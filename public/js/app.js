@@ -21940,7 +21940,7 @@ __webpack_require__.r(__webpack_exports__);
 var Home = function Home() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: "container",
-    children: "Hello"
+    children: "Hello React"
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
