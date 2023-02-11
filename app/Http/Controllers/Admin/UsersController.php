@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UsersController extends Controller
 {
     public function show(Request $req)
     {
-        $db = User::all();
-        if($db)
+        $users = User::all();
+        if($users)
         {
-            return response()->json(['status'=>true,'data'=>$db]);
+            return response()->json(['status'=>true,'data'=>$users]);
         }else {
             return response()->json(['status'=>false,"Message"=>"Can't get data because server network error!"]);
         }
@@ -22,10 +23,11 @@ class UsersController extends Controller
         $user = User::where('username',$req->username)->first();
         if($user == null)
         {
-            $db = new User;
-            $db->username = $req->username;
-            $db->password = Hash::make($req->password);
-            if($db->save())
+            $user = new User;
+            $user->shop_id = $req->shop_id;
+            $user->username = $req->username;
+            $user->password = Hash::make($req->password);
+            if($user->save())
             {
                 return response()->json(['status'=>true,'Message'=>"User Successfully Created!"]);
             }
@@ -67,6 +69,17 @@ class UsersController extends Controller
         else
         {
             return response()->json(['status'=>true,'Message'=>"User can't delete!, Try Again"]);
+        }
+
+
+    }
+    public function restore(Request $req)
+    {
+        $shop = User::withTrashed()->find($req->shop_id);
+        if($shop->restore()){
+            return response()->json(['status'=>true,"Item restored."]);
+        }else {
+            return response()->json(['status'=>true,"Item can't restore!"]);
         }
     }
 }

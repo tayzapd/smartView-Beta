@@ -42,8 +42,9 @@ function Navbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon className='d-none d-md-flex' style={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Link
+          <Typography
             variant="h6"
+            noWrap
             to='/about'
             className='d-none d-md-flex'
             component="a"
@@ -61,7 +62,7 @@ function Navbar() {
             }}
           >
             LOGO
-          </Link>
+          </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
