@@ -20,42 +20,61 @@ class UsersController extends Controller
     }
     public function add(Request $req)
     {
-        $user = User::where('username',$req->username)->first();
-        if($user == null)
-        {
-            $user = new User;
-            $user->shop_id = $req->shop_id;
-            $user->username = $req->username;
-            $user->password = Hash::make($req->password);
-            if($user->save())
+        $validator = Validator::make($req->all(), [
+            'name' => 'required|string',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+        else {
+            $user = User::where('username',$req->username)->first();
+            if($user == null)
             {
-                return response()->json(['status'=>true,'Message'=>"User Successfully Created!"]);
+                $user = new User;
+                $user->shop_id = $req->shop_id;
+                $user->username = $req->username;
+                $user->password = Hash::make($req->password);
+                if($user->save())
+                {
+                    return response()->json(['status'=>true,'Message'=>"User Successfully Created!"]);
+                }
+                else
+                {
+                    return response()->json(['status'=>true,'Message'=>"Can't Created New User."]);
+                }
             }
             else
             {
-                return response()->json(['status'=>true,'Message'=>"Can't Created New User."]);
+                return response()->json(['status'=>true,'Message'=>"The username already exit, can't add new."]);
             }
         }
-        else
-        {
-            return response()->json(['status'=>true,'Message'=>"The username already exit, can't add new."]);
-        }
+
     }
     public function edit(Request $req)
     {
-        $user = User::find($req->id);
-        $user->shop_id = $req->shop_id;
-        $user->username = $req->username;
-        if($req->password!=''){
-            $user->password = Hash::make($req->password);
+        $validator = Validator::make($req->all(), [
+            'name' => 'required|string',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
         }
-        if($user->update())
-        {
-            return response()->json(['status'=>true,'Message'=>"User Edited!"]);
-        }
-        else
-        {
-            return response()->json(['status'=>true,'Message'=>"Can't Edit User"]);
+        else {
+            $user = User::find($req->id);
+            $user->shop_id = $req->shop_id;
+            $user->username = $req->username;
+            if($req->password!=''){
+                $user->password = Hash::make($req->password);
+            }
+            if($user->update())
+            {
+                return response()->json(['status'=>true,'Message'=>"User Edited!"]);
+            }
+            else
+            {
+                return response()->json(['status'=>true,'Message'=>"Can't Edit User"]);
+            }
         }
 
     }

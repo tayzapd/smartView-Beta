@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles;
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];

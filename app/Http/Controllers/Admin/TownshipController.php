@@ -24,7 +24,7 @@ class TownshipController extends Controller
         }else {
             $township = new Township;
             $township->name = $req->name;
-            $city->remark = $req->remark;
+            $township->remark = $req->remark;
             $township->city_id = $req->city_id;
             if($shop->save()){
                 return response()->json(['status'=>true,"Township created successfully."]);
