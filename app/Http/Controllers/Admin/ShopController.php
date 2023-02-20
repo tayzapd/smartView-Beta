@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 use App\Models\Shop;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
-
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 class ShopController extends Controller
 {
     public function show()
@@ -40,7 +39,7 @@ class ShopController extends Controller
             $shop->expired_date = Carbon::now()->addMonth()->toDateString();
             $shop->shoptype_id = $req->shoptype_id;
             $shop->township_id = $req->township_id;
-            $image = $request->file('logo_image');
+            $image = $req->file('logo_image');
             $image = Image::make($image)->resize(640, 480);
             $image->strip();
             $path = $image->save(public_path('shop/logos/' . time() . '.' . $image->extension));
@@ -81,7 +80,7 @@ class ShopController extends Controller
             $shop->shoptype_id = $req->shoptype_id;
             $shop->township_id = $req->township_id;
             if($req->file('logo_image')){
-                $image = $request->file('logo_image');
+                $image = $req->file('logo_image');
                 $image = Image::make($image)->resize(640, 480);
                 $image->strip();
                 $path = $image->save(public_path('shop/logos/' . time() . '.' . $image->extension));

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ShopType;
+use Illuminate\Support\Facades\Validator;
 
 
 class ShopTypeController extends Controller

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
+
 class RoleController extends Controller
 {
 
@@ -60,7 +62,7 @@ class RoleController extends Controller
     }
 
 
-     public function setPermissionToUser($user_id, $permission_id)
+     public function setPermissionToUser(Request $req)
     {
         $user_id = $req->user_id;
         $permission_id = $req->permission_id;

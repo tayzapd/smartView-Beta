@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,9 +13,12 @@ class ItemController extends Controller
 {
     public function show()
     {
-        $items = Item::get();
-        if($items != null)
-        {
+        $user = Auth::user();
+        $items = Item::join('categories', 'categories.id', '=', 'items.category_id')
+             ->where('categories.shop_id', '=', $user->shop_id)
+             ->get();
+
+        if($items != null){
             return response()->json(['status'=>true,'items'=>$items]);
         }
     }
@@ -150,6 +152,5 @@ class ItemController extends Controller
 
         return response()->json(['message' => 'Item restored successfully'], 200);
     }
-
 
 }
