@@ -26,8 +26,11 @@
     "dependencies": {
         "@material-ui/core": "^4.12.4",
         "@material-ui/icons": "^4.11.3",
+        "admin-lte": "^3.2.0",
         "i18next": "^22.4.10",
         "i18next-browser-languagedetector": "^7.0.1",
+        "jquery": "^3.6.3",
+        "popper.js": "^1.16.1",
         "react-bootstrap": "^2.7.2",
         "react-data-table-component": "^7.5.3",
         "react-i18next": "^12.1.5",

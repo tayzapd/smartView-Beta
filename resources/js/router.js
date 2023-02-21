@@ -5,6 +5,9 @@ import UserLayout from "./components/Layouts/UserLayout";
 import AdminLayout from "./components/Layouts/AdminLayout";
 import ShopLayout from "./components/Layouts/ShopLayout";
 import Dashboard from "./components/Shop/Dashboard";
+import Items from "./components/Shop/Items";
+import Users from "./components/Shop/Users";
+import Categories from "./components/Shop/Category";
 
 const Shop = () => {
     return (
@@ -28,8 +31,21 @@ const router = createBrowserRouter([
         children:[
             {
                 path:'owner',
-                element:<Dashboard /> 
-
+                element:<Dashboard /> ,
+                children:[
+                    {
+                        path:'items',
+                        element:<Items /> 
+                    },
+                    {
+                        path:'users',
+                        element:<Users /> 
+                    },
+                    {
+                        path:'category',
+                        element:<Categories /> 
+                    }
+                ]
             },
             {
                 path:'user'
