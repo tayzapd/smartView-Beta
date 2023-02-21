@@ -6,7 +6,7 @@ const AdminLayout = () => {
             <AdminNavbar /> 
             <br />          
             <div className="container">
-                Admin Layout
+                Admin Layout gitlab test
             </div>    
         </>
     )
