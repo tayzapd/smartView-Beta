@@ -77,12 +77,12 @@ class RoleController extends Controller
                 'status'=>true,
                 'message' => 'Permission assigned to user successfully'
             ], 200);
-        } else {
-            return response()->json([
-                'status'=>false,
-                'message' => 'Failed to assign permission to user'
-            ], 500);
         }
+
+        return response()->json([
+            'status'=>false,
+            'message' => 'Failed to assign permission to user'
+        ], 500);
     }
 
 

@@ -1,8 +1,12 @@
+
+
 const Home = () => {
     return (
-        <div className="container">
-            Hello React
+        <div>
+            Home page 
         </div>
     )
 }
+
+
 export default Home;
