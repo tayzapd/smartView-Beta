@@ -14,6 +14,7 @@ class CreateTownshipsTable extends Migration
             $table->string('name');
             $table->foreignId('city_id')->constrained('cities');
             $table->text('remark');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

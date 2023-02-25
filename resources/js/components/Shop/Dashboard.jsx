@@ -1,128 +1,58 @@
-import React from 'react';
-import './Dashboard.css'
 
-const AdminSidebar = () => {
-  return (
+const Dashboard = () => {
+    
+    return (
         <>
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                <div className="px-4 bg-light">
-                <div className="d-flex">
-                    <div className="d-flex align-items-center " id="navbar"> <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-items" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> <span className="fas fa-bars"></span> </button> <a className="text-decoration-none fs14 ps-2" href="#">ACQUIRED<span className="fs13 pe-2">.com</span></a> </div>
-                    <div id="navbar2" className="d-flex justify-content-end pe-4"> <span className="far fa-user-circle "></span> </div>
-                </div>
-                <div className="d-md-flex">
-                    <ul id="navbar-items" className="p-0">
-                        <li> <span className="fas fa-th-list"></span> <span className="ps-3 name">Dashboard</span> </li>
-                        <li> <span className="fas fa-chart-line"></span> <span className="ps-3 name">TRANSACTIONS</span> </li>
-                        <li> <span className="fas fa-clipboard-check"></span> <span className="ps-3 name">finanials</span> </li>
-                        <li> <span className="fas fa-suitcase-rolling"></span> <span className="ps-3 name">frauds</span> </li>
-                        <li> <span className="fas fa-calendar-alt"></span> <span className="ps-3 name">account</span> </li>
-                        <li> <span className="fas fa-comment-alt"></span> <span className="ps-3 name">reqests</span> </li>
-                        <li> <span className="fas fa-store-alt"></span> <span className="ps-3 name">merchants</span> </li>
-                    </ul>
-                    <div id="topnavbar">
-                        <div className="topnav mb-3">
-                            <div className="d-flex px-1"> <a href="#home" className="active">merchants</a> <a href="#news">users</a> <a href="#contact">company<span className="px-1">&</span>mid</a> <a href="#contact">account</a> </div>
-                        </div>
-                        <div className="d-flex align-items-center mb-3 px-md-3 px-2"> <span className="text-uppercase fs13 fw-bolder pe-3">search<span className="ps-1">by</span></span>
-                            <form className="example d-flex align-items-center"> <input type="text" placeholder="Type in Company Name Or Mid id" name="search" /> <button type="submit"><i className="fa fa-search"></i></button> </form>
-                        </div>
-                        <div className="table-responsive px-2">
-                            <table className="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">COMPANY<span>ID</span></th>
-                                        <th scope="col">COMPANY</th>
-                                        <th scope="col">MID</th>
-                                        <th scope="col">BANK<span className="ps-1">NAME</span></th>
-                                        <th scope="col">CUR</th>
-                                        <th className="text-center" scope="col">3DS</th>
-                                        <th className="text-center" scope="col">ACTIVE</th>
-                                        <th className="text-center" scope="col">ACTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><span className="bg-blight">235</span></td>
-                                        <td><span className="bg-bdark">ABC<span className="ps-1">LOANS</span></span></td>
-                                        <td><span className="bg-blight">1343</span></td>
-                                        <td><span className="bg-bdark">Faster<span>Trading</span></span></td>
-                                        <td><span className="bg-bdark">GBP</span></td>
-                                        <td className="text-center px-0"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-ellipsis-h"></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="bg-blight">236</span></td>
-                                        <td><span className="bg-bdark">BCE<span className="ps-1">LOANS</span></span></td>
-                                        <td><span className="bg-blight">1298</span></td>
-                                        <td><span className="bg-bdark">Secure<span>Trading</span></span></td>
-                                        <td><span className="bg-bdark">GBP</span></td>
-                                        <td className="text-center px-0"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-ellipsis-h"></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="bg-blight">237</span></td>
-                                        <td><span className="bg-bdark">CDE<span className="ps-1">LOANS</span></span></td>
-                                        <td><span className="bg-blight">1313</span></td>
-                                        <td><span className="bg-bdark">Secure<span>Trading</span></span></td>
-                                        <td><span className="bg-bdark">GBP</span></td>
-                                        <td className="text-center px-0"><span className="fas fa-times"></span></td>
-                                        <td className="text-center"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-ellipsis-h"></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="bg-blight">235</span></td>
-                                        <td><span className="bg-bdark">DEF<span className="ps-1">LOANS</span></span></td>
-                                        <td><span className="bg-blight">1323</span></td>
-                                        <td><span className="bg-bdark">Secure<span>Trading</span></span></td>
-                                        <td><span className="bg-bdark">GBP</span></td>
-                                        <td className="text-center px-0"><span className="fas fa-times"></span></td>
-                                        <td className="text-center"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-ellipsis-h"></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="bg-blight">235</span></td>
-                                        <td><span className="bg-bdark">FEG<span className="ps-1">LOANS</span></span></td>
-                                        <td><span className="bg-blight">1443</span></td>
-                                        <td><span className="bg-bdark">Secure<span>Trading</span></span></td>
-                                        <td><span className="bg-bdark">GBP</span></td>
-                                        <td className="text-center px-0"><span className="fas fa-times"></span></td>
-                                        <td className="text-center"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-ellipsis-h"></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="bg-blight">237</span></td>
-                                        <td><span className="bg-bdark">GFR<span className="ps-1">LOANS</span></span></td>
-                                        <td><span className="bg-blight">1943</span></td>
-                                        <td><span className="bg-bdark">Faster<span>Trading</span></span></td>
-                                        <td><span className="bg-bdark">GBP</span></td>
-                                        <td className="text-center px-0"><span className="fas fa-times"></span></td>
-                                        <td className="text-center"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-ellipsis-h"></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="bg-blight">235</span></td>
-                                        <td><span className="bg-bdark">ABC<span className="ps-1">LOANS</span></span></td>
-                                        <td><span className="bg-blight">1343</span></td>
-                                        <td><span className="bg-bdark">Faster<span>Trading</span></span></td>
-                                        <td><span className="bg-bdark">GBP</span></td>
-                                        <td className="text-center px-0"><span className="fas fa-times"></span></td>
-                                        <td className="text-center"><span className="fas fa-check"></span></td>
-                                        <td className="text-center"><span className="fas fa-ellipsis-h"></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
+            <nav className="navbar navbar-expand d-flex flex-column align-item-start" id="sidebar">
+        <a href="#" className="navbar-brand text-light mt-5">
+            <div className="display-5 font-weight-bold">THANOS</div>
+        </a>
+        <ul className="navbar-nav d-flex flex-column mt-5 w-100">
+            <li className="nav-item w-100">
+                <a href="#" className="nav-link text-light pl-4">Home</a>
+            </li>
+            <li className="nav-item w-100">
+                <a href="#" className="nav-link text-light pl-4">About</a>
+            </li>
+            <li className="nav-item w-100">
+                <a href="#" className="nav-link text-light pl-4">Blog</a>
+            </li>
+            <li className="nav-item dropdown w-100">
+                <a href="#" className="nav-link dropdown-toggle text-light pl-4" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">Service</a>
+                <ul className="dropdown-menu w-100" aria-labelledby="navbarDropdown">
+                    <li><a href="#" className="dropdown-item text-light pl-4 p-2">Service 01</a></li>
+                    <li><a href="#" className="dropdown-item text-light pl-4 p-2">Service 02</a></li>
+                    <li><a href="#" className="dropdown-item text-light pl-4 p-2">Service 03</a></li>
+                </ul>
+            </li>
+            <li className="nav-item w-100">
+                <a href="#" className="nav-link text-light pl-4">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    <section className="p-4 my-container">
+        <button className="btn my-4" id="menu-btn">Toggle Sidebar</button>
+        <h1>Bootstrap 5 Sidebar Navigation</h1>
+        <p className="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam facilis inventore harum, architecto libero recusandae porro doloremque sunt cum consectetur, autem, vitae ea nihil sapiente voluptas at aut suscipit eos? Sapiente quam culpa aliquam
+            itaque debitis nihil doloremque rem! Praesentium quae, facere nobis impedit quisquam aliquid maxime error? Totam eaque earum fuga aliquam sequi excepturi illum optio quas tempora ea! Eum perspiciatis accusantium distinctio eveniet consequatur
+            sint illo officiis? Saepe dolores fugiat rerum, voluptatem sunt culpa nihil accusantium voluptates unde hic magnam quos est perspiciatis recusandae incidunt quod laborum vitae. Harum modi inventore ea odit eaque ut maiores voluptate nihil
+            aspernatur voluptatibus exercitationem ipsa nam animi neque tempore, eligendi, repellendus praesentium ex voluptatum? Magni laboriosam nemo, assumenda veniam aperiam eum! Eos, ipsum. Eum illo quos quo tempora excepturi reprehenderit numquam
+            voluptas! Blanditiis autem optio labore quisquam culpa, tempora minus eum repudiandae ea voluptatem quia obcaecati velit cum dolorum esse dolorem!</p>
+        <p className="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam facilis inventore harum, architecto libero recusandae porro doloremque sunt cum consectetur, autem, vitae ea nihil sapiente voluptas at aut suscipit eos? Sapiente quam culpa aliquam
+            itaque debitis nihil doloremque rem! Praesentium quae, facere nobis impedit quisquam aliquid maxime error? Totam eaque earum fuga aliquam sequi excepturi illum optio quas tempora ea! Eum perspiciatis accusantium distinctio eveniet consequatur
+            sint illo officiis? Saepe dolores fugiat rerum, voluptatem sunt culpa nihil accusantium voluptates unde hic magnam quos est perspiciatis recusandae incidunt quod laborum vitae. Harum modi inventore ea odit eaque ut maiores voluptate nihil
+            aspernatur voluptatibus exercitationem ipsa nam animi neque tempore, eligendi, repellendus praesentium ex voluptatum? Magni laboriosam nemo, assumenda veniam aperiam eum! Eos, ipsum. Eum illo quos quo tempora excepturi reprehenderit numquam
+            voluptas! Blanditiis autem optio labore quisquam culpa, tempora minus eum repudiandae ea voluptatem quia obcaecati velit cum dolorum esse dolorem!</p>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossOrigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js" integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d" crossOrigin="anonymous"></script>
+
         </>
-  );
-};
+    )
+}
 
-export default AdminSidebar;
+
+export default Dashboard;

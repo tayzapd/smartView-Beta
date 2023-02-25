@@ -10,4 +10,11 @@ class Division extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+
+    public function cities()
+    {
+        return $this->hasMany(City::class);
+    }
+
 }

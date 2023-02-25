@@ -23,6 +23,7 @@ class CreateShopsTable extends Migration
             $table->foreignId('shoptype_id')->constrained('shoptypes');
             $table->foreignId('township_id')->constrained('townships');
             $table->text('remark');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
