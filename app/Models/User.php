@@ -9,6 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+<<<<<<< HEAD
+use Spatie\Permission\Traits\HasRoles;
+=======
+>>>>>>> 465cc92e19c647e16bb762ea0cbeac9a67958abc
 
 class User extends Authenticatable
 {

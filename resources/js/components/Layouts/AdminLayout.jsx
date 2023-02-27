@@ -1,6 +1,11 @@
 
+import { useContext } from "react";
+import { useAuthContext } from "../../Context/AdminContext";
 import AdminNavbar from "./Navbar/Admin";
+
 const AdminLayout = () => {
+    
+    console.log(useAuthContext());
     return (
         <>
             <AdminNavbar /> 
