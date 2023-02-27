@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
+.navbar-title {
+    font-family: 'Russo One', sans-serif;
+}
+
+
+
+.bg-orange {
+    background: linear-gradient(90deg, rgba(254,133,0,1) 0%, rgba(254,165,0,1) 48%, rgba(254,133,0,1) 100%); 
+
+}
+
+.navbar-title {
+    font-family: 'Russo One', sans-serif;
+}
+
+.navbar {
+    background-color: black;
+}
+
+#form1 {
+    background-color: rgba(0,0,0,0.1);
+    border: 0px;
+}
+.form-control-sm {
+    color: white;
+}
+#form1:hover {
+    border: 0px;
+}
+.card {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.item-image:hover { transform: scale(1.05); }
+@media (min-width: 500px) {
+    .card {
+        margin-right: 20px;
+        margin-left: 20px;
+        border: 1px solid white;
+        border-radius: 0px;
+        
+        
+    }
+    .item-image {
+        height: 120px;
+        width: 130px;
+        
+    }
+
+    .navbar-title-index-other {
+        font-size: 21px;
+    }
+
+    .navbar-title-index-0 {
+        font-size: 25px;
+    }
+  }
+
+@media all and  (max-width:500px){
+    .card {
+        margin-right: 20px;
+        
+        margin-left: 20px;
+    }
+
+    .form-control-sm {
+        float: right;
+        width: 70%;   
+    }
+    .item-image {
+        height: 100px;
+        width: 120px;
+    }
+    .navbar-title-index-other {
+        font-size: 13px;
+    }
+
+    .navbar-title-index-0 {
+        font-size: 15px;
+    }
+    
+}

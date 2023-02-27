@@ -4,11 +4,11 @@ import Home from './components/Home';
 import UserLayout from "./components/Layouts/UserLayout";
 import AdminLayout from "./components/Layouts/AdminLayout";
 import ShopLayout from "./components/Layouts/ShopLayout";
-import Dashboard from "./components/Shop/Dashboard";
+import Dashboard from "./components/Shop/Dashboard.jsx";
 import Items from "./components/Shop/Items";
 import Users from "./components/Shop/Users";
 import Categories from "./components/Shop/Category";
-
+import ItemView from './components/User/ItemView';
 const Shop = () => {
     return (
         <div>
@@ -19,7 +19,13 @@ const Shop = () => {
 const router = createBrowserRouter([
     {
         path:"/",
-        element:<UserLayout />
+        element:<UserLayout />,
+        children:[
+            {
+                path:'/sh/:id/',
+                element:<ItemView/>
+            }
+        ]
     },
     {
         path:"/admin",
