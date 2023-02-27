@@ -18,6 +18,7 @@ class CreateCitiesTable extends Migration
             $table->string('name');
             $table->foreignId('division_id')->constrained('divisions');
             $table->text('remark');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

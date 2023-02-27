@@ -17,6 +17,7 @@ class CreateDivisionsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('remark');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

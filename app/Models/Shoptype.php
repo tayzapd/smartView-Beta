@@ -10,4 +10,9 @@ class Shoptype extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+    public function shops()
+    {
+        return $this->hasMany(Shop::class);
+    }
 }

@@ -27,6 +27,7 @@ class CreateItemsTable extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->text('description');
             $table->text('remark');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
