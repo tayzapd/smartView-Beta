@@ -11606,6 +11606,85 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/Context/AdminContext.jsx":
+/*!***********************************************!*\
+  !*** ./resources/js/Context/AdminContext.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AdminProvider": () => (/* binding */ AdminProvider),
+/* harmony export */   "useAuthContext": () => (/* binding */ useAuthContext)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var AdminContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
+  user: null,
+  token: null,
+  axios: null,
+  setUser: function setUser() {},
+  setToken: function setToken() {},
+  users: [],
+  setUsers: function setUsers() {}
+});
+var AdminProvider = function AdminProvider(_ref) {
+  var children = _ref.children;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState2 = _slicedToArray(_useState, 2),
+    user = _useState2[0],
+    _setUser = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    users = _useState4[0],
+    setUsers = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(localStorage.getItem('admin_token')),
+    _useState6 = _slicedToArray(_useState5, 2),
+    token = _useState6[0],
+    _setToken = _useState6[1];
+  var setToken = function setToken(token) {
+    _setToken(token);
+    if (token) {
+      localStorage.setItem('admin_token', token);
+    } else {
+      localStorage.removeItem('admin_token');
+    }
+  };
+  var setUser = function setUser(user) {
+    _setUser(user);
+  };
+  (axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.headers.Authorization) = "Bearer ".concat(token);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(AdminContext.Provider, {
+    value: {
+      user: user,
+      token: token,
+      users: users,
+      setUser: setUser,
+      setUsers: setUsers,
+      setToken: setToken,
+      axios: (axios__WEBPACK_IMPORTED_MODULE_1___default())
+    },
+    children: children
+  });
+};
+var useAuthContext = function useAuthContext() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(AdminContext);
+};
+
+/***/ }),
+
 /***/ "./resources/js/Main.js":
 /*!******************************!*\
   !*** ./resources/js/Main.js ***!
@@ -11712,17 +11791,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Navbar_Admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Navbar/Admin */ "./resources/js/components/Layouts/Navbar/Admin.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Context_AdminContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Context/AdminContext */ "./resources/js/Context/AdminContext.jsx");
+/* harmony import */ var _Navbar_Admin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navbar/Admin */ "./resources/js/components/Layouts/Navbar/Admin.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
 
 
 
 
 var AdminLayout = function AdminLayout() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Navbar_Admin__WEBPACK_IMPORTED_MODULE_0__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+  console.log((0,_Context_AdminContext__WEBPACK_IMPORTED_MODULE_1__.useAuthContext)());
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Navbar_Admin__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "container",
-      children: "Admin Layout gitlab test"
+      children: "Admin Layout"
     })]
   });
 };
