@@ -3,7 +3,7 @@ import axios from "axios";
 
 const ShopContext = createContext({
     user:null,
-    token:null,
+    token:localStorage.getItem('shop_token'),
     axios:null,
     setUser: () => {},
     setToken: () => {},

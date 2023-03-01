@@ -4,7 +4,7 @@ const  UserNavbar = () => {
         <> 
             <script src="https://cdn.jsdelivr.net/npm/@mdi/font@7.1.96/scripts/verify.min.js"></script>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.1.96/css/materialdesignicons.min.css" />
-            <nav className="navbar navbar-dark shadow-md bg-orange"> 
+            <nav className="navbar navbar-dark shadow-md bg-orange sticky-top"> 
             
                 <div className="container-fluid">
                 <span className="navbar-brand mb-0 h1 navbar-title">

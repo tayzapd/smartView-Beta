@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\Shop\ItemController;
+use App\Http\Controllers\User\ViewController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -13,6 +14,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function(){
     Route::post('/login',"login");
 });
+Route::prefix('user')->group(function(){
+    Route::prefix('shop')->controller(ViewController::class)->group(function(){
+        Route::post('items','items');
+    });
+
+    Route::prefix('items')->controller(ViewController::class)->group(function(){
+        Route::post('get','get');
+    });
+});
+
 
 Route::prefix('admin')->group(function(){
     
@@ -75,6 +86,22 @@ Route::prefix('admin')->group(function(){
 });
 
 
+Route::prefix('shop')->middleware('auth:sanctum')->group(function(){
+    Route::prefix('items')->controller(ItemController::class)->group(function(){
+        Route::post('show','show');
+        Route::post('create','create');
+        Route::post('update','update');
+        Route::post('delete','delete');
+        Route::post('restore','restore');
+    });
 
+    Route::prefix('category')->controller(ItemController::class)->group(function(){
+        Route::post('show','show');
+        Route::post('create','create');
+        Route::post('update','update');
+        Route::post('delete','delete');
+        Route::post('restore','restore');
+    });
 
-
+    
+});

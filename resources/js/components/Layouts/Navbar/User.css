@@ -42,11 +42,6 @@
         
         
     }
-    .item-image {
-        height: 120px;
-        width: 130px;
-        
-    }
 
     .navbar-title-index-other {
         font-size: 21px;
@@ -68,10 +63,7 @@
         float: right;
         width: 70%;   
     }
-    .item-image {
-        height: 100px;
-        width: 120px;
-    }
+
     .navbar-title-index-other {
         font-size: 13px;
     }

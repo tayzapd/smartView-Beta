@@ -1,13 +1,14 @@
+import { ShopProvider,useShopContext } from "../../Context/ShopContext";
+import Shop from './Shop';
 
-import ShopNavbar from "./Navbar/Shop";
-import { Outlet } from "react-router-dom";
 const ShopLayout = () => {
-    
+    const {setToken,token} = useShopContext();
+    console.log("TOken:: "+token)
     return (
-        <>
-            <Outlet /> 
-
-        </>
+        <ShopProvider>
+            {token}
+            <Shop />
+        </ShopProvider>
     )
 }
 

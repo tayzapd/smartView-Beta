@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -23,7 +22,7 @@ class AuthController extends Controller
 
         $check = Auth::attempt(['username' => $request->username, 'password' => $request->password]);
         if($check){
-            $user = Auth::user();
+            $user = User::find(Auth::id());
             return response()->json(['status'=>true,'token'=>$user->createToken($request->password)->plainTextToken]);
         }else {
             return response()->json(['status'=>false,'token'=>NULL]);
