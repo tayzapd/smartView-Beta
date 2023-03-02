@@ -1,8 +1,10 @@
 import { createContext,useContext,useState } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 
 const ShopContext = createContext({
     user:null,
+    dialog:false,
     token:localStorage.getItem('shop_token'),
     axios:null,
     setUser: () => {},
@@ -14,6 +16,7 @@ const ShopContext = createContext({
 
 export const ShopProvider = ({children}) => {
     const [user,_setUser] = useState({});
+    const [dialog,setDialog] = useState(false);
     const [users,setUsers] = useState([]);
     const [token,_setToken] = useState(localStorage.getItem('shop_token'));
 
@@ -32,6 +35,12 @@ export const ShopProvider = ({children}) => {
     axios.defaults.headers['Authorization'] = `Bearer ${token}`;
     
 
+    useEffect(() => {
+        axios.get('/api/user').then(({data}) => {
+            setUser(data)
+        })
+    },[])
+
     return (
         <ShopContext.Provider value={{
             user,
@@ -40,7 +49,9 @@ export const ShopProvider = ({children}) => {
             setUser,
             setUsers,
             setToken,
-            axios
+            axios,
+            dialog,
+            setDialog
         }} >
             {children}
         </ShopContext.Provider>

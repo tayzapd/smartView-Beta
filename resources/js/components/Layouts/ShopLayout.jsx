@@ -3,10 +3,8 @@ import Shop from './Shop';
 
 const ShopLayout = () => {
     const {setToken,token} = useShopContext();
-    console.log("TOken:: "+token)
     return (
         <ShopProvider>
-            {token}
             <Shop />
         </ShopProvider>
     )

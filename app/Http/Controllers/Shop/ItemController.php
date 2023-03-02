@@ -16,6 +16,7 @@ class ItemController extends Controller
         $user = Auth::user();
         $items = Item::join('categories', 'categories.id', '=', 'items.category_id')
              ->where('categories.shop_id', '=', $user->shop_id)
+             ->with('category:id,name')
              ->get();
 
         if($items != null){

@@ -2,15 +2,17 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { useShopContext } from "../../../Context/ShopContext";
 import { Button } from 'antd';
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const ShopLogin = () => {
     const {user,token,setToken,setUser,axios} = useShopContext();
+    const {id} = useParams();
     const [login,setLogin] = useState({
         username:'',
         password:'',
     });
-
+    const router = useNavigate();
     const Login = (e) => {
         e.preventDefault();
         axios.post('/api/login',login).then(res => {
@@ -21,7 +23,7 @@ const ShopLogin = () => {
             axios.get('/api/user').then(res => {
                 setUser(res.data);
             })
-            console.log(token)
+            router(`/shop/${id}/owner`);
         })
     }
 
@@ -31,7 +33,6 @@ const ShopLogin = () => {
 
     return (
         <>
-                 <Button type="primary">Button</Button>
             <div className="responsive-box my-lg-3    ">
                 <div className="container d-flex  justify-content-center align-item-center  ">
                     <div className="d-flex justify-content-center align-item center px-3   logo-image-main" >

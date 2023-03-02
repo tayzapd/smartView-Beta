@@ -3,7 +3,7 @@ import NotFound from './components/Layouts/NotFound';
 import Home from './components/Home';
 import UserLayout from "./components/Layouts/UserLayout";
 import AdminLayout from "./components/Layouts/AdminLayout";
-import ShopLayout from "./components/Layouts/Shop";
+import ShopLayout from "./components/Layouts/ShopLayout";
 import Dashboard from "./components/Shop/Dashboard.jsx";
 import Items from "./components/Shop/Items";
 import Users from "./components/Shop/Users";

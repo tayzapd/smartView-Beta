@@ -13,7 +13,12 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    
+    public function show(Request $req) 
+    {
+        $shop_id = Auth::user()->shop_id;
+        $users = User::where('shop_id',$shop_id)->get();
+        return response()->json(['users'=>$users]);
+    }
     public function create(Request $req)
     {
         $validator = Validator::make($req->all(), [

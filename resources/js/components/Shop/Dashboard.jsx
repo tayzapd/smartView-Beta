@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useShopContext } from '../../Context/ShopContext';
 const Dashboard = () => {
+    
     const {id} = useParams();
     const  {axios,user,token} = useShopContext();
     const [items,setItems] = useState([]);
@@ -19,6 +20,8 @@ const Dashboard = () => {
             setItems(res.data.items);
         });
     },[])
+
+
     return (
         <>
             <div className="container mt-5 ">

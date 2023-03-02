@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 
 const ShopLayout = () => {
-    const {token,setUser,user,setToken} = useShopContext();
+    const {token,setUser,user,setToken,dialog} = useShopContext();
     const route = useNavigate();
     const router = useLocation();
     useEffect(() => {
@@ -16,20 +16,22 @@ const ShopLayout = () => {
         <>
                 <Outlet /> 
                 
-                {router.pathname.includes('login') != true ? <Navbar  fixed="bottom" className='navbar container mx-2 mx-lg-5 shadow-lg border border-top' >      
+                {router.pathname.includes('login') != true && dialog != true ? 
+                <Navbar  fixed="bottom" className='container   mb-4 rounded-pill text-center '>      
 
                         <Nav.Link className='col-3' href="#">ITEM</Nav.Link>
                         <Nav.Link className='col-3' href="#">CATEGORY</Nav.Link>
                         <Nav.Link className='col-3' href="#">SHOP</Nav.Link>
-                          <Nav.Link className='col-3' href="#">USER</Nav.Link>
-                </Navbar> : <span></span>}
+                        <Nav.Link className='col-3' href="#">USER</Nav.Link>
+                </Navbar> : 
+                <span></span>}
             
               <style>{`
               .navbar {
                 padding: 1rem 0;
                 background-color: white;
-                box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
-                box-shadow: rgba(60, 64, 67, 0.3) 0px -10px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+                box-shadow: 0px -2px -2px rgba(0, 0, 0, 0.1);
+                z-index:20px;
               }
               
               .nav-link {

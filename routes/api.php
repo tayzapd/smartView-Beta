@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Shop\ItemController;
+use App\Http\Controllers\Shop\UserController;
 use App\Http\Controllers\User\ViewController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -101,6 +103,10 @@ Route::prefix('shop')->middleware('auth:sanctum')->group(function(){
         Route::post('update','update');
         Route::post('delete','delete');
         Route::post('restore','restore');
+    });
+
+    Route::prefix('users')->controller(UserController::class)->group(function(){
+        Route::post('show','show');
     });
 
     
