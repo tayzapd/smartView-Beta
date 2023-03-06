@@ -1,7 +1,7 @@
 import { BrowserRouter,createBrowserRouter,Link } from "react-router-dom";
 import NotFound from './components/Layouts/NotFound';
 import Home from './components/Home';
-import UserLayout from "./components/Layouts/UserLayout";
+import User from "./components/Layouts/User";
 import AdminLayout from "./components/Layouts/AdminLayout";
 import ShopLayout from "./components/Layouts/ShopLayout";
 import Dashboard from "./components/Shop/Dashboard.jsx";
@@ -14,7 +14,7 @@ import ShopLogin from "./components/Shop/Auth/Login";
 const router = createBrowserRouter([
     {
         path:"/",
-        element:<UserLayout />,
+        element:<User />,
         children:[
             {
                 path:'/sh/:id/',

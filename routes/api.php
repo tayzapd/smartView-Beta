@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\ItemController;
 use App\Http\Controllers\Shop\UserController;
 use App\Http\Controllers\User\ViewController;
@@ -18,6 +19,7 @@ Route::controller(AuthController::class)->group(function(){
 });
 Route::prefix('user')->group(function(){
     Route::prefix('shop')->controller(ViewController::class)->group(function(){
+        Route::post('info','getShop');
         Route::post('items','items');
     });
 
@@ -97,7 +99,7 @@ Route::prefix('shop')->middleware('auth:sanctum')->group(function(){
         Route::post('restore','restore');
     });
 
-    Route::prefix('category')->controller(ItemController::class)->group(function(){
+    Route::prefix('category')->controller(CategoryController::class)->group(function(){
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');

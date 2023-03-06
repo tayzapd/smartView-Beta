@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Item;
+use App\Models\Shop;
 class Category extends Model
 {
     use HasFactory;
@@ -15,5 +16,10 @@ class Category extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
     }
 }
