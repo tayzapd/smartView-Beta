@@ -11,7 +11,10 @@ const ShopLogin = () => {
     const [login,setLogin] = useState({
         username:'',
         password:'',
+        shop_id:id
     });
+    const [shop,setShop]  =useState({});
+
     const router = useNavigate();
     const Login = (e) => {
         e.preventDefault();
@@ -28,8 +31,10 @@ const ShopLogin = () => {
     }
 
     useEffect(() => {
-        console.log(token);
-    })
+        axios.post('/api/user/shop/info/',{id:id}).then((res) => {
+            setShop(res.data.shop);
+        })
+    },[])
 
     return (
         <>
@@ -46,7 +51,14 @@ const ShopLogin = () => {
                 <div className="container d-flex  justify-content-center align-item-center mt-3 ">
                     <div className="d-flex justify-content-center align-item center px-4   ">
                         <h2 className="shop-name-title ">
-                            Tea Shop
+                            {
+                                shop.shop_name ? 
+                                <span>
+                                    {shop.shop_name}
+                                </span>
+                                :
+                                <span></span>
+                            }
                         </h2>
                     </div>
                 </div>

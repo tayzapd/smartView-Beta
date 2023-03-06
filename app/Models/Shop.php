@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Shoptype;
 use App\Models\Township;
+use App\Models\Item;
 class Shop extends Model
 {
     use HasFactory;
@@ -32,5 +33,10 @@ class Shop extends Model
     public function township()
     {
         return $this->belongsTo(Township::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
     }
 }

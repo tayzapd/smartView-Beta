@@ -1,5 +1,10 @@
 import './User.css'
+import { useUserContext } from '../../../Context/UserContext';
+import { useEffect } from 'react';
 const  UserNavbar = () => {
+    const {shop} = useUserContext();
+    useEffect(() => {
+    })
     return (
         <> 
             <script src="https://cdn.jsdelivr.net/npm/@mdi/font@7.1.96/scripts/verify.min.js"></script>
@@ -8,8 +13,28 @@ const  UserNavbar = () => {
             
                 <div className="container-fluid">
                 <span className="navbar-brand mb-0 h1 navbar-title">
-                    <span className='navbar-title-index-0'>S</span>
-                    <span className='navbar-title-index-other'>HWE MYO TAW</span>
+                    
+                    {
+                        shop != null ? 
+                        <span>
+                            {shop.shop_name ? 
+                                <>
+                                <span className='navbar-title-index-0'>
+                                {shop.shop_name[0]}
+        
+                                </span>
+                                <span className='navbar-title-index-other'>
+                                {shop.shop_name.substring(1)}
+                                </span>
+                                </>
+                            : 
+                            <span></span>
+                            }
+                        </span>
+                        :
+                        <span></span>
+                    }
+                    
                 </span>
                 <div className="text-white  search ">
                     <div className="input-group">

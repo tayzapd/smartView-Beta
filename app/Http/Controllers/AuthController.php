@@ -13,7 +13,8 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|min:6|max:120',
-            'password' => 'required'
+            'password' => 'required',
+            'shop_id'  => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -23,9 +24,13 @@ class AuthController extends Controller
         $check = Auth::attempt(['username' => $request->username, 'password' => $request->password]);
         if($check){
             $user = User::find(Auth::id());
-            return response()->json(['status'=>true,'token'=>$user->createToken($request->password)->plainTextToken]);
-        }else {
-            return response()->json(['status'=>false,'token'=>NULL]);
+            if($user->shop_id == $request->shop_id)
+            {
+                return response()->json(['status'=>true,'token'=>$user->createToken($request->password)->plainTextToken]);
+            }
         }
+        
+        return response()->json(['status'=>false,'token'=>NULL]);
+        
     }
 }
