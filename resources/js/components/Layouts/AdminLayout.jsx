@@ -1,42 +1,118 @@
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Image } from 'react-bootstrap';
+// import mm from '../../router';
+import { useNavigate } from 'react-router-dom';
+import AddShoptypes from '../Admin/Shoptype/AddShoptypes';
+import ItemView from '../User/ItemView';
+import Main from '../../Main';
+import { Button } from '@material-ui/core';
+
+
 const { Header, Content, Footer, Sider } = Layout;
+
+function getItem(label, key, icon, children) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  };
+}
+
+const items = [
+  getItem('Shoptypes', 'spt', <UserOutlined />, [
+    getItem('AddShop', '/addshoptypes',<UserOutlined/>),
+    getItem('Bill', '4'),
+    getItem('Alex', '5'),
+  ]),
+]
+
+const handleClick = () => {
+  console.log("CLICK")
+}
+
 const App = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const page = ['Admins','Users','Shops','Categories']
+  const navigate = useNavigate();
+  const UserMenu = (
+    <Image
+      src={'https://w7.pngwing.com/pngs/439/19/png-transparent-avatar-user-profile-icon-women-wear-frock-face-holidays-women-accessories-thumbnail.png'}
+      alt="UserName profile image"
+      roundedCircle
+      style={{ width: '40px' }}
+    />
+  )
+  
+  
   return (
     <Layout className='h-screen'>
-      <Sider
+      <Sider 
         breakpoint="lg"
         collapsedWidth="0"
         onBreakpoint={(broken) => {}}
         onCollapse={(collapsed, type) => {}}
+        style={{ 
+          background:'#fc6400'
+         }}
       >
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['4']}
-          items={[UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-            (icon, index) => ({
-              key: String(index + 1),
-              icon: React.createElement(icon),
-              label: page[index],
-            }),
-          )}
+        <div className="logo" style={{ textAlign: 'center', fontSize:'18px' }}>Smart View</div>
+        <Menu 
+          onClick={({key})=>{
+            if(key != "singout"){
+              navigate(key);
+            }
+          }}
+          defaultSelectedKeys={[window.location.pathname]}
+          style={{ background:'#fc6400' }}
+          theme="light" 
+          mode="inline" 
+          items={items} 
         />
       </Sider>
       <Layout>
         <Header
           style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        >
             
+            padding: '0',
+            background: colorBgContainer,
+            
+           
+          }}
+
+        >
+           <div>
+      <Button
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        Dashboard
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
+    </div>
+          
         </Header>
         <Content
           style={{
@@ -50,7 +126,8 @@ const App = () => {
               background: colorBgContainer,
             }}
           >
-            content
+          
+            <Main/>
           </div>
         </Content>
         <Footer
@@ -78,4 +155,10 @@ const App = () => {
   );
 };
 export default App;
+
+
+
+
+
+
 

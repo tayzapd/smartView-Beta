@@ -10,6 +10,8 @@ import Users from "./components/Shop/Users";
 import Categories from "./components/Shop/Category";
 import ItemView from './components/User/ItemView';
 import ShopLogin from "./components/Shop/Auth/Login";
+import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
+import AdminLogin from "./components/Admin/Auth/AdminLogin";
 
 const router = createBrowserRouter([
     {
@@ -23,8 +25,18 @@ const router = createBrowserRouter([
         ]
     },
     {
+        path:"adminlogin",
+        element:<AdminLogin/>
+    },
+    {
         path:"/admin",
-        element:<AdminLayout /> 
+        element:<AdminLayout />, 
+        children:[
+            {
+                path:"addshoptypes",
+                element:<AddShoptypes/>
+            }
+        ]
     },
     {
         path:"/shop/:id",
@@ -40,7 +52,8 @@ const router = createBrowserRouter([
                 children:[
                     {
                         path:'items',
-                        element:<Items /> 
+                        element:<Items />
+
                     },
                     {
                         path:'users',
