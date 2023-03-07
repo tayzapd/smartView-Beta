@@ -21,7 +21,23 @@ const Items = () => {
     const [create,setCreate] = useState(false);
     const [loading,setLoading] = useState(true);
     const [fileList, setFileList] = useState([]);
-    const [viewItem,setViewItem]  = useState({});
+    const [viewItem,setViewItem]  = useState({
+        name:"",
+        price:"",
+        is_available:"",
+        privacy:"",
+        taste:"",
+        images:[],
+        time_limited:"",
+        special_range:"",
+        description:"",
+        remark:"",
+        created_at:"",
+        updated_at:"",
+        category:{name:''},
+    });
+
+
     const [showItem,setShowItem] = useState(false);
 
     const [item,setItem] = useState({
@@ -38,8 +54,8 @@ const Items = () => {
     });
 
     const getCategories = () => {
-        axios.post('/api/shop/category/show').then(({data}) => {
-            setCategories(data.categories)
+        axios.get('/api/shop/category/show').then(({data}) => {
+            setCategories(data.categories.data)
         })
         const stopLoader = () => {
             setLoading(false);
@@ -135,6 +151,7 @@ const Items = () => {
             </Button>
             
             <Modal
+                width={1000}
                 title="ITEM CREATE + "
                 open={create}
                 okButtonProps={{}}
@@ -147,71 +164,71 @@ const Items = () => {
                 onCancel={() => {setCreate(false);setDialog(false)}}
 
             >
-                <div className="overflow-auto h-50">
-                    <form onSubmit={() => {}}> 
+                <div className="item-create h-100 " style={{
+                    padding:"7px"
+                }}>
 
-                        <Input name="name" onChange={(e) => {item.name = e.target.value}} className="my-2 " allowClear placeholder="Name" />
-                        
-                        <Input name="taste" onChange={(e) => {item.taste = e.target.value}} className="my-2 " placeholder="Taste" />
-                        <TextArea name="description" onChange={(e) => {item.description = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Description" maxLength={250} />
+                    <Input name="name" onChange={(e) => {item.name = e.target.value}} className="my-2 " allowClear placeholder="Name" />
+                    
+                    <Input name="taste" onChange={(e) => {item.taste = e.target.value}} className="my-2 " placeholder="Taste" />
+                    <TextArea name="description" onChange={(e) => {item.description = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Description" maxLength={250} />
 
-                        <InputNumber name="price" onChange={(value) => {item.price = value }} className="col-12 my-2" addonBefore="+" addonAfter="$" placeholder="Price " />
+                    <InputNumber name="price" onChange={(value) => {item.price = value }} className="col-12 my-2" addonBefore="+" addonAfter="$" placeholder="Price " />
 
-                        <div className="d-flex flex-row my-4 ">
-                            <div className="col-3">
-                                <div>Available</div>
-                                <Switch name="is_available" defaultChecked onChange={(value) => { item.is_available = value}} />
-                            </div>
-                            <div>
-                            <div className="ml-4 ">Privacy </div>
-                                <Radio.Group name="privacy" onChange={(e) => { item.privacy = e.target.value}} defaultValue="a" buttonStyle="solid">
-                                    <Radio.Button value="private">Private</Radio.Button>
-                                    <Radio.Button value="public">Public</Radio.Button>
-                                </Radio.Group>
-                            </div>
-    
+                    <div className="d-flex flex-row my-4 ">
+                        <div className="col-3">
+                            <div>Available</div>
+                            <Switch name="is_available" defaultChecked onChange={(value) => { item.is_available = value}} />
                         </div>
-                        <Form.Select name="category" onChange={(e) => { item.category = e.target.value }} aria-label="Category" className="mb-3">
-                            <option>Category</option>
-                            {
-                              categories.length != 0 ?
-                              categories.map(cate => {
-                                return <option key={cate.id} value={cate.id}>{cate.name}</option>
-                             })
-                             :
-                             <span></span>
-                            }
+                        <div>
+                        <div className="ml-4 ">Privacy </div>
+                            <Radio.Group name="privacy" onChange={(e) => { item.privacy = e.target.value}} defaultValue="a" buttonStyle="solid">
+                                <Radio.Button value="private">Private</Radio.Button>
+                                <Radio.Button value="public">Public</Radio.Button>
+                            </Radio.Group>
+                        </div>
 
-                        </Form.Select>
-                        <TextArea name="remark" onChange={(e) => {item.remark = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Remark" maxLength={250} />
-                        
-                        <DatePicker 
-                            name="special_date"
-                            onChange={(date,dateString) => {item.special_date = dateString; console.log(item)}}
-                            className="form-control my-2 " style={{zIndex:2000}}></DatePicker>
-                            
-                            <input type="file" className="form-control" multiple  name="images" onChange={handleChange} placeholder="Item images" />
-                            {/* <Upload name="images" {...uploadProps} className="my-2 col-12 text-center justify-content-center ">
-                                <Button className="col-12 w-100 upload-btn " icon={<UploadOutlined />}>Select Images</Button>
-                            </Upload> */}
-                            {fileList.length != 0 ? 
-                                <Carousel
-                                  className="col h-50 carousel"
-                                >
-                              {fileList.map((file,index) => (
-                                  <div key={index}>
-                                  <img 
-                                      className="img-thumbnail"
-                                      src={URL.createObjectURL(file)} 
-                                      alt={file.name} />
-                                  </div>
-                            ))}
-                            </Carousel>
-                            : 
+                    </div>
+                    <Form.Select name="category" onChange={(e) => { item.category = e.target.value }} aria-label="Category" className="mb-3">
+                        <option>Category</option>
+                        {
+                            categories.length != 0 ?
+                            categories.map(cate => {
+                            return <option key={cate.id} value={cate.id}>{cate.name}</option>
+                            })
+                            :
                             <span></span>
                         }
+
+                    </Form.Select>
+                    <TextArea name="remark" onChange={(e) => {item.remark = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Remark" maxLength={250} />
+                    
+                    <DatePicker 
+                        name="special_date"
+                        onChange={(date,dateString) => {item.special_date = dateString; console.log(item)}}
+                        className="form-control my-2 " style={{zIndex:2000}}></DatePicker>
                         
-                    </form>
+                        <input type="file" className="form-control" multiple  name="images" onChange={handleChange} placeholder="Item images" />
+                        {/* <Upload name="images" {...uploadProps} className="my-2 col-12 text-center justify-content-center ">
+                            <Button className="col-12 w-100 upload-btn " icon={<UploadOutlined />}>Select Images</Button>
+                        </Upload> */}
+                        {fileList.length != 0 ? 
+                            <Carousel
+                                className="col h-50 carousel"
+                            >
+                            {fileList.map((file,index) => (
+                                <div key={index}>
+                                <img 
+                                    className="img-thumbnail"
+                                    src={URL.createObjectURL(file)} 
+                                    alt={file.name} />
+                                </div>
+                        ))}
+                        </Carousel>
+                        : 
+                        <span></span>
+                    }
+                        
                 </div>
             </Modal>
       
@@ -239,6 +256,7 @@ const Items = () => {
 
             {/* ITEM ONE PAGE VIEW   */}
             <Modal
+                width={1000}
                 title={
                     <header className="font-weight-bold" style={{fontSize:'20px',fontWeight:'bold'}}>
                         {viewItem.name}
@@ -258,9 +276,7 @@ const Items = () => {
                 onCancel={() => {setShowItem(false);setDialog(false)}}
 
             >
-                <div className="overflow-auto h-sm-100 h-lg-75 shadow-sm  " style={{background:'#ffffff'}}>
-                   
-                   <p className="text-muted">
+                <p className="text-muted">
                         {
                             viewItem.category ? 
                             <span style={{
@@ -278,9 +294,15 @@ const Items = () => {
                             </span>
                         }
                    </p>
+                <div className="item-details  h-auto shadow-sm  d-flex flex-column " style={{background:'#ffffff'}}>
+                   
+                   
                    {
                     viewItem.images ? 
                     <Carousel
+                            style={{
+                                position:'relative',
+                            }}
                             autoplay={true}
                             className="col"
                         >
@@ -296,8 +318,23 @@ const Items = () => {
                     :
                     <span></span>
                    }
+
+
                     
-                    <div className="d-block text-info bg-danger">helo WOrl</div>
+                    
+                </div>
+                <div className="mt-3 mx-4  ">
+                    <span style={{fontWeight:'bold'}} className='text-warning'>
+                        {viewItem.price} Kyats
+                    </span>
+
+                    <span 
+                    className="my-2 mx-3 rounded-circle px-1 py-1"
+                    style={{
+                        background:"greenyellow"
+                    }}>
+                        
+                    </span>
                 </div>
 
                 

@@ -1,0 +1,11 @@
+@media (max-width: 576px) {
+
+    .ant-modal-body {
+      height: auto !important;
+      }
+
+
+    .ant-modal-content {
+      padding:20px !important;
+    }
+}
