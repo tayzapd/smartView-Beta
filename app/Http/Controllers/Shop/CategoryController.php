@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function show(Request $req)
     {
         $user = Auth::user();
-        $categories = Category::where('shop_id',$user->shop_id)->get();
+        $categories = Category::where('shop_id',$user->shop_id)->paginate(8);
         return response()->json([
             'status'=>true,
             'categories'=>$categories
@@ -26,7 +26,6 @@ class CategoryController extends Controller
         $validator = Validator::make($req->all(), [
             'name' => 'required|string',
             'remark' => 'required|string',
-            'shop_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -35,11 +34,11 @@ class CategoryController extends Controller
             $category = new Category;
             $category->name = $req->name;
             $category->remark = $req->remark;
-            $category->shop_id = $req->shop_id;
+            $category->shop_id = Auth::user()->shop_id;
             if($category->save()){
-                return response()->json(['status'=>true,"Category created successfully."]);
+                return response()->json(['status'=>true,'message'=>"Category created successfully."]);
             }else {
-                return response()->json(['status'=>true,"Category can't created!"]);
+                return response()->json(['status'=>true,'message'=>"Category can't created!"]);
             }
         }
     }

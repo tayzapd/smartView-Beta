@@ -102,7 +102,7 @@ Route::prefix('shop')->middleware('auth:sanctum')->group(function(){
     });
 
     Route::prefix('category')->controller(CategoryController::class)->group(function(){
-        Route::post('show','show');
+        Route::get('show','show');
         Route::post('create','create');
         Route::post('update','update');
         Route::post('delete','delete');
