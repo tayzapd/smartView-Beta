@@ -5,6 +5,7 @@ const AdminContext = createContext({
     user:null,
     token:null,
     axios:null,
+    shoptype:{},
     setUser: () => {},
     setToken: () => {},
     users:[],
@@ -16,6 +17,7 @@ export const AdminProvider = ({children}) => {
     const [user,_setUser] = useState({});
     const [users,setUsers] = useState([]);
     const [token,_setToken] = useState(localStorage.getItem('admin_token'));
+    const [shoptype,setShopType] = useState({});
 
     const setToken = (token) => {
         _setToken(token);
@@ -40,7 +42,9 @@ export const AdminProvider = ({children}) => {
             setUser,
             setUsers,
             setToken,
-            axios
+            axios,
+            shoptype,
+            setShopType,
         }} >
             {children}
         </AdminContext.Provider>
@@ -48,4 +52,4 @@ export const AdminProvider = ({children}) => {
 }
 
 
-export const useAuthContext = () => useContext(AdminContext);
+export const useAdminContext = () => useContext(AdminContext);
