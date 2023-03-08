@@ -28,7 +28,7 @@ class TownshipController extends Controller
             $township->name = $req->name;
             $township->remark = $req->remark;
             $township->city_id = $req->city_id;
-            if($shop->save()){
+            if($township->save()){
                 return response()->json(['status'=>true,"Township created successfully."]);
             }else {
                 return response()->json(['status'=>true,"Township can't created!"]);
@@ -51,7 +51,7 @@ class TownshipController extends Controller
             $township->name = $req->name;
             $township->city_id = $req->city_id;
             $township->remark = $req->remark;
-            if($shop->update()){
+            if($township->update()){
                 return response()->json(['status'=>true,"Township updated successfully."]);
             }else {
                 return response()->json(['status'=>true,"Township can't updated!"]);

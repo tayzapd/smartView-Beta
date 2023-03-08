@@ -13,6 +13,9 @@ import ShopLogin from "./components/Shop/Auth/Login";
 import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
 import AdminLogin from "./components/Admin/Auth/AdminLogin";
 import ListShopTypes from "./components/Admin/Shoptype/ListShoptypes";
+import ListDivisions from "./components/Admin/Division/ListDivisions";
+import ListCities from "./components/Admin/City/ListCities";
+import ListTownships from "./components/Admin/Township/ListTownships";
 
 const router = createBrowserRouter([
     {
@@ -40,7 +43,25 @@ const router = createBrowserRouter([
             {
                 path:"listshoptypes",
                 element:<ListShopTypes/>
-            }
+            },
+            {
+                
+                path:"listdivisions",
+                element:<ListDivisions/>
+                
+            },
+            {
+                
+                path:"listcities",
+                element:<ListCities/>
+                
+            },
+            {
+                
+                path:"listtownships",
+                element:<ListTownships/>
+                
+            },
         ]
     },
     {

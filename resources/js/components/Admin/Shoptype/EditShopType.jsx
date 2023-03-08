@@ -35,7 +35,7 @@ const EditShopType = () => {
                 remark:''
             })
 
-            window.location.reload(true);
+            window.location.reload(true);  
         })
     }
     return(

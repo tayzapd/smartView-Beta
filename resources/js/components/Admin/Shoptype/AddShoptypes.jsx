@@ -50,9 +50,7 @@ const AddShoptypes = ()=>{
                     <label>Remark</label>
                     <input type="text" name="remark" onChange={handleInput} value={shoptypesInput.remark} className="form-control" required/>
                 </div>
-                {/* <div className="mb-2 float-end">
-                    <button type="submit" className="btn btn-dark">Add</button>
-                </div> */}
+                
             </form>
         </>
     )

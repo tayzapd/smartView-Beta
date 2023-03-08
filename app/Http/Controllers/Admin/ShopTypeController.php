@@ -15,15 +15,10 @@ class ShopTypeController extends Controller
     public function show(Request $req)
     {
         
-        // return "hi";
         return ShopType::get();
-        // $shoptypes = ShopType::orderBy('id','DESC')->get();
-        // return response()->json([ 'status' => 'OK', 'shoptypes'=> $shoptypes]);
 
     }
-    public function index(){
-        return "hi";
-    }
+    
     public function create(Request $req)
     {
         $validator = Validator::make($req->all(), [
