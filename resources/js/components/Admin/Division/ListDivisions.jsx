@@ -9,7 +9,7 @@ import EditDivision from "./EditDivision";
 
 axios.defaults.baseURL = "http://localhost:8000/";
 
-const ListShopTypes = () => {
+const ListDivisions = () => {
     const {setDivision} = useAdminContext();
     const [divisions,setDivisions] = useState([]);
     const [pending, setPending] = useState(true);
@@ -158,4 +158,4 @@ const ListShopTypes = () => {
     )
 }
 
-export default ListShopTypes;
+export default ListDivisions;

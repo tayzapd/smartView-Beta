@@ -1,21 +1,19 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams,useLocation } from "react-router-dom";
 import './css/item.css';
 import { useShopContext } from "../../Context/ShopContext";
-import { 
-    Upload,Carousel,Card, 
-    Button,Select ,Input,
-    InputNumber,Switch,Radio, 
+import {
+    Carousel,Card,
+    Button,Input,
+    InputNumber,Switch,Radio,
     DatePicker,Modal } from 'antd';
 import { Form } from "react-bootstrap";
-import { UploadOutlined } from '@ant-design/icons';
-import { Height, LocalDining } from "@material-ui/icons";
+
 const { Meta } = Card;
 const { TextArea } = Input;
 
 const Items = () => {
-    const {user,token,users,setUsers,axios,setDialog} = useShopContext();
+    const {axios,setDialog} = useShopContext();
     const [items,setItems] = useState([]);
     const [categories,setCategories]  = useState([]);
     const [create,setCreate] = useState(false);
@@ -40,7 +38,7 @@ const Items = () => {
 
     const [showItem,setShowItem] = useState(false);
 
-    const [item,setItem] = useState({
+    const [item] = useState({
         name:'',
         taste:'',
         price:null,
@@ -60,12 +58,12 @@ const Items = () => {
         const stopLoader = () => {
             setLoading(false);
         }
-        setTimeout(stopLoader,3000)
+        setTimeout(stopLoader,1500)
 
-      
+
     }
-    
-    
+
+
     const ShowOneItem  = (index)  => {
         setShowItem(true);
         let item = items[index];
@@ -79,7 +77,7 @@ const Items = () => {
         fileList.forEach(img => {
             formData.append('images[]',img)
         })
-        
+
 
         formData.append('name',item.name);
         formData.append('price',item.price);
@@ -96,8 +94,8 @@ const Items = () => {
             console.log(err); // handle error response from server
         }
     };
-    
-    
+
+
 
     const handleRemove = (file) => {
         const index = item.images.indexOf(file);
@@ -105,31 +103,22 @@ const Items = () => {
         newFileList.splice(index, 1);
         item.images = newFileList;
     };
-    
 
-    
+
+
     const handleChange = (e) => {
 
         for (let i = 0; i < e.target.files.length; i++) {
             setFileList([...fileList,e.target.files[i]])
         }
-        
+
         item.images = e.target.files;
         console.log(item.images)
         console.log(e.target.files);
         console.log(fileList)
- 
+
     };
-    
-    const uploadProps = {
-        onRemove: handleRemove,
-        beforeUpload: () => false,
-        fileList:item.images,
-        maxLength:4,
-        showUploadList:false,
-        onChange: handleChange,
-        multiple: true,
-    };
+
 
 
     useEffect(() => {
@@ -137,19 +126,19 @@ const Items = () => {
             setItems(data.items)
         })
         getCategories();
-        
+
     },[])
 
 
     return (
-        <>  
+        <>
             <Button type="primary" onClick={() => {
                 setCreate(true)
                 setDialog(true)
                 }}>
-                CREATE +  
+                CREATE +
             </Button>
-            
+
             <Modal
                 width={1000}
                 title="ITEM CREATE + "
@@ -169,7 +158,7 @@ const Items = () => {
                 }}>
 
                     <Input name="name" onChange={(e) => {item.name = e.target.value}} className="my-2 " allowClear placeholder="Name" />
-                    
+
                     <Input name="taste" onChange={(e) => {item.taste = e.target.value}} className="my-2 " placeholder="Taste" />
                     <TextArea name="description" onChange={(e) => {item.description = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Description" maxLength={250} />
 
@@ -202,39 +191,37 @@ const Items = () => {
 
                     </Form.Select>
                     <TextArea name="remark" onChange={(e) => {item.remark = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Remark" maxLength={250} />
-                    
-                    <DatePicker 
+
+                    <DatePicker
                         name="special_date"
                         onChange={(date,dateString) => {item.special_date = dateString; console.log(item)}}
                         className="form-control my-2 " style={{zIndex:2000}}></DatePicker>
-                        
+
                         <input type="file" className="form-control" multiple  name="images" onChange={handleChange} placeholder="Item images" />
-                        {/* <Upload name="images" {...uploadProps} className="my-2 col-12 text-center justify-content-center ">
-                            <Button className="col-12 w-100 upload-btn " icon={<UploadOutlined />}>Select Images</Button>
-                        </Upload> */}
-                        {fileList.length != 0 ? 
+
+                        {fileList.length != 0 ?
                             <Carousel
                                 className="col h-50 carousel"
                             >
                             {fileList.map((file,index) => (
                                 <div key={index}>
-                                <img 
+                                <img
                                     className="img-thumbnail"
-                                    src={URL.createObjectURL(file)} 
+                                    src={URL.createObjectURL(file)}
                                     alt={file.name} />
                                 </div>
                         ))}
                         </Carousel>
-                        : 
+                        :
                         <span></span>
                     }
-                        
+
                 </div>
             </Modal>
-      
+            {/* item cards */}
             <div className="row row-cols-1 row-cols-md-2 px-0">
                 {items.map((item,index) => {
-                     
+
                 return  <Card
                             key={index}
                             className="mx-lg-3 mb-sm-3 "
@@ -249,20 +236,14 @@ const Items = () => {
                                     ShowOneItem(index)
                                 }}>View More</Button>
                             </Card>
-                        
+
                 })}
             </div>
-            
+
 
             {/* ITEM ONE PAGE VIEW   */}
             <Modal
                 width={1000}
-                title={
-                    <header className="font-weight-bold" style={{fontSize:'20px',fontWeight:'bold'}}>
-                        {viewItem.name}
-                   </header>
-                }
-      
                 open={showItem}
                 okButtonProps={{}}
                 onOk={() => {
@@ -270,15 +251,44 @@ const Items = () => {
                   setShowItem(false);
                   setViewItem({});
                   setDialog(false);
-                  
+
                 }}
                 type
                 onCancel={() => {setShowItem(false);setDialog(false)}}
 
             >
-                <p className="text-muted">
+
+                <div className="shadow-sm  d-flex flex-row h-auto" style={{background:'#ffffff'}}>
+                    <div id="d-sm-none" className="col-md-4 h-auto"></div>
+                    <div className="col-12 col-md-5 d-block h-100 h-auto">
                         {
-                            viewItem.category ? 
+                            viewItem.images ?
+                                <Carousel
+                                    autoplay={true}>
+                                    {viewItem.images.map((img,index) => (
+                                        <div key={index}>
+                                            <img
+                                                className="img-thumbnail rounded-0 border-0"
+                                                src={`/images/shop/item/`+img}
+                                                alt={img} />
+                                        </div>
+                                    ))}
+                                </Carousel>
+                                :
+                                <span className='col-12 col-md-5'></span>
+                        }
+                    </div>
+                    <div id="d-sm-none" className="col col-md-3 h-auto"></div>
+                </div>
+   
+
+                <div className="col row d-block  " id="item-content">
+                    <div className="col-12 pt-2 font-weight-bold" style={{fontSize:'20px',fontWeight:'bold'}}>
+                        {viewItem.name}
+                    </div>
+                    <div className="text-muted col-12">
+                        {
+                            viewItem.category ?
                             <span style={{
                                 background:'rgba(0,0,0,0.1)',
                                 marginTop:'5px',
@@ -286,71 +296,53 @@ const Items = () => {
                                 borderRadius:'20px',
                                 padding:'5px'
                             }}>
-                               #{viewItem.category.name} 
+                               #{viewItem.category.name}
                             </span>
                             :
                             <span>
-                                Not Have 
+                                Not Have
                             </span>
                         }
-                   </p>
-                <div className="item-details  h-auto shadow-sm  d-flex flex-column " style={{background:'#ffffff'}}>
-                   
-                   
-                   {
-                    viewItem.images ? 
-                    <Carousel
-                            style={{
-                                position:'relative',
-                            }}
-                            autoplay={true}
-                            className="col"
-                        >
-                        {viewItem.images.map((img,index) => (
-                            <div key={index}>
-                            <img 
-                                className="img-thumbnail rounded-0 border-0"
-                                src={`/images/shop/item/`+img} 
-                                alt={img} />
-                            </div>
-                    ))}
-                    </Carousel>
-                    :
-                    <span></span>
-                   }
 
-
-                    
-                    
-                </div>
-                <div className="mt-3 mx-4  ">
-                    <span style={{fontWeight:'bold'}} className='text-warning'>
+                    <span style={{fontWeight:'bold'}} className='text-warning mx-3'>
                         {viewItem.price} Kyats
                     </span>
 
-                    <span 
-                    className="my-2 mx-3 rounded-circle px-1 py-1"
-                    style={{
-                        background:"greenyellow"
-                    }}>
-                        
+                    <span className="text-muted">
+                        {viewItem.view} views 
+                    </span>
+                   </div>
+
+
+                </div>
+                <div className="mt-3 px-3 py-3 ">
+                    {
+                        viewItem.is_available == 1 ? 
+                        <span 
+                        style={{
+                            background:"yellowgreen"
+                        }}
+                        className="rounded-pill py-1 px-2 " >Available</span>
+                        :
+                        <span className="rounded-pill bg-danger py-1 px-2 ">Not Available </span>
+                    }
+                    <span className="mx-3 ">
+                    {viewItem.taste}
                     </span>
                 </div>
 
-                
+                <div>
+                    <h4>Description</h4>
+                    <p>
+                        {viewItem.description}
+                    </p>
+                </div>
+
+
             </Modal>
 
             <style>
                 {`
-      
-                    .ant-modal-close {
-                        display:none !important
-                    }
-
-                    .ant-modal-header {
-                        margin-left:20px;
-                    }
-
                     .ant-modal-footer {
                         padding:10px !important;
                         margin:10px !important;

@@ -20,9 +20,7 @@
 @media screen and (min-width: 768px) {
   .item-create {
     overflow: auto;
-  }
-
-  
+  } 
 }
 
 @media (max-width: 768px) {
@@ -40,10 +38,9 @@
 }
 
 @media (max-width: 576px) {
-
   .ant-modal-body {
     height: calc(100vh - 110px);
-    }
+  }
   .ant-modal, .ant-modal-content {
     height: 100vh;
     width: 100vw;
@@ -83,25 +80,42 @@
 }
 
 @media (max-width: 768px) {
-
+  #item-content {
+    margin-top: 100px;
+  }
+   #d-sm-none {
+    display: none;
+   }
   .ant-carousel {
     height: 200px;
   }
 }
 
 @media (max-width: 576px) {
+  #d-sm-none {
+    display: none;
+   }
+
+  
+  
   .ant-carousel {
     height: 150px;
   }
 }
 
 @media (max-width: 375px) {
+  #d-sm-none {
+    display: none;
+   }
   .ant-carousel {
     height: 120px;
   }
 }
 
 @media (max-width: 320px) {
+  #d-sm-none {
+    display: none;
+   }
   .ant-carousel {
     height: 100px;
   }
