@@ -14,9 +14,11 @@ class Township extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $with=['city'];
+
     public function city() 
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class,'city_id','id');
     }
 
     public function shops()

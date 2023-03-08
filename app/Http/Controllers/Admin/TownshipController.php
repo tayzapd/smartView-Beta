@@ -11,7 +11,7 @@ class TownshipController extends Controller
 {
     public function show(Request $req)
     {
-        return Township::get();
+        return Township::with('city')->get();
     }
     public function create(Request $req)
     {

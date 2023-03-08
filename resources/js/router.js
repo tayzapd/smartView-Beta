@@ -60,7 +60,7 @@ const router = createBrowserRouter([
             {
                 
                 path:"listtownships",
-                element:<ListTownshipsyy/>
+                element:<ListTownships/>
                 
             },
         ]
