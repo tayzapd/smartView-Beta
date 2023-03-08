@@ -12,7 +12,12 @@ import ItemView from './components/User/ItemView';
 import ShopLogin from "./components/Shop/Auth/Login";
 import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
 import AdminLogin from "./components/Admin/Auth/AdminLogin";
+<<<<<<< HEAD
 import ShopProfile from "./components/Shop/Shop";
+=======
+import ListShopTypes from "./components/Admin/Shoptype/ListShoptypes";
+
+>>>>>>> refs/remotes/origin/main
 const router = createBrowserRouter([
     {
         path:"/",
@@ -24,10 +29,10 @@ const router = createBrowserRouter([
             }
         ]
     },
-    {
-        path:"adminlogin",
-        element:<AdminLogin/>
-    },
+    // {
+    //     path:"adminlogin",
+    //     element:<AdminLogin/>
+    // },
     {
         path:"/admin",
         element:<AdminLayout />,
@@ -35,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path:"addshoptypes",
                 element:<AddShoptypes/>
+            },
+            {
+                path:"listshoptypes",
+                element:<ListShopTypes/>
             }
         ]
     },

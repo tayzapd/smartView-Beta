@@ -1,28 +1,32 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAdminContext } from "../../../Context/AdminContext";
 
 axios.defaults.baseURL = "http://localhost:8000/";
 
-const AddShoptypes = ()=>{
+const EditShopType = () => {
+
+    const {shoptype} = useAdminContext();
     const [shoptypesInput,setShoptypes] = useState({
-        name:'',
-        remark:'',
-    });
-
-    const navigate = useNavigate();
-
+        id:shoptype.id,
+        name:shoptype.name,
+        remark:shoptype.remark
+    })
     const handleInput = (e)=>{
         setShoptypes({...shoptypesInput,[e.target.name]:e.target.value});
+
     }
-    // console.log(shoptypesInput);
-    const saveShoptype = (e)=>{
+    console.log(shoptypesInput);
+    // useEffect(() => {
+    //     console.log(`ShopType name : ${shoptype.name}`)
+    // },[])
+    const updateShoptype = (e)=>{
         e.preventDefault();
         const data = {
+            id:shoptypesInput.id,
             name:shoptypesInput.name,
             remark:shoptypesInput.remark
         }
-        axios.post(`/api/admin/shoptypes/create`, data)
+        axios.post(`/api/admin/shoptypes/update`, data)
         .then(res=>{
             console.log(res);
 
@@ -32,15 +36,11 @@ const AddShoptypes = ()=>{
             })
 
             window.location.reload(true);
-
-            
         })
-         
-
     }
     return(
         <>
-            <form onSubmit={saveShoptype} id="addshoptype">
+            <form onSubmit={updateShoptype} id="updateshoptype">
                 <div className="mb-2">
                     <label>Name</label>
                     <input type="text" name="name" onChange={handleInput} value={shoptypesInput.name} className="form-control" required/>
@@ -50,12 +50,9 @@ const AddShoptypes = ()=>{
                     <label>Remark</label>
                     <input type="text" name="remark" onChange={handleInput} value={shoptypesInput.remark} className="form-control" required/>
                 </div>
-                {/* <div className="mb-2 float-end">
-                    <button type="submit" className="btn btn-dark">Add</button>
-                </div> */}
             </form>
         </>
     )
 }
 
-export default AddShoptypes;
+export default EditShopType

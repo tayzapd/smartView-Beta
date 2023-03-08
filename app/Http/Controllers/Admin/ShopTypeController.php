@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Shop;
 use App\Models\ShopType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -12,7 +14,15 @@ class ShopTypeController extends Controller
 {
     public function show(Request $req)
     {
+        
+        // return "hi";
         return ShopType::get();
+        // $shoptypes = ShopType::orderBy('id','DESC')->get();
+        // return response()->json([ 'status' => 'OK', 'shoptypes'=> $shoptypes]);
+
+    }
+    public function index(){
+        return "hi";
     }
     public function create(Request $req)
     {
@@ -27,8 +37,8 @@ class ShopTypeController extends Controller
             $shop_type = new ShopType;
             $shop_type->name = $req->name;
             $shop_type->remark = $req->remark;
-            if($shop->save()){
-                return response()->json(['status'=>true,"Shop Type created successfully."]);
+            if($shop_type->save()){
+                return response()->json(['status'=>true,'message'=>"Shop Type created successfully."]);
             }else {
                 return response()->json(['status'=>true,"Shop Type can't created!"]);
             }
@@ -48,7 +58,7 @@ class ShopTypeController extends Controller
             $shop_type = ShopType::find($req->id);
             $shop_type->name = $req->name;
             $shop_type->remark = $req->remark;
-            if($shop->update()){
+            if($shop_type->update()){
                 return response()->json(['status'=>true,"Shop Type updated successfully."]);
             }else {
                 return response()->json(['status'=>true,"Shop Type can't updated!"]);
@@ -68,9 +78,15 @@ class ShopTypeController extends Controller
         }
 
     }
-    public function restore(Request $req)
+    public function trashshow(){
+        $shoptypes = ShopType::onlyTrashed()->get();
+        return response()->json(['status'=>true,'shoptypes'=>$shoptypes]);
+
+
+    }
+    public function restore($id)
     {
-        $shop_type = ShopType::withTrashed()->find($req->id);
+        $shop_type = ShopType::withTrashed()->find($id);
         if($shop_type->restore()){
             return response()->json(['status'=>true,"ShopType restored."]);
         }else {

@@ -17,11 +17,11 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('name');
             $table->double('price');
+            $table->string('currency');
             $table->boolean('is_available');
             $table->enum('privacy',['public','private']);
             $table->string('taste');
             $table->text('images');
-            $table->text('time_limited');
             $table->dateTime('special_range');
             $table->integer('view');
             $table->foreignId('category_id')->constrained('categories');

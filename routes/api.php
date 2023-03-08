@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ShopTypeController;
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,14 +29,15 @@ Route::prefix('user')->group(function(){
     });
 });
 
+Route::get('/test/admin',[ShopTypeController::class,'index']);
 
 Route::prefix('admin')->group(function(){
     
     Route::prefix('shoptypes')->controller(ShopTypeController::class)->group(function() {
-        Route::get('show','show');
+        Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');
-        Route::delete('delete/{id}','delete');
+        Route::post('delete','delete');
         Route::get('trashshow','trashshow');
         Route::post('restore/{id}','restore');
     });
