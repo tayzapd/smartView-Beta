@@ -139,8 +139,7 @@ const Categories =  () => {
 
                 }}
                 onCancel={() => {setEdit(false);setDialog(false)}}
-
-            >
+                >
                 <div className="category-create h-100 " style={{
                     padding:"7px"
                 }}>
@@ -157,7 +156,7 @@ const Categories =  () => {
             height: 400,
             overflow: 'auto',
             padding: '0 16px',
-            border: '1px solid rgba(140, 140, 140, 0.35)',
+            boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"
           }}
         >
             <InfiniteScroll
@@ -185,7 +184,9 @@ const Categories =  () => {
                                       setName(item.name);
                                       setRemark(item.remark)
                                     }}
-                                    className="rounded-0 btn btn-sm btn-primary">Edit</button>, 
+                                    className="rounded-0 btn btn-sm btn-primary">
+                                      Edit
+                                </button>, 
                                 <button 
                                   onClick={() => {
                                     setShopId(item.shop_id);
@@ -194,7 +195,9 @@ const Categories =  () => {
                                     showDeleteModal();
                                     
                                   }}
-                                    className="rounded-0 btn btn-sm btn-danger">Delete</button>
+                                    className="rounded-0 btn btn-sm btn-danger">
+                                      Delete
+                                </button>
                               ]}
                       key={index}>
                         <List.Item.Meta
