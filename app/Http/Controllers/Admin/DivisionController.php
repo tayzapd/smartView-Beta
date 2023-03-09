@@ -13,6 +13,7 @@ class DivisionController extends Controller
     {
         return Division::get();
     }
+    
     public function create(Request $req)
     {
         $validator = Validator::make($req->all(), [
@@ -26,7 +27,7 @@ class DivisionController extends Controller
             $division = new Division;
             $division->name = $req->name;
             $division->remark = $req->remark;
-            if($shop->save()){
+            if($division->save()){
                 return response()->json(['status'=>true,"Division created successfully."]);
             }else {
                 return response()->json(['status'=>true,"Division can't created!"]);
@@ -47,7 +48,7 @@ class DivisionController extends Controller
             $division = Division::find($req->id);
             $division->name = $req->name;
             $division->remark = $req->remark;
-            if($shop->update()){
+            if($division->update()){
                 return response()->json(['status'=>true,"Division updated successfully."]);
             }else {
                 return response()->json(['status'=>true,"Division can't updated!"]);

@@ -13,7 +13,13 @@ import ShopLogin from "./components/Shop/Auth/Login";
 import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
 import AdminLogin from "./components/Admin/Auth/AdminLogin";
 import ListShopTypes from "./components/Admin/Shoptype/ListShoptypes";
+
+import ListDivisions from "./components/Admin/Division/ListDivisions";
+import ListCities from "./components/Admin/City/ListCities";
 import ShopProfile from "./components/Shop/Shop";
+import ListTownships from "./components/Admin/Township/ListTownships";
+import { element } from "prop-types";
+
 const router = createBrowserRouter([
     {
         path:"/",
@@ -25,22 +31,40 @@ const router = createBrowserRouter([
             }
         ]
     },
-    // {
-    //     path:"adminlogin",
-    //     element:<AdminLogin/>
-    // },
     {
         path:"/admin",
-        element:<AdminLayout />,
+        element:<AdminLayout />, 
         children:[
             {
-                path:"addshoptypes",
+                path:'login',
+                element:<AdminLogin />
+            },
+            {
+                path:"shoptypes/add",
                 element:<AddShoptypes/>
             },
             {
-                path:"listshoptypes",
+                path:"shoptypes",
                 element:<ListShopTypes/>
-            }
+            },
+            {
+                
+                path:"divisions",
+                element:<ListDivisions/>
+                
+            },
+            {
+                
+                path:"cities",
+                element:<ListCities/>
+                
+            },
+            {
+                
+                path:"townships",
+                element:<ListTownships/>
+                
+            },
         ]
     },
     {
@@ -62,28 +86,29 @@ const router = createBrowserRouter([
                     },
                     {
                         path:'users',
-                        element:<Users />
+                        element:<Users /> 
                     },
                     {
                         path:'category',
-                        element:<Categories />
+                        element:<Categories /> 
                     },
                     {
                         path:'shop',
                         element:<ShopProfile />
                     }
+
                 ]
             },
-
-
+         
+            
         ]
     },
-
+    
     {
         path:"*",
         element:<NotFound />
     }
-]);
+]); 
 
 
 export default router;

@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\City;
 use Illuminate\Support\Facades\Validator;
+
 class CityController extends Controller
 {
     public function show(Request $req)
     {
-        return City::get();
+        return City::with('division')->get();
     }
-
+    
 
     public function create(Request $req)
     {
@@ -27,6 +28,7 @@ class CityController extends Controller
         }else {
             $city = new City;
             $city->name = $req->name;
+            $city->division_id = $req->division_id;
             $city->remark = $req->remark;
             if($city->save()){
                 return response()->json(['status'=>true,"City created successfully."]);
@@ -51,7 +53,7 @@ class CityController extends Controller
             $city->name = $req->name;
             $city->division_id = $req->division_id;
             $city->remark = $req->remark;
-            if($shop->update()){
+            if($city->update()){
                 return response()->json(['status'=>true,"City updated successfully."]);
             }else {
                 return response()->json(['status'=>true,"City can't updated!"]);

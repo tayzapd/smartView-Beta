@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ShopTypeController;
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Shop\ItemController;
 use App\Http\Controllers\Shop\ShopController;
 use App\Http\Controllers\Shop\UserController;
 use App\Http\Controllers\User\ViewController;
+use App\Models\Division;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -29,6 +31,7 @@ Route::prefix('user')->group(function(){
     });
 });
 
+Route::get('/test/admin',[ShopTypeController::class,'index']);
 
 Route::prefix('admin')->group(function(){
     
@@ -42,7 +45,7 @@ Route::prefix('admin')->group(function(){
     });
 
     Route::prefix('divisions')->controller(DivisionController::class)->group(function() {
-        Route::get('show','show');
+        Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');
         Route::post('delete','delete');
