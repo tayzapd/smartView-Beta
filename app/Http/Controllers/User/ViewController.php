@@ -25,14 +25,14 @@ class ViewController extends Controller
             $item->images = $images; // Assign the unserialized array to the images field
         }
 
-        foreach ($items as $item) {
-            $images = @unserialize($item->images); // Unserialize the images field
-            $item->images = $images; // Assign the unserialized array to the images field
-        }
-
         if($items != null){
             return response()->json(['status'=>true,'items'=>$items]);
         }
+    }
+
+    public function itemsSearch(Request $req)
+    {
+        
     }
 
     public function getShop(Request $req)

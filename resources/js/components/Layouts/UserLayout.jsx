@@ -7,7 +7,7 @@ import { useUserContext } from "../../Context/UserContext";
 
 const UserLayout = () => {
     const route = useNavigate();
-    const {setShop} = useUserContext();
+    const {setShop,dialog} = useUserContext();
     const router = useLocation();
     const {id} = useParams();
     const getShopInfo = () => {
@@ -21,7 +21,11 @@ const UserLayout = () => {
     },[])
     return (
         <>
-            <UserNavbar /> 
+            {
+                dialog != true ? 
+                <UserNavbar /> : <span></span>
+            
+            }
             <Outlet style={{ height: 'calc(100vh - 110px)'}} /> 
         
         </>
