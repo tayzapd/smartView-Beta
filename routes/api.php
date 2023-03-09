@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DivisionController;
+use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\ShopTypeController;
 use App\Http\Controllers\Admin\TownshipController;
 use App\Http\Controllers\Admin\UsersController;
@@ -33,7 +34,7 @@ Route::prefix('user')->group(function(){
     });
 });
 
-
+Route::get('/test',[ShopController::class,'index']);
 
 Route::prefix('admin')->group(function(){
     
