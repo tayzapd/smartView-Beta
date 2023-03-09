@@ -30,18 +30,11 @@ const router = createBrowserRouter([
             }
         ]
     },
-    // {
-    //     path:"adminlogin",
-    //     element:<AdminLogin/>
-    // },
+    
     {
         path:"/admin",
         element:<AdminLayout />, 
         children:[
-            {
-                // path:"addshoptypes",
-                // element:<AddShoptypes/>
-            },
             {
                 path:"shoptypes",
                 element:<ListShopTypes/>
