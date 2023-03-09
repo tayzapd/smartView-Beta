@@ -26,7 +26,7 @@ const ShopLayout = () => {
     },[])
     return (
     <>
-        <Outlet style={{ height: 'calc(100vh - 110px)'}} />
+        <Outlet  />
 
         {router.pathname.includes('login') != true && dialog != true ?
         <Navbar fixed="bottom" className='container   mb-2 rounded-pill text-center '>

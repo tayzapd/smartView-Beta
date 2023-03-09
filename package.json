@@ -36,7 +36,10 @@
         "react-bootstrap": "^2.7.2",
         "react-data-table-component": "^7.5.3",
         "react-i18next": "^12.1.5",
+<<<<<<< HEAD
         "styled-components": "^5.3.8",
+=======
+>>>>>>> a4e95309e133339b54a42a71c6d698b3679d5b1d
         "react-infinite-scroll-component": "^6.1.0",
         "react-router-dom": "^6.8.1"
     }

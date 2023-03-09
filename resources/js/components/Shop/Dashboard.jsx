@@ -24,8 +24,8 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className="container mt-5 ">
-                <Outlet></Outlet>
+            <div className="container ">
+                <Outlet className="mt-3 "></Outlet>
             </div>
         </>
     )

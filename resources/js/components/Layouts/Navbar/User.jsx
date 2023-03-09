@@ -1,10 +1,24 @@
 import './User.css'
 import { useUserContext } from '../../../Context/UserContext';
 import { useEffect } from 'react';
+import { AudioOutlined } from '@ant-design/icons';
+import { Input, Space } from 'antd';
+
+
+const { Search } = Input;
+const suffix = (
+  <AudioOutlined
+    style={{
+      fontSize: 16,
+      color: '#1890ff',
+    }}
+  />
+);
 const  UserNavbar = () => {
     const {shop} = useUserContext();
     useEffect(() => {
     })
+    const onSearch = (value) => console.log(value);
     return (
         <> 
             <script src="https://cdn.jsdelivr.net/npm/@mdi/font@7.1.96/scripts/verify.min.js"></script>
@@ -39,7 +53,7 @@ const  UserNavbar = () => {
                 <div className="text-white  search ">
                     <div className="input-group">
                     <div id="search-autocomplete" className="form-outline">
-                        <input placeholder='Search....' type="search" id="form1" className="form-control-sm rounded-pill px-md-3" />
+                    <Search placeholder="Search...." type='search' enterButton size='small' onSearch={onSearch} id='form1' className='form-control-sm rounded-pill px-md-3 ' />
                     </div>
 
                     </div>
@@ -48,6 +62,14 @@ const  UserNavbar = () => {
                 </div>
                 
             </nav>
+
+            <style>
+                {`
+                    .ant-input-search-button {
+
+                    }
+                `}
+            </style>
             
         </>
     )

@@ -13,12 +13,16 @@ import ShopLogin from "./components/Shop/Auth/Login";
 import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
 import AdminLogin from "./components/Admin/Auth/AdminLogin";
 import ListShopTypes from "./components/Admin/Shoptype/ListShoptypes";
+<<<<<<< HEAD
 import ListDivisions from "./components/Admin/Division/ListDivisions";
 import ListCities from "./components/Admin/City/ListCities";
 import ShopProfile from "./components/Shop/Shop";
 import ListTownships from "./components/Admin/Township/ListTownships";
 import ListShops from "./components/Admin/Shop/ListShops";
 
+=======
+import ShopProfile from "./components/Shop/Shop";
+>>>>>>> a4e95309e133339b54a42a71c6d698b3679d5b1d
 const router = createBrowserRouter([
     {
         path:"/",

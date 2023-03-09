@@ -61,7 +61,8 @@
 
     .form-control-sm {
         float: right;
-        width: 70%;   
+        width: 70%; 
+        height: 70%;  
     }
 
     .navbar-title-index-other {
