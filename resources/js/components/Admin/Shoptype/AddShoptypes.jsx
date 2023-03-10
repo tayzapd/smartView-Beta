@@ -32,7 +32,7 @@ const AddShoptypes = ()=>{
                 remark:''
             })
 
-            window.location.reload(true);
+            window.location.reload(false);
 
             
         })

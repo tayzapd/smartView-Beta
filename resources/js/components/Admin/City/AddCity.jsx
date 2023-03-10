@@ -47,7 +47,8 @@ const AddCity = () => {
                 remark:'',
             })
 
-            setSelect([]);
+            setSelect({});
+            window.location.reload(false);
         })
     }
     return(

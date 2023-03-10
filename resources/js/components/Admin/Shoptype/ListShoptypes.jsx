@@ -8,8 +8,6 @@ import AddShoptypes from './AddShoptypes';
 import EditShopType from './EditShopType';
 import { useAdminContext } from '../../../Context/AdminContext';
 
-
-
 const deleteShoptype = (e,id)=>{
     e.preventDefault();
     // console.log(id);
@@ -18,8 +16,8 @@ const deleteShoptype = (e,id)=>{
     }
     axios.post(`/api/admin/shoptypes/delete/`,data)
         .then((res)=>{
-            console.log(res);
-            window.location.reload(true);
+            // console.log(res);
+            window.location.reload(false);
         })
 
 }
@@ -99,7 +97,7 @@ const ListShopTypes = () => {
         e.preventDefault();
         setEditShow(true);
         setShopType(row);
-        console.log(row);
+        // console.log(row);
         
     }
 
@@ -138,7 +136,7 @@ const ListShopTypes = () => {
                     Close
                 </Button>
                 <Button variant="primary" type="submit" form="addshoptype">
-                    Save Changes
+                    Save
                 </Button>
                 </Modal.Footer>
             </Modal>

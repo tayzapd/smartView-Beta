@@ -44,7 +44,7 @@ const ListDivisions = () => {
 
         axios.post(`/api/admin/divisions/delete/`,data).then((res)=>{
             console.log(res);
-            window.location.reload(true);
+            window.location.reload(false);
         })
     }
 

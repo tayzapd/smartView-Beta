@@ -45,7 +45,7 @@ const EditCity = ()=>{
             })
 
             setSelect({});
-            window.location.reload(true); 
+            window.location.reload(false); 
             
 
         })
