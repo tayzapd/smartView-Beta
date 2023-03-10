@@ -104,7 +104,7 @@ const EditShop = () =>{
                 <div className="mb-2">
                     <label>Township</label>
                     
-                    <select name="township" onChange={(e)=>setSelctTownship({township_id:e.target.value})} value={selectTownship.township_id}   className="form-control">
+                    <select name="township" onChange={(e)=>setSelctTownship({township_id:e.target.value})} value={selectTownship.township_id}   className="form-select">
                     <option>Select Township</option>
                         {townships.map((township, index) => (
                             <option key={index} value={township.id} selected={(township.id == selectTownship.township_id)?'selected':''}>

@@ -7,7 +7,7 @@ import AddTownship from "./AddTownship";
 import { useAdminContext } from "../../../Context/AdminContext";
 import EditTownship from "./EditTownship";
 
-// axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const ListTownships = () => {
     const {axios,setTownship} = useAdminContext();

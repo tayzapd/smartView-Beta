@@ -58,7 +58,7 @@ const EditCategory = () => {
             <div className="mb-2">
                     <label>Shop</label>
                     
-                    <select name="shop" onChange={(e)=>setSelect({...selectInput,shop_id:e.target.value})} value={selectInput.shop_id}  className="form-control">
+                    <select name="shop" onChange={(e)=>setSelect({...selectInput,shop_id:e.target.value})} value={selectInput.shop_id}  className="form-select">
                     <option>Select Shop</option>
                         {shops.map((shop, index) => (
                             <option key={index} value={shop.id} selected={(shop.id == selectInput.shop_id)?'selected':''}>

@@ -57,7 +57,7 @@ const AddTownship = () =>{
             <div className="mb-2">
                     <label>City</label>
                     
-                    <select name="city" onChange={(e)=>setSelect(...selectInput,e.target.value)} value={selectInput.division_id}   className="form-control">
+                    <select name="city" onChange={(e)=>setSelect(...selectInput,e.target.value)} value={selectInput.division_id}   className="form-select">
                     <option>Select City</option>
                         {cities.map((city, index) => (
                             <option key={index} value={city.id}>

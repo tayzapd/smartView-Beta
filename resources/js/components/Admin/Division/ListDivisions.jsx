@@ -7,10 +7,10 @@ import AddDivisions from "./AddDivisions";
 import { useAdminContext } from "../../../Context/AdminContext";
 import EditDivision from "./EditDivision";
 
-axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const ListDivisions = () => {
-    const {setDivision} = useAdminContext();
+    const {setDivision,axios} = useAdminContext();
     const [divisions,setDivisions] = useState([]);
     const [pending, setPending] = useState(true);
     const [show, setShow] = useState(false);
