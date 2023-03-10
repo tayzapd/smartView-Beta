@@ -33,4 +33,30 @@ class AuthController extends Controller
         return response()->json(['status'=>false,'token'=>NULL]);
         
     }
+
+    public function AdminLogin(Request $req)
+    {
+        // validator 
+        $validator = Validator::make($req->all() , [
+            'username' => 'required|min:6|max:120',
+            'password' => 'required',
+            'shop_id'  => 'required'
+        ]);
+
+        // validator fail 
+        if($validator->fails()){
+            return response()->json(['status'=>false,'token'=>NULL]);
+        }
+        // Auth
+        $check = Auth::attempt(['username'=>$req->username, 'password'=>$req->password]);
+        // Find Admin User
+        $user = User::find(Auth::id());
+
+        // validate user is admin user ? 
+        if($check && $user->shop_id == 1 && $user->hasRole('admin')){
+            return response()->json(['status'=>true,'token'=>$user->createToken($req->password)]);
+        }
+        return response()->json(['status'=>false,'token'=>NULL]);
+        
+    }
 }

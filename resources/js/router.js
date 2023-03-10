@@ -19,6 +19,7 @@ import ListCities from "./components/Admin/City/ListCities";
 import ShopProfile from "./components/Shop/Shop";
 import ListTownships from "./components/Admin/Township/ListTownships";
 import { element } from "prop-types";
+import ListShops from "./components/Admin/Shop/ListShops";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
             }
         ]
     },
+
     {
         path:"/admin",
         element:<AdminLayout />, 
@@ -44,6 +46,7 @@ const router = createBrowserRouter([
                 element:<AddShoptypes/>
             },
             {
+
                 path:"shoptypes",
                 element:<ListShopTypes/>
             },
@@ -63,6 +66,12 @@ const router = createBrowserRouter([
                 
                 path:"townships",
                 element:<ListTownships/>
+                
+            },
+            {
+                
+                path:"shops",
+                element:<ListShops/>
                 
             },
         ]

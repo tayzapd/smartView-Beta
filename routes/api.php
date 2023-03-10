@@ -1,6 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\ShopTypeController;
+
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\DivisionController;
+use App\Http\Controllers\Admin\ShopController as AdminShopController;
+use App\Http\Controllers\Admin\TownshipController;
+
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('/login',"login");
+    Route::post('admin/login','AdminLogin');
 });
 Route::prefix('user')->group(function(){
     Route::prefix('shop')->controller(ViewController::class)->group(function(){
@@ -31,8 +37,9 @@ Route::prefix('user')->group(function(){
     });
 });
 
-Route::get('/test/admin',[ShopTypeController::class,'index']);
 
+Route::get('/test/admin',[ShopTypeController::class,'index']);
+Route::get('/test',[ShopController::class,'index']);
 Route::prefix('admin')->group(function(){
     
     Route::prefix('shoptypes')->controller(ShopTypeController::class)->group(function() {
@@ -68,7 +75,7 @@ Route::prefix('admin')->group(function(){
         Route::post('restore','restore');
     });
 
-    Route::prefix('shops')->controller(ShopController::class)->group(function() {
+    Route::prefix('shops')->controller(AdminShopController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');

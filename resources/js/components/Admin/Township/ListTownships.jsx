@@ -13,6 +13,7 @@ const ListTownships = () => {
     const {axios,setTownship} = useAdminContext();
     const [townships,setTownships] = useState([]);
     const [show, setShow] = useState(false);
+    const [pending, setPending] = useState(true);
 
 
     const getTownships = ()=>{
@@ -23,7 +24,13 @@ const ListTownships = () => {
     }
 
     useEffect(()=>{
-        getTownships();
+        
+        const timeout = setTimeout(() => {
+            getTownships();
+			setPending(false);
+		}, 1000);
+        return () => clearTimeout(timeout);
+        
     },[])
 
     // console.log(townships);
@@ -107,7 +114,7 @@ const ListTownships = () => {
             title="Township Lists"
             columns={columns}
             data={townships}
-            // progressPending={pending}
+            progressPending={pending}
             fixedHeader
             fixedHeaderScrollHeight="300px"
             pagination
