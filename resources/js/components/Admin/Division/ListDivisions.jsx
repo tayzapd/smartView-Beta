@@ -139,7 +139,7 @@ const ListDivisions = () => {
 
             <Modal size="lg" show={showedit} onHide={editClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Shop Type</Modal.Title>
+                    <Modal.Title>Edit Division</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <EditDivision />

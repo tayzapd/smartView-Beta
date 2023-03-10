@@ -9,6 +9,8 @@ const AdminContext = createContext({
     division:{},
     city:{},
     township:{},
+    shop:{},
+    category:{},
     setUser: () => {},
     setToken: () => {},
     users:[],
@@ -24,6 +26,8 @@ export const AdminProvider = ({children}) => {
     const [division,setDivision] = useState({});
     const [city,setCity] = useState({});
     const [township,setTownship] = useState({});
+    const [shop,setShop] = useState({});
+    const [category,setCategory] = useState({});
 
     const setToken = (token) => {
         _setToken(token);
@@ -57,6 +61,10 @@ export const AdminProvider = ({children}) => {
             setCity,
             township,
             setTownship,
+            shop,
+            setShop,
+            category,
+            setCategory,
         }} >
             {children}
         </AdminContext.Provider>

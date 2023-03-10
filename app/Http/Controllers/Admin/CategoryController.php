@@ -13,6 +13,7 @@ class CategoryController extends Controller
     {
         return Category::get();
     }
+    
     public function create(Request $req)
     {
         $validator = Validator::make($req->all(), [
@@ -28,7 +29,7 @@ class CategoryController extends Controller
             $category->name = $req->name;
             $category->remark = $req->remark;
             $category->shop_id = $req->shop_id;
-            if($shop->save()){
+            if($category->save()){
                 return response()->json(['status'=>true,"Category created successfully."]);
             }else {
                 return response()->json(['status'=>true,"Category can't created!"]);

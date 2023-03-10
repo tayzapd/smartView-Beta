@@ -72,10 +72,10 @@ const AddShop = () => {
             <div className="mb-2">
                     <label>Shop Type</label>
                     
-                    <select name="shoptype" onChange={(e)=>setSelctShoptype(e.target.value)} className="form-control">
+                    <select name="shoptype" onChange={(e)=>setSelctShoptype(e.target.value)} className="form-select">
                     <option>Select Shop Type</option>
                         {shoptypes.map((shoptype, index) => (
-                            <option key={index} value={shoptype.id}>
+                            <option key={index} value={shoptype.id} >
                                 {shoptype.name}
                             </option>
                         ))}

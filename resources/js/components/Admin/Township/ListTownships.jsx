@@ -143,7 +143,7 @@ const ListTownships = () => {
             {/* EDIT TOWNSHIP */}
             <Modal size="lg" show={showedit} onHide={editClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit City</Modal.Title>
+                    <Modal.Title>Edit Township</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <EditTownship/>
