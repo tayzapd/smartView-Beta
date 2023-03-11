@@ -16,6 +16,9 @@ class Shop extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
+    protected $with=['shoptype','township'];
+
+
     public function users()
     {
         return $this->hasMany(User::class);
@@ -32,11 +35,15 @@ class Shop extends Model
 
     public function township()
     {
-        return $this->belongsTo(Township::class);
+        return $this->belongsTo(Township::class,'township_id','id');
     }
 
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function shoptype(){
+        return $this->belongsTo(Shoptype::class,'shoptype_id','id');
     }
 }

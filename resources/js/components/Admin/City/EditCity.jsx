@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext"
 
 const EditCity = ()=>{
-    const {city} = useAdminContext();
+    const {city,axios} = useAdminContext();
     const [citiesInput,setCitiesInput] = useState({
         id:city.id,
         name:city.name,
@@ -56,7 +56,7 @@ const EditCity = ()=>{
                 <div className="mb-2">
                     <label>Division</label>
                     
-                    <select name="division" onChange={(e)=>setSelect({...selectInput,division_id:e.target.value})} value={selectInput.division_id}   className="form-control">
+                    <select name="division" onChange={(e)=>setSelect({...selectInput,division_id:e.target.value})} value={selectInput.division_id}   className="form-select">
                     <option>Select Division</option>
                         {divisions.map((division, index) => (
                             <option key={index} value={division.id} selected={ (division.id == city.id)?'selected':''}>

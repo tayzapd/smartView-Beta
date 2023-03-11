@@ -1,18 +1,16 @@
 <?php
 
-
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DivisionController;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\Admin\TownshipController;
-
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\ItemController;
-use App\Http\Controllers\Shop\ShopController;
 use App\Http\Controllers\Shop\UserController;
 use App\Http\Controllers\User\ViewController;
 use App\Models\Division;
@@ -43,7 +41,7 @@ Route::get('/test',[ShopController::class,'index']);
 Route::prefix('admin')->group(function(){
     
     Route::prefix('shoptypes')->controller(ShopTypeController::class)->group(function() {
-        Route::get('show','show');
+        Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');
         Route::delete('delete/{id}','delete');
@@ -83,7 +81,7 @@ Route::prefix('admin')->group(function(){
         Route::post('restore','restore');
     });
 
-    Route::prefix('categories')->controller(CategoryController::class)->group(function() {
+    Route::prefix('categories')->controller(AdminCategoryController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');

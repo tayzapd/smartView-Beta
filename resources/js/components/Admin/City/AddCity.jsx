@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState,useEffect } from "react";
+import { useAdminContext } from "../../../Context/AdminContext";
 
-axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const AddCity = () => {
+    const {axios} = useAdminContext();
     const [citiesInput,setCitiesInput] = useState({
         name:'',
         remark:''
@@ -54,7 +56,7 @@ const AddCity = () => {
                 <div className="mb-2">
                     <label>Division</label>
                     
-                    <select name="division" onChange={(e)=>setSelect(...selectInput,e.target.value)}   className="form-control">
+                    <select name="division" onChange={(e)=>setSelect(...selectInput,e.target.value)}   className="form-select">
                     <option>Select Division</option>
                         {divisions.map((division, index) => (
                             <option key={index} value={division.id}>

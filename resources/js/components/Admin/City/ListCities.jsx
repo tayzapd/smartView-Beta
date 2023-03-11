@@ -7,10 +7,10 @@ import AddCity from './AddCity';
 import { useAdminContext } from '../../../Context/AdminContext';
 import EditCity from './EditCity';
 
-axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const ListCities = () => {
-    const {setCity} = useAdminContext();
+    const {setCity,axios} = useAdminContext();
     const [cities,setCities] = useState([]);
     const [pending, setPending] = useState(true);
     const [show, setShow] = useState(false);

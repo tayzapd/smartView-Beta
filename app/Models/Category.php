@@ -13,6 +13,8 @@ class Category extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
+    protected $with = ['shop'];
+
     public function items()
     {
         return $this->hasMany(Item::class);
@@ -20,6 +22,6 @@ class Category extends Model
 
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class,'shop_id','id');
     }
 }

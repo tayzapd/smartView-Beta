@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext"
 
 const EditDivision = () => { 
-    const {division} = useAdminContext();
+    const {division,axios} = useAdminContext();
 
     const [divisionInput,setDivisionInput] = useState({
         id:division.id,

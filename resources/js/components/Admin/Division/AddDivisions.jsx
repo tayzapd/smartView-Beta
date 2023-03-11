@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAdminContext } from "../../../Context/AdminContext";
 
-axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const AddDivisions = ()=>{
-    
+    const {axios} = useAdminContext();
     const [divisionsInput,setDivisions] = useState({
         name:'',
         remark:'',

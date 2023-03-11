@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext";
 
-axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const EditShopType = () => {
 
-    const {shoptype} = useAdminContext();
+    const {shoptype,axios} = useAdminContext();
     const [shoptypesInput,setShoptypes] = useState({
         id:shoptype.id,
         name:shoptype.name,

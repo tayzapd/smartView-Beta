@@ -8,7 +8,7 @@ import AddShoptypes from './AddShoptypes';
 import EditShopType from './EditShopType';
 import { useAdminContext } from '../../../Context/AdminContext';
 
-axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const deleteShoptype = (e,id)=>{
     e.preventDefault();
@@ -26,7 +26,7 @@ const deleteShoptype = (e,id)=>{
 
 
 const ListShopTypes = () => {
-    const {setShopType} = useAdminContext();
+    const {setShopType,axios} = useAdminContext();
     const columns = [
         {
             name: 'ID',

@@ -72,10 +72,10 @@ const AddShop = () => {
             <div className="mb-2">
                     <label>Shop Type</label>
                     
-                    <select name="shoptype" onChange={(e)=>setSelctShoptype(e.target.value)} className="form-control">
+                    <select name="shoptype" onChange={(e)=>setSelctShoptype(e.target.value)} className="form-select">
                     <option>Select Shop Type</option>
                         {shoptypes.map((shoptype, index) => (
-                            <option key={index} value={shoptype.id}>
+                            <option key={index} value={shoptype.id} >
                                 {shoptype.name}
                             </option>
                         ))}
@@ -84,7 +84,7 @@ const AddShop = () => {
                 <div className="mb-2">
                     <label>Township</label>
                     
-                    <select name="township" onChange={(e)=>setSelctTownship(e.target.value)}  className="form-control">
+                    <select name="township" onChange={(e)=>setSelctTownship(e.target.value)}  className="form-select">
                     <option>Select Township</option>
                         {townships.map((township, index) => (
                             <option key={index} value={township.id}>

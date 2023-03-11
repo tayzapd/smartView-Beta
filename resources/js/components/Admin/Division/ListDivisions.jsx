@@ -7,10 +7,10 @@ import AddDivisions from "./AddDivisions";
 import { useAdminContext } from "../../../Context/AdminContext";
 import EditDivision from "./EditDivision";
 
-axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const ListDivisions = () => {
-    const {setDivision} = useAdminContext();
+    const {setDivision,axios} = useAdminContext();
     const [divisions,setDivisions] = useState([]);
     const [pending, setPending] = useState(true);
     const [show, setShow] = useState(false);
@@ -139,7 +139,7 @@ const ListDivisions = () => {
 
             <Modal size="lg" show={showedit} onHide={editClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Shop Type</Modal.Title>
+                    <Modal.Title>Edit Division</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <EditDivision />

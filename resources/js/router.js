@@ -13,14 +13,14 @@ import ShopLogin from "./components/Shop/Auth/Login";
 import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
 import AdminLogin from "./components/Admin/Auth/AdminLogin";
 import ListShopTypes from "./components/Admin/Shoptype/ListShoptypes";
-
 import ListDivisions from "./components/Admin/Division/ListDivisions";
 import ListCities from "./components/Admin/City/ListCities";
-import ShopProfile from "./components/Shop/Shop";
 import ListTownships from "./components/Admin/Township/ListTownships";
 import { element } from "prop-types";
 import ListShops from "./components/Admin/Shop/ListShops";
 
+import ShopProfile from "./components/Shop/Shop";
+import ListCategories from "./components/Admin/Category/ListCategories";
 const router = createBrowserRouter([
     {
         path:"/",
@@ -72,6 +72,12 @@ const router = createBrowserRouter([
                 
                 path:"shops",
                 element:<ListShops/>
+                
+            },
+            {
+                
+                path:"categories",
+                element:<ListCategories/>
                 
             },
         ]

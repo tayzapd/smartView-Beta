@@ -7,7 +7,7 @@ import AddTownship from "./AddTownship";
 import { useAdminContext } from "../../../Context/AdminContext";
 import EditTownship from "./EditTownship";
 
-// axios.defaults.baseURL = "http://localhost:8000/";
+
 
 const ListTownships = () => {
     const {axios,setTownship} = useAdminContext();
@@ -143,7 +143,7 @@ const ListTownships = () => {
             {/* EDIT TOWNSHIP */}
             <Modal size="lg" show={showedit} onHide={editClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit City</Modal.Title>
+                    <Modal.Title>Edit Township</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <EditTownship/>
