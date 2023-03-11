@@ -60,10 +60,17 @@ const AddShop = () => {
         data.append('remark',shopInput.remark);
         data.append('logo_image',imageInput.logo_image);
         
-        console.log(data);
+        // console.log(data);
         axios.post(`/api/admin/shops/create`,data)
             .then(res=>{
-                console.log(res);
+                // console.log(res);
+                setShop({
+                    shop_name:'',
+                    address:'',
+                    phone:'',
+                    remark:'' 
+                })
+                window.location.reload(false);
             })
     }
     return(

@@ -44,8 +44,8 @@ const ListShops = ()=>{
         }
 
         axios.post(`/api/admin/shops/delete/`,data).then((res)=>{
-            console.log(res);
-            window.location.reload(true);
+            // console.log(res);
+            window.location.reload(false);
         })
     }
 

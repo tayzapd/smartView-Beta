@@ -36,8 +36,9 @@
         "react-bootstrap": "^2.7.2",
         "react-data-table-component": "^7.5.3",
         "react-i18next": "^12.1.5",
-        "styled-components": "^5.3.8",
         "react-infinite-scroll-component": "^6.1.0",
-        "react-router-dom": "^6.8.1"
+        "react-router-dom": "^6.8.1",
+        "styled-components": "^5.3.8",
+        "sweetalert2": "^11.7.3"
     }
 }

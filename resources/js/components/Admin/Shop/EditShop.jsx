@@ -49,7 +49,7 @@ const EditShop = () =>{
         setImage({...imageInput,logo_image:e.target.files[0]});
     }
     
-    console.log(imageInput);
+    // console.log(imageInput);
     const updateshop = (e)=>{
         e.preventDefault();
         // const {name,address,phone} = shopInput;
@@ -65,7 +65,7 @@ const EditShop = () =>{
         data.append('logo_image',imageInput.logo_image);
         data.append('old_logo',shop.logo_image);
         
-        console.log(data);
+        // console.log(data);
         axios.post(`/api/admin/shops/update`,data)
             .then(res=>{
                 // console.log(res);
@@ -76,7 +76,7 @@ const EditShop = () =>{
                     remark:''
     
                 })
-                window.location.reload(true);
+                window.location.reload(false);
             })
     }
     return(

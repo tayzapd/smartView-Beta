@@ -44,7 +44,7 @@ const ListCities = () => {
 
         axios.post(`/api/admin/cities/delete/`,data).then((res)=>{
             console.log(res);
-            window.location.reload(true);
+            window.location.reload(false);
         })
     }
 

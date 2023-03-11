@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState,useEffect } from "react";
 import { useAdminContext } from "../../../Context/AdminContext";
 
@@ -47,7 +46,8 @@ const AddCity = () => {
                 remark:'',
             })
 
-            setSelect([]);
+            setSelect({});
+            window.location.reload(false);
         })
     }
     return(

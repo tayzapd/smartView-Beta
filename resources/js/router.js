@@ -21,6 +21,7 @@ import ListShops from "./components/Admin/Shop/ListShops";
 
 import ShopProfile from "./components/Shop/Shop";
 import ListCategories from "./components/Admin/Category/ListCategories";
+import AdminItems from "./components/Admin/Items";
 const router = createBrowserRouter([
     {
         path:"/",
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
                 element:<ListCategories/>
                 
             },
+            {
+                path:'items',
+                element:<AdminItems /> 
+            }
         ]
     },
     {

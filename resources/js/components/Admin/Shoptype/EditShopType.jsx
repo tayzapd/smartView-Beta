@@ -15,7 +15,7 @@ const EditShopType = () => {
         setShoptypes({...shoptypesInput,[e.target.name]:e.target.value});
 
     }
-    console.log(shoptypesInput);
+    // console.log(shoptypesInput);
     // useEffect(() => {
     //     console.log(`ShopType name : ${shoptype.name}`)
     // },[])
@@ -28,14 +28,14 @@ const EditShopType = () => {
         }
         axios.post(`/api/admin/shoptypes/update`, data)
         .then(res=>{
-            console.log(res);
+            // console.log(res);
 
             setShoptypes({
                 name:'',
                 remark:''
             })
 
-            window.location.reload(true);  
+            window.location.reload(false);  
         })
     }
     return(

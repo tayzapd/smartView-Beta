@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\Admin\CityController;
-use App\Http\Controllers\Admin\DivisionController;
+use App\Http\Controllers\Admin\CityController as AdminCityController;
+use App\Http\Controllers\Admin\DivisionController as AdminDivisionController;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
-use App\Http\Controllers\Admin\TownshipController;
-use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\TownshipController as AdminTownShipController;
+use App\Http\Controllers\Admin\UsersController as AdminUserController;
+use App\Http\Controllers\Admin\ItemController as AdminItemController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -40,7 +42,7 @@ Route::get('/test/admin',[ShopTypeController::class,'index']);
 Route::get('/test',[ShopController::class,'index']);
 Route::prefix('admin')->group(function(){
     
-    Route::prefix('shoptypes')->controller(ShopTypeController::class)->group(function() {
+    Route::prefix('shoptypes')->controller(AdminShopTypeController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');
@@ -49,7 +51,7 @@ Route::prefix('admin')->group(function(){
         Route::post('restore/{id}','restore');
     });
 
-    Route::prefix('divisions')->controller(DivisionController::class)->group(function() {
+    Route::prefix('divisions')->controller(AdminDivisionController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');
@@ -57,7 +59,7 @@ Route::prefix('admin')->group(function(){
         Route::post('restore','restore');
     });
 
-    Route::prefix('cities')->controller(CityController::class)->group(function() {
+    Route::prefix('cities')->controller(AdminCityController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');
@@ -65,7 +67,7 @@ Route::prefix('admin')->group(function(){
         Route::post('restore','restore');
     });
 
-    Route::prefix('townships')->controller(TownshipController::class)->group(function() {
+    Route::prefix('townships')->controller(AdminTownshipController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');
@@ -82,14 +84,14 @@ Route::prefix('admin')->group(function(){
     });
 
     Route::prefix('categories')->controller(AdminCategoryController::class)->group(function() {
-        Route::post('show','show');
+        Route::post('show','showByShop');
         Route::post('create','create');
         Route::post('update','update');
         Route::post('delete','delete');
         Route::post('restore','restore');
     });
 
-    Route::prefix('items')->controller(ItemController::class)->group(function() {
+    Route::prefix('items')->controller(AdminItemController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAdminContext } from "../../../Context/AdminContext";
@@ -27,14 +26,14 @@ const AddDivisions = ()=>{
         // console.log(data);
         axios.post(`/api/admin/divisions/create`, data)
         .then(res=>{
-            console.log(res);
+            // console.log(res);
 
             setDivisions({
                 name:'',
                 remark:''
             })
 
-            window.location.reload(true); 
+            window.location.reload(false); 
         })
          
 
