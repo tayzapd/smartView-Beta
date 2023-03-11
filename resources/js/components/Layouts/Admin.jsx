@@ -6,7 +6,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Image } from 'react-bootstrap';
-// import mm from '../../router';
 import { useNavigate } from 'react-router-dom';
 import AddShoptypes from '../Admin/Shoptype/AddShoptypes';
 import ItemView from '../User/ItemView';
@@ -25,32 +24,23 @@ function getItem(label, key, icon, children) {
   };
 }
 
+
 const items = [
-  getItem('Shoptypes', 'spt', <UserOutlined />, [
-    getItem('AddShop', '/addshoptypes',<UserOutlined/>),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
+  getItem('Shoptypes','/admin/shoptypes',<UserOutlined/>),
+  getItem('Divisions','/admin/divisions',<UserOutlined/>),
+  getItem('Cities','/admin/cities',<UserOutlined/>),
+  getItem('Townships','/admin/townships',<UserOutlined/>),
+  getItem('Shops','/admin/shops',<UserOutlined/>),
+  getItem('Categories','/admin/categories',<UserOutlined/>),
+  getItem('Items','/admin/items',<UserOutlined/>),
 ]
 
-const handleClick = () => {
-  console.log("CLICK")
-}
 
 const Admin = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
-  const UserMenu = (
-    <Image
-      src={'https://w7.pngwing.com/pngs/439/19/png-transparent-avatar-user-profile-icon-women-wear-frock-face-holidays-women-accessories-thumbnail.png'}
-      alt="UserName profile image"
-      roundedCircle
-      style={{ width: '40px' }}
-    />
-  )
-  
   
   return (
     <Layout className='h-screen'>
@@ -60,10 +50,10 @@ const Admin = () => {
         onBreakpoint={(broken) => {}}
         onCollapse={(collapsed, type) => {}}
         style={{ 
-          background:'#fc6400'
-         }}
+          backgroundImage: 'linear-gradient(to left bottom, #f26d00, #f16103, #ef5407, #ed460d, #eb3612)'
+        }}
       >
-        <div className="logo" style={{ textAlign: 'center', fontSize:'18px' }}>Smart View</div>
+        <div className="logo" style={{ textAlign: 'center', fontSize:'20px', backgroundColor:'transparent'}}>Smart View</div>
         <Menu 
           onClick={({key})=>{
             if(key != "singout"){
@@ -71,7 +61,9 @@ const Admin = () => {
             }
           }}
           defaultSelectedKeys={[window.location.pathname]}
-          style={{ background:'#fc6400' }}
+          style={{ 
+            backgroundColor:'transparent'
+          }}
           theme="light" 
           mode="inline" 
           items={items} 
@@ -88,9 +80,7 @@ const Admin = () => {
           }}
 
         >
-          
-      
-          
+
         </Header>
         <Content
           style={{
@@ -127,6 +117,12 @@ const Admin = () => {
             .h-screen {
                 height:665px;
             }
+
+            .ant-menu-light .ant-menu-item-selected{
+              background-color:transparent;
+              color:#ffffff;
+            }
+            
         `}
       </style>
     </Layout>

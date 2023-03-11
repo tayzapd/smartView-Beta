@@ -35,7 +35,7 @@ class ShopTypeController extends Controller
             if($shop_type->save()){
                 return response()->json(['status'=>true,'message'=>"Shop Type created successfully."]);
             }else {
-                return response()->json(['status'=>true,"Shop Type can't created!"]);
+                return response()->json(['status'=>false,"Shop Type can't created!"]);
             }
         }
     }

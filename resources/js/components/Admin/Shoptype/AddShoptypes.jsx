@@ -2,8 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAdminContext } from "../../../Context/AdminContext";
-
-
+import Swal from "sweetalert2";
 const AddShoptypes = ()=>{
     const {axios} = useAdminContext();
     const [shoptypesInput,setShoptypes] = useState({
@@ -25,17 +24,26 @@ const AddShoptypes = ()=>{
         }
         axios.post(`/api/admin/shoptypes/create`, data)
         .then(res=>{
-            console.log(res);
+            // console.log(res);
+            Swal.fire({
+                position: 'top-end',
+                title: 'GOOD JOB!',
+                text: res.data.message,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1000
+              }).then(()=>{
+                    setShoptypes({
+                        name:'',
+                        remark:''
+                    })
+                    window.location.reload(false);
 
-            setShoptypes({
-                name:'',
-                remark:''
-            })
-
-            window.location.reload(false);
-
-            
+              })
+              
+    
         })
+        
          
 
     }
@@ -49,7 +57,7 @@ const AddShoptypes = ()=>{
                 </div>
                 <div className="mb-2">
                     <label>Remark</label>
-                    <input type="text" name="remark" onChange={handleInput} value={shoptypesInput.remark} className="form-control" required/>
+                    <input type="text" name="remark" onChange={handleInput} value={shoptypesInput.remark} className="form-control"/>
                 </div>
                 
             </form>

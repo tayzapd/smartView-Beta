@@ -135,7 +135,7 @@ const ListShopTypes = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="addshoptype">
+                <Button variant="primary" type="submit" onClick={handleClose} form="addshoptype">
                     Save
                 </Button>
                 </Modal.Footer>
