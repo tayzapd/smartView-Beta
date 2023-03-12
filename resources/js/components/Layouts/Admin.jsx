@@ -122,6 +122,10 @@ const Admin = () => {
               background-color:transparent;
               color:#ffffff;
             }
+
+            .ant-layout .ant-layout-sider-zero-width-trigger{
+              background-color:#fc6400;
+            }
             
         `}
       </style>

@@ -7,6 +7,8 @@ import Form from 'react-bootstrap/Form';
 import AddShoptypes from './AddShoptypes';
 import EditShopType from './EditShopType';
 import { useAdminContext } from '../../../Context/AdminContext';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const deleteShoptype = (e,id)=>{
     e.preventDefault();
@@ -66,23 +68,23 @@ const ListShopTypes = () => {
     const [shoptypes,setShoptypes] = useState([]);
     const [pending, setPending] = useState(true);
     const [show, setShow] = useState(false);
+    
+    const getShoptypes = async () => {
+        const res = await axios.post(`/api/admin/shoptypes/show`);
+        console.log(res.data);
+        setShoptypes(res.data);
 
-    const getShoptypes = ()=>{
-        axios.post(`/api/admin/shoptypes/show`).then(res=>{
-            // console.log(res);
-            setShoptypes(...shoptypes,res.data);
-           
-        })
     }
 
     useEffect(()=>{
-        const timeout = setTimeout(() => {
-			getShoptypes();
-			setPending(false);
-		}, 2000);
-        return () => clearTimeout(timeout);
+        getShoptypes();
+        // const timeout = setTimeout(() => {
+		// 	getShoptypes();
+		// 	setPending(false);
+		// }, 2000);
+        // return () => clearTimeout(timeout);
 
-    },[])
+    },[]);
 
     // console.log(shoptypes);
 
@@ -103,16 +105,16 @@ const ListShopTypes = () => {
 
     return (
         <>
+            
             <div className="container">
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Shop Type</button>
 
             </div>
-            
+            <ToastContainer />
             <DataTable
             title="Shop Type Lists"
             columns={columns}
             data={shoptypes}
-            progressPending={pending}
             fixedHeader
             fixedHeaderScrollHeight="300px"
             pagination
@@ -122,7 +124,7 @@ const ListShopTypes = () => {
             />
 
             {/* Add Shop Type */}
-
+            
             <Modal size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Shop Type</Modal.Title>
@@ -135,7 +137,7 @@ const ListShopTypes = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" onClick={handleClose} form="addshoptype">
+                <Button variant="primary" type="submit"  form="addshoptype">
                     Save
                 </Button>
                 </Modal.Footer>

@@ -15,7 +15,7 @@ class ShopTypeController extends Controller
     public function show(Request $req)
     {
         
-        return ShopType::get();
+        return ShopType::get(['id','name','remark']);
 
     }
     
