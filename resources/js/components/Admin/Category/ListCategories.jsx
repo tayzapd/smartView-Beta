@@ -15,7 +15,7 @@ const ListCategories = () => {
     const handleShow = () => setShow(true);
 
     const getCategories = ()=>{
-        axios.post(`/api/admin/categories/show`).then((res)=>{
+        axios.post(`/api/admin/categories/showAll`).then((res)=>{
             // console.log(res);
             setCategories(...categories,res.data);
         })
@@ -33,16 +33,12 @@ const ListCategories = () => {
         e.preventDefault();
         setEditShow(true);
         setCategory(row);
-        // console.log(row);  
     }
 
     const deleteCategory = (e,id)=>{
-        console.log(id);
-
         const data = {
             id:id
         }
-
         axios.post(`/api/admin/categories/delete`,data).then((res)=>{
             // console.log(res);
             window.location.reload(false);

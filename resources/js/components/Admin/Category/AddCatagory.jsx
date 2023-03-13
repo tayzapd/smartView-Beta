@@ -39,7 +39,7 @@ const AddCategory = ()=>{
 
         // console.log(data);
 
-        axios.post(`/api/admin/categories/create`,data).then((res)=>{
+        axios.post(`/api/admin/category/create`,data).then((res)=>{
             // console.log(res);
             setCategoriesInput({
                 name:'',

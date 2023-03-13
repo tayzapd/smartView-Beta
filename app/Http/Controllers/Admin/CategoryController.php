@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    public function show(Request $req)
+    public function showAll(Request $req)
     {
         return Category::get();
     }
