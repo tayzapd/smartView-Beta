@@ -200,8 +200,7 @@ const ItemView = () => {
                                 <Button type="primary" onClick={() => {
                                     ShowOneItem(index)
                                 }}>View More</Button>
-                            </Card>
-                        
+                        </Card>
                 })}
             </div>
             </div>
