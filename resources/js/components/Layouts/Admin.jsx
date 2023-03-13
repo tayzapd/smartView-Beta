@@ -63,7 +63,6 @@ const Admin = () => {
       router.pathname.includes('login') != true ? 
       <Layout className='h-screen'>
       <Sider 
-      
         breakpoint="lg"
         collapsedWidth="0"
         onBreakpoint={(broken) => {}}

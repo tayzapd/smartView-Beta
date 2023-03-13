@@ -8,6 +8,7 @@ import {
     InputNumber,Switch,Radio,
     DatePicker,Modal } from 'antd';
 import { Form } from "react-bootstrap";
+import { EditOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 const { TextArea } = Input;
@@ -227,7 +228,20 @@ const Items = () => {
                             className="mx-lg-3 mb-sm-3 "
                             hoverable
                             loading={loading}
-                            cover={<img style={{height:250,margin:0,padding:0}} alt="card image" src={`/images/shop/item/`+item.images[0]} />}
+                            cover={
+                                
+                                <>
+                                <img style={{height:250,margin:0,padding:0}}  src={`/images/shop/item/`+item.images[0]}/>
+                                <div style={{
+                                    position:"absolute",
+                                    top:"8px",
+                                    left:'16px',
+                                    color:"white"
+                                }}>
+                                    <Button type="primary" icon={<EditOutlined />} />
+                                </div>
+                                </>
+                            }
                             style={{ width: 300 ,margin:20,padding:0}}
                             >
                                 <Meta title={item.name} description={`${item.description}`} />
