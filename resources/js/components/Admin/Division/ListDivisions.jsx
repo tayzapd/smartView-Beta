@@ -51,7 +51,7 @@ const ListDivisions = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [showedit, setEditShow] = useState(false);
+    const [showEdit, setEditShow] = useState(false);
     const editClose = () => setEditShow(false);
 
     const editShow = (e,row) => {
@@ -137,7 +137,7 @@ const ListDivisions = () => {
 
             {/* EDIT DIVISION */}
 
-            <Modal size="lg" show={showedit} onHide={editClose}>
+            <Modal size="lg" show={showEdit} onHide={editClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Division</Modal.Title>
                 </Modal.Header>

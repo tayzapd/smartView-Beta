@@ -14,6 +14,10 @@ class CategoryController extends Controller
         return Category::get();
     }
     
+    public function showByShop(Request $req)
+    {
+        return Category::where('shop_id',$req->shop_id)->get();
+    }
     public function create(Request $req)
     {
         $validator = Validator::make($req->all(), [

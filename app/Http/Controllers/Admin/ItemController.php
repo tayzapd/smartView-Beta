@@ -14,7 +14,7 @@ class ItemController extends Controller
 {
     public function show()
     {
-        $items = Item::get();
+        $items = Item::with('category','category.shop')->get()->groupBy('category.shop_id');
         if($items != null)
         {
             return response()->json(['status'=>true,'items'=>$items]);
@@ -26,14 +26,12 @@ class ItemController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'is_available' => 'required|boolean',
+            'is_available' => 'required',
             'privacy' => 'required|in:public,private',
             'taste' => 'required|string',
-            'images' => 'required|array',
+            'images'=>'array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'time_limited' => 'required|string',
-            'special_range' => 'required|date_format:Y-m-d H:i:s',
-            'view' => 'required|integer',
+            'special_range' => 'required|date_format:Y-m-d',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
             'remark' => 'required|string',
@@ -46,21 +44,24 @@ class ItemController extends Controller
         $item = new Item;
         $item->name = $request->name;
         $item->price = $request->price;
-        $item->is_available = $request->is_available;
+        $item->is_available = json_decode($request->is_available);
         $item->privacy = $request->privacy;
         $item->taste = $request->taste;
-        $item->time_limited = $request->time_limited;
+        $item->time_limited = date('Y-m-d');
         $item->special_range = $request->special_range;
-        $item->view = $request->view;
+        $item->view = 0;
         $item->category_id = $request->category_id;
         $item->description = $request->description;
         $item->remark = $request->remark;
 
         $images = [];
-        foreach ($request->images as $image) {
-            $path = $image->store('public/images');
+        foreach ($request->file('images') as $image) {
+            $path = $image->move(public_path('images/shop/item'),$image->getClientOriginalName());
             $images[] = basename($path);
         }
+
+
+
         $item->images = serialize($images);
 
         if($item->save()){
@@ -68,7 +69,6 @@ class ItemController extends Controller
         }else {
             return response()->json(['message' => "Item can't created"], 505);
         }
-
 
     }
 

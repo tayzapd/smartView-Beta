@@ -16,10 +16,12 @@ import ListShopTypes from "./components/Admin/Shoptype/ListShoptypes";
 import ListDivisions from "./components/Admin/Division/ListDivisions";
 import ListCities from "./components/Admin/City/ListCities";
 import ListTownships from "./components/Admin/Township/ListTownships";
+import { element } from "prop-types";
 import ListShops from "./components/Admin/Shop/ListShops";
 
 import ShopProfile from "./components/Shop/Shop";
 import ListCategories from "./components/Admin/Category/ListCategories";
+import AdminItems from "./components/Admin/Items";
 const router = createBrowserRouter([
     {
         path:"/",
@@ -31,12 +33,21 @@ const router = createBrowserRouter([
             }
         ]
     },
-    
+
     {
         path:"/admin",
         element:<AdminLayout />, 
         children:[
             {
+                path:'login',
+                element:<AdminLogin />
+            },
+            {
+                path:"shoptypes/add",
+                element:<AddShoptypes/>
+            },
+            {
+
                 path:"shoptypes",
                 element:<ListShopTypes/>
             },
@@ -70,6 +81,10 @@ const router = createBrowserRouter([
                 element:<ListCategories/>
                 
             },
+            {
+                path:'items',
+                element:<AdminItems /> 
+            }
         ]
     },
     {

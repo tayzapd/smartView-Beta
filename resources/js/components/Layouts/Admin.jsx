@@ -1,17 +1,17 @@
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Image } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AddShoptypes from '../Admin/Shoptype/AddShoptypes';
 import ItemView from '../User/ItemView';
 import Main from '../../Main';
 import { Button } from '@material-ui/core';
-import { useAuthContext } from '../../Context/AdminContext';
+import { useAdminContext, useAuthContext } from '../../Context/AdminContext';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -37,14 +37,33 @@ const items = [
 
 
 const Admin = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const {token} = useAdminContext();
   const navigate = useNavigate();
+  const  router = useLocation()
+  const UserMenu = (
+    <Image
+      src={'https://w7.pngwing.com/pngs/439/19/png-transparent-avatar-user-profile-icon-women-wear-frock-face-holidays-women-accessories-thumbnail.png'}
+      alt="UserName profile image"
+      roundedCircle
+      style={{ width: '40px' }}
+    />
+  )
+
+  useEffect(() => {
+    console.log(token)
+    if(token == null){
+      return navigate('/admin/login');
+    }
+  },[])
+  
   
   return (
-    <Layout className='h-screen'>
+    <>
+    {
+      router.pathname.includes('login') != true ? 
+      <Layout className='h-screen'>
       <Sider 
+      
         breakpoint="lg"
         collapsedWidth="0"
         onBreakpoint={(broken) => {}}
@@ -70,18 +89,19 @@ const Admin = () => {
         />
       </Sider>
       <Layout>
-        <Header
+        {/* <Header
           style={{
             
             padding: '0',
-            background: colorBgContainer,
             
            
           }}
 
         >
-
-        </Header>
+          
+      
+          
+        </Header> */}
         <Content
           style={{
             margin: '24px 16px 0',
@@ -91,7 +111,6 @@ const Admin = () => {
             style={{
               padding: 24,
               minHeight: 360,
-              background: colorBgContainer,
             }}
           >
           
@@ -129,7 +148,10 @@ const Admin = () => {
             
         `}
       </style>
-    </Layout>
+    </Layout> 
+            : <Main />
+    }
+    </>
   );
 };
 export default Admin;
