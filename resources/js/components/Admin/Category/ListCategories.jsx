@@ -33,6 +33,7 @@ const ListCategories = () => {
         e.preventDefault();
         setEditShow(true);
         setCategory(row);
+        getCategories()
     }
 
     const deleteCategory = (e,id)=>{
@@ -41,7 +42,7 @@ const ListCategories = () => {
         }
         axios.post(`/api/admin/categories/delete`,data).then((res)=>{
             // console.log(res);
-            window.location.reload(false);
+            getCategories();
         })
     }
     const columns = [
