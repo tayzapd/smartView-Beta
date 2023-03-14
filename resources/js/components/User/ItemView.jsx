@@ -65,6 +65,7 @@ const ItemView = () => {
     return (
         <>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.7.55/css/materialdesignicons.min.css" />
+
         <div className="container-fluid py-3 ">
             <style>
                 {`
@@ -85,7 +86,6 @@ const ItemView = () => {
                   
                 `}
             </style>
-
             {/* ITEM ONE PAGE VIEW   */}
             <Modal
                 width={1000}
@@ -200,7 +200,7 @@ const ItemView = () => {
                                 <Button type="primary" onClick={() => {
                                     ShowOneItem(index)
                                 }}>View More</Button>
-                            </Card>
+                        </Card>
                         
                 })}
             </div>
