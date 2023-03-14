@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Form } from 'react-bootstrap';
 import { QRCode } from "antd";
+// Admin Qr Code Generator 
 const AdminQrCode = () => {
     const [shops,setShops] = useState([]);
     const [url,setUrl] = useState('');
