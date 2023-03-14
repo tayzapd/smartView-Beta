@@ -32,15 +32,14 @@ const EditCategory = () => {
     const updataCategory = (e)=>{
         e.preventDefault();
         const data = {
-            id:categoriesInput.id,
-            name:categoriesInput.name,
-            remark:categoriesInput.remark,
-            shop_id:selectInput.shop_id
-        }
+                id:categoriesInput.id,
+                name:categoriesInput.name,
+                remark:categoriesInput.remark,
+                shop_id:selectInput.shop_id
+            }
 
         axios.post(`/api/admin/categories/update`,data)
         .then((res)=>{
-            // console.log(res);
             setCategoriesInput({
                 name:'',
                 remark:''

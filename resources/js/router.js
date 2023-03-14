@@ -16,6 +16,7 @@ import ListShopTypes from "./components/Admin/Shoptype/ListShoptypes";
 import ListDivisions from "./components/Admin/Division/ListDivisions";
 import ListCities from "./components/Admin/City/ListCities";
 import ListTownships from "./components/Admin/Township/ListTownships";
+import AdminQrCode from './components/Admin/QrCode';
 import { element } from "prop-types";
 import ListShops from "./components/Admin/Shop/ListShops";
 
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
             {
                 path:'items',
                 element:<AdminItems /> 
+            },
+            {
+                path:'qrcode',
+                element:<AdminQrCode /> 
             }
         ]
     },

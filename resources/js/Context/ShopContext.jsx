@@ -20,6 +20,7 @@ export const ShopProvider = ({children}) => {
     const [dialog,setDialog] = useState(false);
     const [users,setUsers] = useState([]);
     const [token,_setToken] = useState(localStorage.getItem('shop_token'));
+    const [itemEdit,setItemEdit] = useState(false);
 
     const setToken = (token) => {
         _setToken(token);
@@ -54,7 +55,9 @@ export const ShopProvider = ({children}) => {
             axios,
             dialog,
             setDialog,
-            getUser
+            getUser,
+            itemEdit,
+            setItemEdit
         }} >
             {children}
         </ShopContext.Provider>

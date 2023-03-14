@@ -201,7 +201,9 @@ const ItemView = () => {
                                     ShowOneItem(index)
                                 }}>View More</Button>
                         </Card>
+
                         
+
                 })}
             </div>
             </div>
