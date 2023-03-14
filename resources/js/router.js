@@ -6,7 +6,7 @@ import AdminLayout from "./components/Layouts/AdminLayout";
 import ShopLayout from "./components/Layouts/ShopLayout";
 import Dashboard from "./components/Shop/Dashboard.jsx";
 import Items from "./components/Shop/Items";
-import Users from "./components/Shop/Users";
+import ShopQRCode from "./components/Shop/QrCode";
 import Categories from "./components/Shop/Category";
 import ItemView from './components/User/ItemView';
 import ShopLogin from "./components/Shop/Auth/Login";
@@ -110,8 +110,8 @@ const router = createBrowserRouter([
 
                     },
                     {
-                        path:'users',
-                        element:<Users /> 
+                        path:'myqrcode',
+                        element:<ShopQRCode /> 
                     },
                     {
                         path:'category',
