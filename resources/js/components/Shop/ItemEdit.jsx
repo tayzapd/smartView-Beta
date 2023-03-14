@@ -1,10 +1,19 @@
-import { useState } from 'react';
-import useShopContext from '../../Context/ShopContext';
+import { useEffect, useState } from 'react';
+import {useShopContext} from '../../Context/ShopContext';
+import {
+    Carousel,Card,
+    Button,Input,
+    InputNumber,Switch,Radio,
+    DatePicker,Modal } from 'antd';
+import { Form } from "react-bootstrap";
 
-const ItemEdit = () => {
-    const {id,itemEdit,setItemEdit,setDialog} = useShopContext();
+const {TextArea} = Input;
+const ItemEdit = ({ citem }) => {
+    const {cItem,itemEdit,setItemEdit,setDialog,axios} = useShopContext();
     const [fileList,setFileList] = useState([]);
+    const [categories,setCategories] = useState([]);
     const [item,setItem] = useState({
+        id:id,
         shop_id:'',
         name:'',
         category_id:'',
@@ -22,6 +31,15 @@ const ItemEdit = () => {
         console.log('i come from handleChange Method!');
     }
 
+    const getCategories = () => {
+        axios.get('/api/shop/category/show').then(({data}) => {
+            setCategories(data.categories.data)
+        })
+   
+
+
+    }
+    
     const editItem = async  () => {
         
         if(fileList.length != 0){
@@ -65,7 +83,9 @@ const ItemEdit = () => {
         
     }
 
-
+    useEffect(() => {
+        getCategories()
+    },[])
     return (
         <>
             <Modal
@@ -85,28 +105,28 @@ const ItemEdit = () => {
                     padding:"7px"
                 }}>
 
-                    <Input name="name" onChange={(e) => {item.name = e.target.value}} className="my-2 " allowClear placeholder="Name" />
+                    <Input value={item.name} name="name" onChange={(e) => {item.name = e.target.value}} className="my-2 " allowClear placeholder="Name" />
 
-                    <Input name="taste" onChange={(e) => {item.taste = e.target.value}} className="my-2 " placeholder="Taste" />
-                    <TextArea name="description" onChange={(e) => {item.description = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Description" maxLength={250} />
+                    <Input value={item.taste} name="taste" onChange={(e) => {item.taste = e.target.value}} className="my-2 " placeholder="Taste" />
+                    <TextArea value={item.description} name="description" onChange={(e) => {item.description = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Description" maxLength={250} />
 
-                    <InputNumber name="price" onChange={(value) => {item.price = value }} className="col-12 my-2" addonBefore="+" addonAfter="$" placeholder="Price " />
+                    <InputNumber value={item.price} name="price" onChange={(value) => {item.price = value }} className="col-12 my-2" addonBefore="+" addonAfter="$" placeholder="Price " />
 
                     <div className="d-flex flex-row my-4 ">
                         <div className="col-3">
                             <div>Available</div>
-                            <Switch name="is_available" defaultChecked onChange={(value) => { item.is_available = value}} />
+                            <Switch checked={item.is_available} name="is_available" defaultChecked onChange={(value) => { item.is_available = value}} />
                         </div>
                         <div>
                         <div className="ml-4 ">Privacy </div>
-                            <Radio.Group name="privacy" onChange={(e) => { item.privacy = e.target.value}} defaultValue="a" buttonStyle="solid">
+                            <Radio.Group value={item.privacy} name="privacy" onChange={(e) => { item.privacy = e.target.value}} defaultValue="a" buttonStyle="solid">
                                 <Radio.Button value="private">Private</Radio.Button>
                                 <Radio.Button value="public">Public</Radio.Button>
                             </Radio.Group>
                         </div>
 
                     </div>
-                    <Form.Select name="category" onChange={(e) => { item.category = e.target.value }} aria-label="Category" className="mb-3">
+                    <Form.Select value={item.category_id} name="category" onChange={(e) => { item.category = e.target.value }} aria-label="Category" className="mb-3">
                         <option>Category</option>
                         {
                             categories.length != 0 ?
@@ -118,16 +138,17 @@ const ItemEdit = () => {
                         }
 
                     </Form.Select>
-                    <TextArea name="remark" onChange={(e) => {item.remark = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Remark" maxLength={250} />
+                    <TextArea value={item.remark} name="remark" onChange={(e) => {item.remark = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Remark" maxLength={250} />
 
                     <DatePicker
+                        value={item.special_date}
                         name="special_date"
                         onChange={(date,dateString) => {item.special_date = dateString;}}
                         className="form-control my-2 " style={{zIndex:2000}}></DatePicker>
 
                         <input type="file" className="form-control" multiple  name="images" onChange={handleChange} placeholder="Item images" />
 
-                        {fileList.length != 0 ?
+                        {/* {fileList.length != 0 ?
                             <Carousel
                                 className="col h-50 carousel"
                             >
@@ -142,10 +163,13 @@ const ItemEdit = () => {
                         </Carousel>
                         :
                         <span></span>
-                    }
+                    } */}
 
                 </div>
             </Modal>
         </>
     )
 }
+
+
+export default ItemEdit;

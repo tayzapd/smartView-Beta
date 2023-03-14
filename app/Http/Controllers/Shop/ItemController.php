@@ -32,6 +32,24 @@ class ItemController extends Controller
         }
     }
 
+    public function showOne(Request $req)
+    {
+        $shopId = Auth::user()->shop_id; 
+        $item = Item::whereHas('category', function ($query) use ($shopId) {
+                        $query->where('shop_id', $shopId);
+                    })
+                    ->with('category:id,name')
+                    ->first();
+        $item = Item::find($req->id);
+        return $item;
+
+        $images = @unserialize($item->images); // Unserialize the images field
+
+        // if($item != null){
+        //     return response()->json(['status'=>true,'items'=>$item]);
+        // }
+    }
+
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [

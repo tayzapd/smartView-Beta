@@ -9,12 +9,12 @@ import {
     DatePicker,Modal } from 'antd';
 import { Form } from "react-bootstrap";
 import { EditOutlined } from '@ant-design/icons';
-
+import ItemEdit from "./ItemEdit";
 const { Meta } = Card;
 const { TextArea } = Input;
 
 const Items = () => {
-    const {axios,setDialog} = useShopContext();
+    const {axios,setDialog,setItemEdit,setId,id} = useShopContext();
     const [items,setItems] = useState([]);
     const [categories,setCategories]  = useState([]);
     const [create,setCreate] = useState(false);
@@ -238,7 +238,12 @@ const Items = () => {
                                     left:'16px',
                                     color:"white"
                                 }}>
-                                    <Button type="primary" icon={<EditOutlined />} />
+                                    <Button onClick={() => {
+                                        setItemEdit(true);
+                                        setDialog(false);
+                                        setId(item.id)
+                                        console.log(id)
+                                    }} type="primary" icon={<EditOutlined />} />
                                 </div>
                                 </>
                             }
@@ -250,11 +255,10 @@ const Items = () => {
                                     ShowOneItem(index)
                                 }}>View More</Button>
                             </Card>
-
                 })}
             </div>
 
-
+            <ItemEdit /> 
             {/* ITEM ONE PAGE VIEW   */}
             <Modal
                 width={1000}
