@@ -36,8 +36,8 @@ const ShopLayout = () => {
                 >CATEGORY</Nav.Link>
             <Nav.Link className='col-3' onClick={()=> {nav(`/shop/${id}/owner/shop`)}}
                 >SHOP</Nav.Link>
-            <Nav.Link className='col-3' onClick={()=> {nav(`/shop/${id}/owner/user`)}}
-                >USER</Nav.Link>
+            <Nav.Link className='col-3' onClick={()=> {nav(`/shop/${id}/owner/myqrcode`)}}
+                >My QrCode</Nav.Link>
         </Navbar> :
         <span></span>}
 
