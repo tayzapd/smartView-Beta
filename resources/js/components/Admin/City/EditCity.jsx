@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext"
 
-const EditCity = ()=>{
-    const {city,axios} = useAdminContext();
+const EditCity = () => {
+    const {city,axios,setCities,cities} = useAdminContext();
     const [citiesInput,setCitiesInput] = useState({
         id:city.id,
         name:city.name,
@@ -13,6 +13,15 @@ const EditCity = ()=>{
         division_id:city.division_id
     });
     // console.log(selectInput);
+
+    const getCities = () => {
+        axios.post(`/api/admin/cities/show`).then(({data})=>{
+            // console.log(res);
+            setCities(data);
+        })
+    }
+
+
     useEffect(()=>{
         axios.post(`/api/admin/divisions/show/`).then(res=>{
             // console.log(res);
@@ -45,7 +54,7 @@ const EditCity = ()=>{
             })
 
             setSelect({});
-            window.location.reload(false); 
+            getCities();
             
 
         })

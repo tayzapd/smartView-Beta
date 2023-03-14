@@ -28,7 +28,7 @@ const ShopQRCode =  () => {
         <div className="mt-5 d-flex justify-content-center">
              <div className="text-center pt-4 d-flex flex-column justify-content-center align-item-center shadow shadow-md col-md-6 col-12">
                 <h3 className="d-flex justify-content-center align-item ">
-                My QRCode 
+                    My QRCode 
                 </h3>
 
                 <div id="QrCode" className=" d-flex justify-content-center align-item ">

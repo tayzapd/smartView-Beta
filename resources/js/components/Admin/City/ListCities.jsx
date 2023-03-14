@@ -10,12 +10,11 @@ import EditCity from './EditCity';
 
 
 const ListCities = () => {
-    const {setCity,axios} = useAdminContext();
-    const [cities,setCities] = useState([]);
+    const {setCity,axios,cities,setCities} = useAdminContext();
     const [pending, setPending] = useState(true);
     const [show, setShow] = useState(false);
 
-    const getcities = () => {
+    const getCities = () => {
         axios.post(`/api/admin/cities/show`).then((res)=>{
             // console.log(res);
             setCities(...cities,res.data);
@@ -24,7 +23,7 @@ const ListCities = () => {
 
     useEffect(()=>{
         const timeout = setTimeout(() => {
-            getcities();
+            getCities();
 			setPending(false);
 		}, 1000);
         return () => clearTimeout(timeout);
@@ -44,7 +43,7 @@ const ListCities = () => {
 
         axios.post(`/api/admin/cities/delete/`,data).then((res)=>{
             console.log(res);
-            window.location.reload(false);
+            getCities();
         })
     }
 
@@ -138,19 +137,19 @@ const ListCities = () => {
             </Modal>
 
             {/* EDIT CITY */}
-            <Modal size="lg" show={showedit} onHide={editClose}>
+            <Modal size="lg" show={showedit} onHide={() => {setEditShow(false) }}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit City</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditCity/>
+                    <EditCity />
 
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={editClose}>
+                <Button variant="secondary" onClick={() => {setEditShow(false) }}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="updatecity">
+                <Button variant="primary" onClick={() => {setEditShow(false) }} type="submit" form="updatecity">
                     Update
                 </Button>
                 </Modal.Footer>
