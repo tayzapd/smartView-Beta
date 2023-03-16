@@ -102,7 +102,7 @@ class ItemController extends Controller
 
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
@@ -111,9 +111,7 @@ class ItemController extends Controller
             'privacy' => 'required|in:public,private',
             'taste' => 'required|string',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'time_limited' => 'required|string',
             'special_range' => 'required|date_format:Y-m-d',
-            'view' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
         ]);
@@ -122,15 +120,14 @@ class ItemController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        $item = Item::findOrFail($id);
+        $item = Item::findOrFail($request->id);
         $item->name = $request->name;
         $item->price = $request->price;
         $item->is_available = $request->is_available;
         $item->privacy = $request->privacy;
         $item->taste = $request->taste;
-        $item->time_limited = $request->time_limited;
+        $item->time_limited = date("Y-m-d");
         $item->special_range = $request->special_range;
-        $item->view = $request->view;
         $item->category_id = $request->category_id;
         $item->description = $request->description;
         $item->remark = $request->remark;

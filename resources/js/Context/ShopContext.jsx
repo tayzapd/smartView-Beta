@@ -12,18 +12,14 @@ const ShopContext = createContext({
     users:[],
     setUsers:() =>{},
     getUser:() =>{},
-    id:0,
-    setId:() => {}
 });
 
 
 export const ShopProvider = ({children}) => {
-    const [user,setUser] = useState({});
-    const [id,setId] = useState(1);
+    const [user,setUser] = useState({});    
     const [dialog,setDialog] = useState(false);
     const [users,setUsers] = useState([]);
     const [token,_setToken] = useState(localStorage.getItem('shop_token'));
-    const [itemEdit,setItemEdit] = useState(false);
 
     const setToken = (token) => {
         _setToken(token);
@@ -49,8 +45,6 @@ export const ShopProvider = ({children}) => {
     }
     return (
         <ShopContext.Provider value={{
-            id,
-            setId,
             user,
             token,
             users,
@@ -61,8 +55,6 @@ export const ShopProvider = ({children}) => {
             dialog,
             setDialog,
             getUser,
-            itemEdit,
-            setItemEdit
         }} >
             {children}
         </ShopContext.Provider>
