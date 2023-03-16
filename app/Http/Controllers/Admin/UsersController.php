@@ -12,10 +12,10 @@ class UsersController extends Controller
 {
     public function show(Request $req)
     {
-        $users = User::all();
+        $users = User::with('shop:id,shop_name')->get();
         if($users)
         {
-            return response()->json(['status'=>true,'data'=>$users]);
+            return response()->json(['status'=>true,'users'=>$users]);
         }else {
             return response()->json(['status'=>false,"Message"=>"Can't get data because server network error!"]);
         }
@@ -23,7 +23,8 @@ class UsersController extends Controller
     public function add(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'name' => 'required|string',
+            'shop_id' => 'required',
+            'username' => 'required|string',
             'password' => 'required',
         ]);
         if ($validator->fails()) {
@@ -37,6 +38,7 @@ class UsersController extends Controller
                 $user->shop_id = $req->shop_id;
                 $user->username = $req->username;
                 $user->password = Hash::make($req->password);
+                $user->remark = " ";
                 if($user->save())
                 {
                     return response()->json(['status'=>true,'Message'=>"User Successfully Created!"]);
@@ -53,11 +55,11 @@ class UsersController extends Controller
         }
 
     }
-    public function edit(Request $req)
+    public function update(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'name' => 'required|string',
-            'password' => 'required',
+            'shop_id' => 'required',
+            'username' => 'required|string',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);

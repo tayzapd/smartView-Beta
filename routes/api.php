@@ -105,6 +105,14 @@ Route::prefix('admin')->group(function(){
         Route::post('delete','delete');
         Route::post('restore','restore');
     });
+
+    Route::prefix('users')->controller(AdminUserController::class)->group(function() {
+        Route::post('show','show');
+        Route::post('create','add');
+        Route::post('update','update');
+        Route::post('delete','delete');
+        Route::post('restore','restore');
+    });
 });
 
 
