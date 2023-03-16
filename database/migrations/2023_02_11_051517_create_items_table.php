@@ -20,7 +20,7 @@ class CreateItemsTable extends Migration
             $table->string('currency');
             $table->boolean('is_available');
             $table->enum('privacy',['public','private']);
-            $table->string('taste');
+            $table->string('tag');
             $table->text('images');
             $table->dateTime('special_range');
             $table->integer('view');

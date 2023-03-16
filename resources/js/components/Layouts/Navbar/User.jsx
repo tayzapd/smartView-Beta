@@ -1,12 +1,12 @@
 import './User.css'
 import { useUserContext } from '../../../Context/UserContext';
-import { useEffect } from 'react';
+import React,{ useEffect,useState } from 'react';
 import { AudioOutlined,FilterFilled } from '@ant-design/icons';
 import { Grid, Input, Space } from 'antd';
 import { List } from '@material-ui/icons';
 import { GridOn } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown,Form } from 'react-bootstrap';
 const { Search } = Input;
 const suffix = (
   <AudioOutlined
@@ -16,6 +16,50 @@ const suffix = (
     }}
   />
 );
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+      {/* &#x25bc; */}
+    </a>
+  ));
+  
+  const CustomMenu = React.forwardRef(
+    ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+      const [search, setSearch] = useState('');
+  
+      return (
+        <div
+          ref={ref}
+          style={style}
+          className={className}
+          aria-labelledby={labeledBy}
+        >
+          <Form.Control
+            autoFocus
+            className="mx-3 my-2 w-auto"
+            placeholder="Search..."
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          <ul className="list-unstyled">
+            {React.Children.toArray(children).filter(
+              (child) =>
+                !search || child.props.children.toLowerCase().startsWith(search),
+            )}
+          </ul>
+        </div>
+      );
+    },
+  );
+
+  
 const  UserNavbar = () => {
     const {shop,grid,setGrid,setItems,setCategories,categories} = useUserContext();
     const {id} = useParams();
@@ -121,11 +165,11 @@ const  UserNavbar = () => {
                     <div className="col-4"></div>
                     <div className='col-4'>
                     <Dropdown style={{float:"right"}} size='sm'>
-                        <Dropdown.Toggle size='sm' variant="primary" id="dropdown-basic">
+                        <Dropdown.Toggle as={CustomToggle} size='sm' variant="primary" id="dropdown-basic">
                             <FilterFilled />
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu>
+                        <Dropdown.Menu as={CustomMenu}>
                             {categories.map((cate,index) => {
                                 return (
                                     <Dropdown.Item onClick={() => {getItems(cate.id)}} key={index}>{cate.name}</Dropdown.Item>
