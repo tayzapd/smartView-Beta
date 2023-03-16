@@ -7,12 +7,15 @@ const UserContext = createContext({
     setShop:() => {},
     dialog:false,
     setDialog:() => {},
+    grid:false,
+    setGrid:() => {},
 });
 
 
 
 export const UserProvider = ({children}) => {
     const [items,setItems] = useState([]);
+    const [grid,setGrid] = useState(false);
     const [shop,setShop] = useState({});
     const [dialog,setDialog] = useState(false);
     const [theme,setTheme] = useState({
@@ -27,7 +30,9 @@ export const UserProvider = ({children}) => {
             setItems,
             setShop,
             dialog,
-            setDialog
+            setDialog,
+            grid,
+            setGrid
         }} >
             {children}
         </UserContext.Provider>

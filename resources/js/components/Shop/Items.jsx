@@ -9,7 +9,7 @@ import {
     DatePicker,Modal } from 'antd';
 import { Form } from "react-bootstrap";
 import { EditOutlined } from '@ant-design/icons';
-
+import dayjs from "dayjs";
 const { Meta } = Card;
 const { TextArea } = Input;
 
@@ -18,6 +18,7 @@ const Items = () => {
     const [items,setItems] = useState([]);
     const [categories,setCategories]  = useState([]);
     const [create,setCreate] = useState(false);
+    const [edit,setEdit] = useState(false);
     const [loading,setLoading] = useState(true);
     const [fileList, setFileList] = useState([]);
     const [viewItem,setViewItem]  = useState({
@@ -36,10 +37,26 @@ const Items = () => {
         category:{name:''},
     });
 
+    const [editCItem,setditCItem]  = useState({
+        name:"",
+        price:"",
+        is_available:"",
+        privacy:"",
+        taste:"",
+        images:[],
+        time_limited:"",
+        special_range:"",
+        description:"",
+        remark:"",
+        created_at:"",
+        updated_at:"",
+        category:{name:''},
+    });
+
 
     const [showItem,setShowItem] = useState(false);
 
-    const [item] = useState({
+    const [item,setItem] = useState({
         name:'',
         taste:'',
         price:null,
@@ -96,6 +113,32 @@ const Items = () => {
         }
     };
 
+    const editItem = () => {
+        console.log(editCItem)
+        const formData = new FormData();
+        fileList.forEach(img => {
+            formData.append('images[]',img)
+        })
+
+
+        formData.append('id',editCItem.id);
+        formData.append('name',editCItem.name);
+        formData.append('price',editCItem.price);
+        formData.append('description',editCItem.description);
+        formData.append('remark',editCItem.remark);
+        formData.append('taste',editCItem.taste);
+        formData.append('special_range',editCItem.special_range);
+        formData.append('privacy',editCItem.privacy);
+        formData.append('is_available',editCItem.is_available);
+        formData.append('category_id',editCItem.category_id);
+        try {
+            axios.post('/api/shop/items/update', formData);
+        } catch (err) {
+            console.log(err); 
+        }
+    };
+
+
 
 
     const handleRemove = (file) => {
@@ -114,9 +157,6 @@ const Items = () => {
         }
 
         item.images = e.target.files;
-        console.log(item.images)
-        console.log(e.target.files);
-        console.log(fileList)
 
     };
 
@@ -195,7 +235,88 @@ const Items = () => {
 
                     <DatePicker
                         name="special_date"
-                        onChange={(date,dateString) => {item.special_date = dateString; console.log(item)}}
+                        onChange={(date,dateString) => {item.special_range = dateString;}}
+                        className="form-control my-2 " style={{zIndex:2000}}></DatePicker>
+
+                        <input type="file" className="form-control" multiple  name="images" onChange={handleChange} placeholder="Item images" />
+
+                        {fileList.length != 0 ?
+                            <Carousel
+                                className="col h-50 carousel"
+                            >
+                            {fileList.map((file,index) => (
+                                <div key={index}>
+                                <img
+                                    className="img-thumbnail"
+                                    src={URL.createObjectURL(file)}
+                                    alt={file.name} />
+                                </div>
+                        ))}
+                        </Carousel>
+                        :
+                        <span></span>
+                    }
+
+                </div>
+            </Modal>
+
+            {/* ITEM EDIT  */}
+            <Modal
+                width={1000}
+                title="ITEM EDIT + "
+                open={edit}
+                okButtonProps={{}}
+                onOk={() => {
+                  editItem();
+                  setEdit(false);
+                  setDialog(false);
+                }}
+                onCancel={() => {setEdit(false);setDialog(false)}}
+
+            >
+                <div className="item-create h-100 " style={{
+                    padding:"7px"
+                }}>
+
+                    <Input value={editCItem.name} name="name" onChange={(e) => {setditCItem({...editCItem,[e.target.name]:e.target.value})}} className="my-2 " allowClear placeholder="Name" />
+
+                    <Input value={editCItem.taste} name="taste" onChange={(e) => {setditCItem({...item,[e.target.name]:e.target.value})}} className="my-2 " placeholder="Taste" />
+                    <TextArea value={editCItem.description} name="description" onChange={(e) => {setditCItem({...item,[e.target.name]:e.target.value})}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Description" maxLength={250} />
+
+                    <InputNumber value={editCItem.price} name="price" onChange={(value) => {setditCItem({...editCItem,price:value})}} className="col-12 my-2" addonBefore="+" addonAfter="$" placeholder="Price " />
+
+                    <div className="d-flex flex-row my-4 ">
+                        <div className="col-3">
+                            <div>Available</div>
+                            <Switch  name="is_available" checked={editCItem.is_available} onChange={(value) => { setditCItem({...editCItem,is_available:value})}} />
+                        </div>
+                        <div>
+                        <div className="ml-4 ">Privacy </div>
+                            <Radio.Group value={editCItem.privacy} name="privacy" onChange={(e) => { setditCItem({...item,[e.target.name]:e.target.value})}} defaultValue="a" buttonStyle="solid">
+                                <Radio.Button value="private">Private</Radio.Button>
+                                <Radio.Button value="public">Public</Radio.Button>
+                            </Radio.Group>
+                        </div>
+
+                    </div>
+                    <Form.Select value={editCItem.category_id} name="category_id" onChange={(e) => {console.log(e.target.value); setditCItem({...item,category_id:e.target.value}) }} aria-label="Category" className="mb-3">
+                        <option>Category</option>
+                        {
+                            categories.length != 0 ?
+                            categories.map(cate => {
+                            return <option key={cate.id} value={cate.id}>{cate.name}</option>
+                            })
+                            :
+                            <span></span>
+                        }
+
+                    </Form.Select>
+                    <TextArea value={editCItem.remark} name="remark" onChange={(e) => {setditCItem({...editCItem,[e.target.name]:e.target.value})}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Remark" maxLength={250} />
+
+                    <DatePicker
+                        defaultValue={dayjs(editCItem.special_range,"YYYY-MM-DD")}
+                        name="special_range"
+                        onChange={(date,dateString) => {item.special_range = dateString}}
                         className="form-control my-2 " style={{zIndex:2000}}></DatePicker>
 
                         <input type="file" className="form-control" multiple  name="images" onChange={handleChange} placeholder="Item images" />
@@ -238,7 +359,20 @@ const Items = () => {
                                     left:'16px',
                                     color:"white"
                                 }}>
-                                    <Button type="primary" icon={<EditOutlined />} />
+                                    <Button onClick={() => {
+                                        setDialog(false);   
+                                        let i = item;
+                                        
+                                        i.special_range = item.special_range.substring(0,10);
+                                        setditCItem(i);
+                                        setditCItem({...item,category_id:i.category_id});
+                                        editCItem.shop_id = i.category.shop_id;
+                                        editCItem.images = [];
+                                        editCItem.is_available = i.is_available == 1 ? true : false; 
+                                        getCategories(editCItem.category.shop_id);
+                                        
+                                        setEdit(true);                                     
+                                    }} type="primary" icon={<EditOutlined />} />
                                 </div>
                                 </>
                             }
@@ -250,10 +384,8 @@ const Items = () => {
                                     ShowOneItem(index)
                                 }}>View More</Button>
                             </Card>
-
                 })}
             </div>
-
 
             {/* ITEM ONE PAGE VIEW   */}
             <Modal
@@ -261,7 +393,6 @@ const Items = () => {
                 open={showItem}
                 okButtonProps={{}}
                 onOk={() => {
-                  console.log(viewItem)
                   setShowItem(false);
                   setViewItem({});
                   setDialog(false);
@@ -326,8 +457,6 @@ const Items = () => {
                         {viewItem.view} views 
                     </span>
                    </div>
-
-
                 </div>
                 <div className="mt-3 px-3 py-3 ">
                     {

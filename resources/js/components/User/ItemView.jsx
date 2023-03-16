@@ -9,13 +9,12 @@ const { Meta } = Card;
 
 import './css/itemView.css'
 const ItemView = () => {
-    const {setDialog} = useUserContext()
+    const {setDialog,grid,items,setItems} = useUserContext()
     const {id} = useParams();
-    const [items,setItems] = useState([]);
     const [shop,setShop] = useState([]);
     const [loading,setLoading]  = useState(true);
     const [showItem,setShowItem] = useState(false);
-    const [grid,setGrid] = useState(false);
+    
 
     const [viewItem,setViewItem]  = useState({
         name:"",
@@ -61,18 +60,18 @@ const ItemView = () => {
     useEffect(() => {
         getItems();
         getShopInfo();
-        setTimeout(stopLoading,3000)
+        setTimeout(stopLoading,3000);
+    
     },[])
 
     return (
         <>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.7.55/css/materialdesignicons.min.css" />
         <div className="container-fluid py-3 " style={{
-            background:"#f0f2f5"
+            background:"#f0f2f5",
+            overflow:"hidden"
         }}>
-            <button onClick={() => {setGrid(!grid)}} className="btn btn-primary rounded-0 px-3">
-                Change
-            </button>
+            
             <style>
                 {`
                 .card-img {
@@ -191,16 +190,16 @@ const ItemView = () => {
 
 
             </Modal>
-            <div className="row mx-md-5 ">
+            <div className="row mx-md-5 mx-3  ">
                 {items.map((item,id) => {
                     if(grid == true){
-                        return <div key={id} class="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-3 " >
+                        return <div key={id} className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-3 " >
                                 <div className="row no-gutters">
                                     <div className="col-5 p-0">
                                         <img className="card-img rounded-0 col-12" src={`/images/shop/item/`+item.images[0]} />
                                     </div>
-                                    <div class="col-7">
-                                        <div classclassName="card-body py-2 px-2 mr-2 ">
+                                    <div className="col-7">
+                                        <div className="card-body py-2 px-2 mr-2 ">
                                             <h5 className="card-title mt-3 ">{item.name}</h5>
                                             <p className="card-text">{item.description} - <span className="text-muted">{item.price} Kyats </span></p>
                                             <a onClick={() => {

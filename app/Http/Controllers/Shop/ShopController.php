@@ -8,7 +8,8 @@ use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use Nette\Utils\Image;
+use Intervention\Image\Facades\Image;
+
 class ShopController extends Controller
 {
     public function show()
@@ -36,15 +37,13 @@ class ShopController extends Controller
             $shop->shop_name = $req->shop_name;
             $shop->address = $req->address;
             $shop->phone = $req->phone;
-            // if($req->file('logo_image')){
-            //     $image = $req->file('logo_image');
-            //     $image = Image::make($image)->resize(640, 480);
-            //     $image->strip();
-            //     $path = $image->save(public_path('shop/logos/' . time() . '.' . $image->extension));
-            //     if($path){
-            //         $shop->logo_image = public_path('shop/logos/' . time() . '.' . $image->extension);
-            //     }
-            // }
+            if($req->file('logo_image')){
+                $image = $req->file('logo_image');
+                $path = $image->move(public_path('images/shop/logo/'),$shop->id."_".$image->getClientOriginalName());
+                if($path){
+                    $shop->logo_image = $shop->id."_".$image->getClientOriginalName();
+                }
+            }
             if($shop->update()){
                 return response()->json(['status'=>true,"Message"=>"Shop Updated Successfully!","shop"=>$shop]);
             }else {

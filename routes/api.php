@@ -36,6 +36,8 @@ Route::prefix('user')->group(function(){
 
     Route::prefix('items')->controller(ViewController::class)->group(function(){
         Route::post('get','get');
+        Route::post('search-name','itemsSearchByName');
+        Route::post('search-category','itemsSearchByCategory');
     });
 });
 
@@ -105,6 +107,7 @@ Route::prefix('admin')->group(function(){
 Route::prefix('shop')->middleware('auth:sanctum')->group(function(){
     
     Route::prefix('items')->controller(ItemController::class)->group(function(){
+        Route::post('get','showOne');
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');

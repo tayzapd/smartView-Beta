@@ -69,10 +69,10 @@ class ShopController extends Controller
     {    
         if($req->hasFile('logo_image')){
             $shop = Shop::find($req->id);
-            File::delete(public_path('/shoplogo/'.$req->old_logo));
+            File::delete(public_path('/images/shop/logo/'.$shop->logo_image));
             $image = $req->file('logo_image');
             $fileName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('shoplogo'),$fileName);
+            $image->move(public_path('/images/shop/logo/'),$fileName);
             $shop->logo_image = $fileName;
             $shop->shop_name = $req->shop_name;
             $shop->address = $req->address;
