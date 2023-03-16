@@ -1,7 +1,7 @@
 import './User.css'
 import { useUserContext } from '../../../Context/UserContext';
 import { useEffect } from 'react';
-import { AudioOutlined } from '@ant-design/icons';
+import { AudioOutlined,FilterFilled } from '@ant-design/icons';
 import { Grid, Input, Space } from 'antd';
 import { List } from '@material-ui/icons';
 import { GridOn } from '@material-ui/icons';
@@ -96,13 +96,17 @@ const  UserNavbar = () => {
                 
                 
             </nav>
-            <nav style={{background:"rgba(0,0,0,0.1)"}} className="navbar navbar-dark shadow-md sticky-top px-2 ">
+            <nav style={{background:"rgba(0,0,0,0.1)"}} className="navbar  shadow-md sticky-top px-2 col-12 ">
                 <div className="container-fluid">
-
+                    <div className="col-4"></div>
+                    <div className="col-4"></div>
+                    <div className='col-4'>
+                        <button className="btn btn-sm btn-primary" style={{float:"right"}}>
+                            <FilterFilled />
+                        </button>
+                    </div>
                 </div>
-                <button className="btn btn-sm btn-primary" style={{float:"right"}}>
-                    Filter
-                </button>
+                
             </nav>
             <style>
                 {`
