@@ -42,14 +42,13 @@ Route::prefix('user')->group(function(){
 });
 
 
-
 Route::prefix('admin')->group(function(){
     
     Route::prefix('shoptypes')->controller(AdminShopTypeController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
         Route::post('update','update');
-        Route::delete('delete/{id}','delete');
+        Route::post('delete','delete');
         Route::get('trashshow','trashshow');
         Route::post('restore/{id}','restore');
     });

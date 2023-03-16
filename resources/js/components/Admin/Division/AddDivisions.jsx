@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAdminContext } from "../../../Context/AdminContext";
-
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const AddDivisions = ()=>{
-    const {axios} = useAdminContext();
-    const [divisionsInput,setDivisions] = useState({
+    const {axios,divisions,setDivisions} = useAdminContext();
+    const [divisionsInput,setDivisionsInput] = useState({
         name:'',
         remark:'',
     });
 
     const navigate = useNavigate();
-
+    const getDivisions = ()=>{
+        axios.post(`/api/admin/divisions/show`).then(res=>{
+            
+            // console.log(res);
+            setDivisions(res.data);
+           
+        })
+    }
     const handleInput = (e)=>{
-        setDivisions({...divisionsInput,[e.target.name]:e.target.value});
+        setDivisionsInput({...divisionsInput,[e.target.name]:e.target.value});
     }
     // console.log(divisionsInput);
     const saveDivision = (e)=>{
@@ -28,12 +36,18 @@ const AddDivisions = ()=>{
         .then(res=>{
             // console.log(res);
 
-            setDivisions({
-                name:'',
-                remark:''
-            })
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getDivisions();
 
-            window.location.reload(false); 
         })
          
 

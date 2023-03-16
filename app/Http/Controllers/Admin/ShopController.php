@@ -15,7 +15,7 @@ class ShopController extends Controller
 {
     public function show()
     {
-        $shops = Shop::with('shoptype')->get();
+        $shops = Shop::with('shoptype','township')->get();
         if($shops != null){
             return response()->json(['status'=>true,'shops'=>$shops]);
         }
@@ -53,9 +53,9 @@ class ShopController extends Controller
                 $shop->remark = $req->remark;
                 
                 if($shop->save()){
-                    return response()->json(['status'=>true,"Message"=>"Shop Create Successfully!"]);
+                    return response()->json(['status'=>true,"message"=>"Shop Create Successfully!"]);
                 }else {
-                    return response()->json(['status'=>false,"Message"=>"Shop Can't Create,Something was wrong!"]);
+                    return response()->json(['status'=>false,"message"=>"Shop Can't Create,Something was wrong!"]);
                 }
 
 
@@ -82,9 +82,9 @@ class ShopController extends Controller
             $shop->township_id = $req->township_id;
             $shop->remark = $req->remark;
             if($shop->update()){
-                return response()->json(['status'=>true,"Message"=>"Shop Updated Successfully!"]);
+                return response()->json(['status'=>true,"message"=>"Shop Updated Successfully!"]);
             }else {
-                return response()->json(['status'=>false,"Message"=>"Shop Can't Updated,Something was wrong!"]);
+                return response()->json(['status'=>false,"message"=>"Shop Can't Updated,Something was wrong!"]);
             }
         }else{
             $shop = Shop::find($req->id);
@@ -97,9 +97,9 @@ class ShopController extends Controller
             $shop->township_id = $req->township_id;
             $shop->remark = $req->remark;
             if($shop->update()){
-                return response()->json(['status'=>true,"Message"=>"Shop Updated Successfully!"]);
+                return response()->json(['status'=>true,"message"=>"Shop Updated Successfully!"]);
             }else {
-                return response()->json(['status'=>false,"Message"=>"Shop Can't Updated,Something was wrong!"]);
+                return response()->json(['status'=>false,"message"=>"Shop Can't Updated,Something was wrong!"]);
             }
         }
 
@@ -109,9 +109,9 @@ class ShopController extends Controller
     {
         $shop = Shop::find($req->id);
         if($shop->delete()){
-            return response()->json(['status'=>true,"Item move to trash."]);
+            return response()->json(['status'=>true,'message'=>"Item move to trash."]);
         }else {
-            return response()->json(['status'=>true,"Item can't move trash!"]);
+            return response()->json(['status'=>true,'message'=>"Item can't move trash!"]);
         }
     }
 

@@ -17,11 +17,12 @@ const AdminLogin = ()=>{
     const Login = async  (e) => {
         e.preventDefault();
         const {data} = await axios.post('/api/admin/login',login); 
-        if(data.status == true){
-            setToken(data.token);
-            console.log(token);
-            return router('/admin/dashboard');
-        }
+        console.log(data);
+        // if(data.status == true){
+        //     setToken(data.token);
+        //     console.log(token);
+        //     return router('/admin/dashboard');
+        // }
     }
 
 

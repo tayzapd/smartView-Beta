@@ -15,7 +15,7 @@ class ShopTypeController extends Controller
     public function show(Request $req)
     {
         
-        return ShopType::get();
+        return ShopType::get(['id','name','remark']);
 
     }
     
@@ -54,9 +54,9 @@ class ShopTypeController extends Controller
             $shop_type->name = $req->name;
             $shop_type->remark = $req->remark;
             if($shop_type->update()){
-                return response()->json(['status'=>true,"Shop Type updated successfully."]);
+                return response()->json(['status'=>true,'message'=>"Shop Type updated successfully."]);
             }else {
-                return response()->json(['status'=>true,"Shop Type can't updated!"]);
+                return response()->json(['status'=>false,'message'=>"Shop Type can't updated!"]);
             }
         }
     }
@@ -65,7 +65,7 @@ class ShopTypeController extends Controller
         $shop_type = ShopType::find($req->id);
         if($shop_type->delete())
         {
-            return response()->json(['status'=>true,'Message'=>"ShopType Deleted!"]);
+            return response()->json(['status'=>true,'message'=>"ShopType Deleted!"]);
         }
         else
         {

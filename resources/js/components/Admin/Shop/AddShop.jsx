@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const AddShop = () => {
-    const {axios} = useAdminContext();
+    const {axios,shops,setShops} = useAdminContext();
     const [shoptypes,setShoptypes] = useState([]);
     const [townships,setTownships] = useState([]);
     const [shopInput,setShop] = useState({
@@ -46,6 +48,12 @@ const AddShop = () => {
         setShop({...shopInput,[e.target.name]:e.target.value});
     }
 
+    const getShops = () => {
+        axios.post(`/api/admin/shops/show`).then((res)=>{
+            // console.log(res.data.shops);
+            setShops(res.data.shops);
+        })
+    }
     // console.log(expired_date);
     const saveshop = (e)=>{
         e.preventDefault();
@@ -63,14 +71,18 @@ const AddShop = () => {
         // console.log(data);
         axios.post(`/api/admin/shops/create`,data)
             .then(res=>{
-                // console.log(res);
-                setShop({
-                    shop_name:'',
-                    address:'',
-                    phone:'',
-                    remark:'' 
-                })
-                window.location.reload(false);
+                console.log(res);
+                toast.success(res.data.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+                getShops();
             })
     }
     return(

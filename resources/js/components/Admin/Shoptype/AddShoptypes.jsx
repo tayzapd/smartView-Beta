@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAdminContext } from "../../../Context/AdminContext";
 import Swal from "sweetalert2";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 const AddShoptypes = ()=>{
-    const {axios} = useAdminContext();
+    const {axios,shoptypes,setShopTypes} = useAdminContext();
+    
     const [shoptypesInput,setShoptypes] = useState({
         name:'',
         remark:'',
@@ -16,6 +19,13 @@ const AddShoptypes = ()=>{
         setShoptypes({...shoptypesInput,[e.target.name]:e.target.value});
     }
     // console.log(shoptypesInput);
+
+    const getShoptypes = async () => {
+        const res = await axios.post(`/api/admin/shoptypes/show`);
+        console.log(res.data);
+        setShopTypes(res.data);
+
+    }
     const saveShoptype = (e)=>{
         e.preventDefault();
         const data = {
@@ -25,30 +35,28 @@ const AddShoptypes = ()=>{
         axios.post(`/api/admin/shoptypes/create`, data)
         .then(res=>{
             // console.log(res);
-            Swal.fire({
-                position: 'top-end',
-                title: 'GOOD JOB!',
-                text: res.data.message,
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1000
-              }).then(()=>{
-                    setShoptypes({
-                        name:'',
-                        remark:''
-                    })
-                    window.location.reload(false);
-
-              })
-              
+            
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+                getShoptypes();
+            
     
         })
         
-         
+        
 
     }
     return(
         <>
+            
             <form onSubmit={saveShoptype} id="addshoptype">
                 <div className="mb-2">
                     <label>Name</label>

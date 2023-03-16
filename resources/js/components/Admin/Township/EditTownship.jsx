@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import { useAdminContext } from "../../../Context/AdminContext"
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const EditTownship = ()=>{
-    const {township,axios} = useAdminContext();
+    const {township,axios,townships,setTownships} = useAdminContext();
     const [cities,setCities] = useState([]);
 
     const [townshipsInput,setTownshipsInput] = useState({
@@ -14,7 +16,13 @@ const EditTownship = ()=>{
     const [selectInput,setSelect] = useState({
         city_id:township.city_id
     })
-
+    
+    const getTownships = ()=>{
+        axios.post(`/api/admin/townships/show`).then((res)=>{
+            // console.log(res);
+            setTownships(res.data);
+        })
+    }
     useEffect(()=>{
         const getcities = ()=>{
             axios.post(`/api/admin/cities/show`).then((res)=>{
@@ -43,14 +51,17 @@ const EditTownship = ()=>{
         axios.post(`/api/admin/townships/update`,data)
         .then((res)=>{
             // console.log(res);
-            setTownshipsInput({
-                name:'',
-                remark:''
-
-            })
-
-            setSelect({});
-            window.location.reload(true); 
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getTownships();
             
         })
     }

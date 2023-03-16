@@ -28,9 +28,9 @@ class DivisionController extends Controller
             $division->name = $req->name;
             $division->remark = $req->remark;
             if($division->save()){
-                return response()->json(['status'=>true,"Division created successfully."]);
+                return response()->json(['status'=>true,'message'=>"Division created successfully."]);
             }else {
-                return response()->json(['status'=>true,"Division can't created!"]);
+                return response()->json(['status'=>true,'message'=>"Division can't created!"]);
             }
         }
     }
@@ -49,9 +49,9 @@ class DivisionController extends Controller
             $division->name = $req->name;
             $division->remark = $req->remark;
             if($division->update()){
-                return response()->json(['status'=>true,"Division updated successfully."]);
+                return response()->json(['status'=>true,'message'=>"Division updated successfully."]);
             }else {
-                return response()->json(['status'=>true,"Division can't updated!"]);
+                return response()->json(['status'=>true,'message'=>"Division can't updated!"]);
             }
         }
     }
@@ -60,11 +60,11 @@ class DivisionController extends Controller
         $division = Division::find($req->id);
         if($division->delete())
         {
-            return response()->json(['status'=>true,'Message'=>"Division Deleted!"]);
+            return response()->json(['status'=>true,'message'=>"Division Deleted!"]);
         }
         else
         {
-            return response()->json(['status'=>true,'Message'=>"Division can't delete!, Try Again"]);
+            return response()->json(['status'=>true,'message'=>"Division can't delete!, Try Again"]);
         }
 
     }

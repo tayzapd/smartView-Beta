@@ -6,7 +6,8 @@ import Modal from 'react-bootstrap/Modal';
 import AddCity from './AddCity';
 import { useAdminContext } from '../../../Context/AdminContext';
 import EditCity from './EditCity';
-
+import { toast, ToastContainer } from 'react-toastify' ;
+import "react-toastify/dist/ReactToastify.css";
 
 
 const ListCities = () => {
@@ -17,7 +18,7 @@ const ListCities = () => {
     const getCities = () => {
         axios.post(`/api/admin/cities/show`).then((res)=>{
             // console.log(res);
-            setCities(...cities,res.data);
+            setCities(res.data);
         })
     }
 
@@ -43,6 +44,16 @@ const ListCities = () => {
 
         axios.post(`/api/admin/cities/delete/`,data).then((res)=>{
             console.log(res);
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
             getCities();
         })
     }
@@ -106,6 +117,7 @@ const ListCities = () => {
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add City</button>
             </div>
 
+            <ToastContainer/>
             <DataTable
             title="City Lists"
             columns={columns}
@@ -130,7 +142,7 @@ const ListCities = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="addcity">
+                <Button variant="primary" onClick={handleClose} type="submit" form="addcity">
                     Save
                 </Button>
                 </Modal.Footer>

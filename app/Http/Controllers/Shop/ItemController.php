@@ -73,10 +73,10 @@ class ItemController extends Controller
         $item = new Item;
         $item->name = $request->name;
         $item->price = $request->price;
+        $item->currency = "MMK";
         $item->is_available = json_decode($request->is_available);
         $item->privacy = $request->privacy;
         $item->taste = $request->taste;
-        $item->time_limited = date('Y-m-d');
         $item->special_range = $request->special_range;
         $item->view = 0;
         $item->category_id = $request->category_id;

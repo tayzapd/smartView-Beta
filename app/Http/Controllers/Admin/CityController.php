@@ -31,9 +31,9 @@ class CityController extends Controller
             $city->division_id = $req->division_id;
             $city->remark = $req->remark;
             if($city->save()){
-                return response()->json(['status'=>true,"City created successfully."]);
+                return response()->json(['status'=>true,'message'=>"City created successfully."]);
             }else {
-                return response()->json(['status'=>true,"City can't created!"]);
+                return response()->json(['status'=>true,'message'=>"City can't created!"]);
             }
         }
     }
@@ -54,9 +54,9 @@ class CityController extends Controller
             $city->division_id = $req->division_id;
             $city->remark = $req->remark;
             if($city->update()){
-                return response()->json(['status'=>true,"City updated successfully."]);
+                return response()->json(['status'=>true,'message'=>"City updated successfully."]);
             }else {
-                return response()->json(['status'=>true,"City can't updated!"]);
+                return response()->json(['status'=>true,'message'=>"City can't updated!"]);
             }
         }
     }
@@ -65,11 +65,11 @@ class CityController extends Controller
         $city = City::find($req->id);
         if($city->delete())
         {
-            return response()->json(['status'=>true,'Message'=>"City Deleted!"]);
+            return response()->json(['status'=>true,'message'=>"City Deleted!"]);
         }
         else
         {
-            return response()->json(['status'=>true,'Message'=>"City can't delete!, Try Again"]);
+            return response()->json(['status'=>true,'message'=>"City can't delete!, Try Again"]);
         }
 
     }

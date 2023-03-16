@@ -7,24 +7,16 @@ import Form from 'react-bootstrap/Form';
 import AddShoptypes from './AddShoptypes';
 import EditShopType from './EditShopType';
 import { useAdminContext } from '../../../Context/AdminContext';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { GestureSharp } from '@material-ui/icons';
 
-const deleteShoptype = (e,id)=>{
-    e.preventDefault();
-    // console.log(id);
-    const data = {
-        id:id
-    }
-    axios.post(`/api/admin/shoptypes/delete/`,data)
-        .then((res)=>{
-            // console.log(res);
-            window.location.reload(false);
-        })
 
-}
 
 
 const ListShopTypes = () => {
-    const {setShopType,axios} = useAdminContext();
+
+    const {setShopType,axios,shoptypes,setShopTypes} = useAdminContext();
     const columns = [
         {
             name: 'ID',
@@ -63,26 +55,21 @@ const ListShopTypes = () => {
     
     ];
 
-    const [shoptypes,setShoptypes] = useState([]);
     const [pending, setPending] = useState(true);
     const [show, setShow] = useState(false);
+    
+    const getShoptypes = async () => {
+        const res = await axios.post(`/api/admin/shoptypes/show`);
+        console.log(res.data);
+        setShopTypes(res.data);
 
-    const getShoptypes = ()=>{
-        axios.post(`/api/admin/shoptypes/show`).then(res=>{
-            // console.log(res);
-            setShoptypes(...shoptypes,res.data);
-           
-        })
     }
 
     useEffect(()=>{
-        const timeout = setTimeout(() => {
-			getShoptypes();
-			setPending(false);
-		}, 2000);
-        return () => clearTimeout(timeout);
+        getShoptypes();
+      
 
-    },[])
+    },[]);
 
     // console.log(shoptypes);
 
@@ -101,18 +88,43 @@ const ListShopTypes = () => {
         
     }
 
+    const deleteShoptype = (e,id)=>{
+        e.preventDefault();
+        // console.log(id);
+        const data = {
+            id:id
+        }
+        axios.post(`/api/admin/shoptypes/delete/`,data)
+            .then((res)=>{
+                // console.log(res);
+                toast.success(res.data.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+                getShoptypes();
+            })
+
+        
+    
+    }
     return (
         <>
+            
             <div className="container">
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Shop Type</button>
 
             </div>
-            
+            <ToastContainer />
             <DataTable
             title="Shop Type Lists"
             columns={columns}
             data={shoptypes}
-            progressPending={pending}
             fixedHeader
             fixedHeaderScrollHeight="300px"
             pagination
@@ -122,7 +134,7 @@ const ListShopTypes = () => {
             />
 
             {/* Add Shop Type */}
-
+            
             <Modal size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Shop Type</Modal.Title>
@@ -135,7 +147,7 @@ const ListShopTypes = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" onClick={handleClose} form="addshoptype">
+                <Button variant="primary" onClick={handleClose} type="submit"  form="addshoptype">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -154,7 +166,7 @@ const ListShopTypes = () => {
                 <Button variant="secondary" onClick={editClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="updateshoptype">
+                <Button variant="primary" onClick={editClose} type="submit" form="updateshoptype">
                     Update
                 </Button>
                 </Modal.Footer>

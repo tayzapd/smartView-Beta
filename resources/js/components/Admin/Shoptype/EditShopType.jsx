@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext";
+import { toast, ToastContainer } from 'react-toastify';
 
 
 
 const EditShopType = () => {
 
-    const {shoptype,axios} = useAdminContext();
+    const {shoptype,axios,shoptypes,setShopTypes} = useAdminContext();
     const [shoptypesInput,setShoptypes] = useState({
         id:shoptype.id,
         name:shoptype.name,
@@ -16,9 +17,13 @@ const EditShopType = () => {
 
     }
     // console.log(shoptypesInput);
-    // useEffect(() => {
-    //     console.log(`ShopType name : ${shoptype.name}`)
-    // },[])
+    const getShoptypes = async () => {
+        const res = await axios.post(`/api/admin/shoptypes/show`);
+        console.log(res.data);
+        setShopTypes(res.data);
+
+    }
+
     const updateShoptype = (e)=>{
         e.preventDefault();
         const data = {
@@ -26,16 +31,22 @@ const EditShopType = () => {
             name:shoptypesInput.name,
             remark:shoptypesInput.remark
         }
+
         axios.post(`/api/admin/shoptypes/update`, data)
         .then(res=>{
             // console.log(res);
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getShoptypes();
 
-            setShoptypes({
-                name:'',
-                remark:''
-            })
-
-            window.location.reload(false);  
         })
     }
     return(
