@@ -6,6 +6,7 @@ import { Grid, Input, Space } from 'antd';
 import { List } from '@material-ui/icons';
 import { GridOn } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
 const { Search } = Input;
 const suffix = (
   <AudioOutlined
@@ -16,7 +17,7 @@ const suffix = (
   />
 );
 const  UserNavbar = () => {
-    const {shop,grid,setGrid,setItems} = useUserContext();
+    const {shop,grid,setGrid,setItems,setCategories,categories} = useUserContext();
     const {id} = useParams();
     const items = [
         {
@@ -35,8 +36,26 @@ const  UserNavbar = () => {
           key: '3',
         },
       ];
+
+    const getCategories = async () => {
+        const { data } = await axios.post('/api/user/categories/showAll',{shop_id:id});
+        setCategories(data.categories);
+    }
+
+    const getItems = async (cateId) => { 
+        const form = {
+            cate_id:cateId,
+            id:id
+        }
+        const { data } = await axios.post('/api/user/items/search-category',form);
+        setItems(data.items)
+    } 
+
     useEffect(() => {
-    })
+        getCategories();
+    },[]);
+
+
     const onSearch = async (value) => {
         const form = {
             shop_id:id,
@@ -96,14 +115,25 @@ const  UserNavbar = () => {
                 
                 
             </nav>
-            <nav style={{background:"rgba(0,0,0,0.1)"}} className="navbar  shadow-md sticky-top px-2 col-12 ">
+            <nav style={{background:"rgba(0,0,0,0.1)"}} className="navbar navbar-sm shadow-md sticky-top px-2 col-12 ">
                 <div className="container-fluid">
                     <div className="col-4"></div>
                     <div className="col-4"></div>
                     <div className='col-4'>
-                        <button className="btn btn-sm btn-primary" style={{float:"right"}}>
+                    <Dropdown style={{float:"right"}} size='sm'>
+                        <Dropdown.Toggle size='sm' variant="primary" id="dropdown-basic">
                             <FilterFilled />
-                        </button>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            {categories.map((cate,index) => {
+                                return (
+                                    <Dropdown.Item onClick={() => {getItems(cate.id)}} key={index}>{cate.name}</Dropdown.Item>
+                                )
+                            })}
+                        </Dropdown.Menu>
+                    </Dropdown>
+
                     </div>
                 </div>
                 

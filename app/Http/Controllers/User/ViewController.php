@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Shop;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ViewController extends Controller
@@ -54,16 +55,10 @@ class ViewController extends Controller
 
     public function itemsSearchByCategory(Request $req)
     {
-        $shopId = $req->id;
-        $name   = $req->name;
-        $cate_id   = $req->cate_id;
-        $items = Item::whereHas('category', function ($query) use ($shopId,$cate_id) {
-                        $query->where('shop_id', $shopId);
-                        $query->where('id', $cate_id);
-                    })
-                    ->where('name',$name)
-                    ->with('category:id,name')
-                    ->get();
+        $cate_id= $req->cate_id;
+        $items = Item::where('category_id',$cate_id)
+                        ->with('category:id,name')
+                        ->get();
 
         foreach ($items as $item) {
             $item->name = $item->name;
@@ -76,6 +71,15 @@ class ViewController extends Controller
         }
     }
 
+    public function showAll(Request $req)
+    {
+        $categories =  Category::where('shop_id',$req->shop_id)->get();
+        return response()->json([
+            'status'=>true,
+            'categories'=>$categories
+
+        ]);
+    }
     public function getShop(Request $req)
     {
         $shop = Shop::where('id',$req->id)

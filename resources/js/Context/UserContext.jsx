@@ -9,6 +9,8 @@ const UserContext = createContext({
     setDialog:() => {},
     grid:false,
     setGrid:() => {},
+    categories:[],
+    setCategories:() => {} , 
 });
 
 
@@ -18,6 +20,7 @@ export const UserProvider = ({children}) => {
     const [grid,setGrid] = useState(false);
     const [shop,setShop] = useState({});
     const [dialog,setDialog] = useState(false);
+    const [categories,setCategories] = useState([]);
     const [theme,setTheme] = useState({
         navBarColor:'',
         navBarBackground:'',
@@ -32,7 +35,9 @@ export const UserProvider = ({children}) => {
             dialog,
             setDialog,
             grid,
-            setGrid
+            setGrid,
+            categories,
+            setCategories
         }} >
             {children}
         </UserContext.Provider>

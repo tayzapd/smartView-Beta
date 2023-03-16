@@ -39,6 +39,10 @@ Route::prefix('user')->group(function(){
         Route::post('search-name','itemsSearchByName');
         Route::post('search-category','itemsSearchByCategory');
     });
+
+    Route::prefix('categories')->controller(ViewController::class)->group(function(){
+        Route::post('showAll','showAll');
+    });
 });
 
 

@@ -17,7 +17,6 @@ const ListCategories = () => {
 
     const getCategories = ()=>{
         axios.post(`/api/admin/categories/showAll`).then((res)=>{
-            // console.log(res);
             setCategories(res.data);
         })
     }
@@ -25,7 +24,6 @@ const ListCategories = () => {
         getCategories();
     },[])
 
-    // console.log(categories);
 
     const [showedit, setEditShow] = useState(false);
     const editClose = () => setEditShow(false);
