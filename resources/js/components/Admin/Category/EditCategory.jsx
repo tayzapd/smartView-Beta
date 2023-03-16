@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext";
+import { toast, ToastContainer } from 'react-toastify' ;
+import "react-toastify/dist/ReactToastify.css";
 
 const EditCategory = () => {
-    const {category,axios} = useAdminContext();
+    const {category,axios,categories,setCategories} = useAdminContext();
     const [categoriesInput,setCategoriesInput] = useState({
         id:category.id,
         name:category.name,
@@ -21,10 +23,17 @@ const EditCategory = () => {
             setShops(...shops,res.data.shops);
         })
     }
+    const getCategories = ()=>{
+        axios.post(`/api/admin/categories/showAll`).then(({data})=>{
+            // console.log(data);
+            setCategories(data);
+        })
+    }
     useEffect(()=>{
         getShops();
     },[])
 
+   
     const handleInput = (e)=>{
         setCategoriesInput({...categoriesInput,[e.target.name]:e.target.value});
 
@@ -40,14 +49,17 @@ const EditCategory = () => {
 
         axios.post(`/api/admin/categories/update`,data)
         .then((res)=>{
-            setCategoriesInput({
-                name:'',
-                remark:''
-
-            })
-
-            setSelect({});
-            window.location.reload(false); 
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getCategories();
             
         })
     }

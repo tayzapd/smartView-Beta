@@ -29,9 +29,9 @@ class TownshipController extends Controller
             $township->remark = $req->remark;
             $township->city_id = $req->city_id;
             if($township->save()){
-                return response()->json(['status'=>true,"Township created successfully."]);
+                return response()->json(['status'=>true,'message'=>"Township created successfully."]);
             }else {
-                return response()->json(['status'=>true,"Township can't created!"]);
+                return response()->json(['status'=>true,'message'=>"Township can't created!"]);
             }
         }
     }
@@ -52,9 +52,9 @@ class TownshipController extends Controller
             $township->city_id = $req->city_id;
             $township->remark = $req->remark;
             if($township->update()){
-                return response()->json(['status'=>true,"Township updated successfully."]);
+                return response()->json(['status'=>true,'message'=>"Township updated successfully."]);
             }else {
-                return response()->json(['status'=>true,"Township can't updated!"]);
+                return response()->json(['status'=>true,'message'=>"Township can't updated!"]);
             }
         }
     }
@@ -63,11 +63,11 @@ class TownshipController extends Controller
         $township = Township::find($req->id);
         if($township->delete())
         {
-            return response()->json(['status'=>true,'Message'=>"Township Deleted!"]);
+            return response()->json(['status'=>true,'message'=>"Township Deleted!"]);
         }
         else
         {
-            return response()->json(['status'=>true,'Message'=>"Township can't delete!, Try Again"]);
+            return response()->json(['status'=>true,'message'=>"Township can't delete!, Try Again"]);
         }
 
     }

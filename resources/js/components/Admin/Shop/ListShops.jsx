@@ -5,21 +5,22 @@ import Modal from 'react-bootstrap/Modal';
 import AddShop from "./AddShop";
 import { useAdminContext } from "../../../Context/AdminContext";
 import EditShop from "./EditShop";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const ListShops = ()=>{
-    const {axios,setShop} = useAdminContext();
-    const [shops,setShops] = useState([]);
+    const {axios,setShop,shops,setShops} = useAdminContext();
     const [show, setShow] = useState(false);
     
-    const getshops = () => {
+    const getShops = () => {
         axios.post(`/api/admin/shops/show`).then((res)=>{
             // console.log(res.data.shops);
-            setShops(...shops,res.data.shops);
+            setShops(res.data.shops);
         })
     }
 
     useEffect(()=>{
-        getshops();
+        getShops();
     },[])
 
     const handleClose = () => setShow(false);
@@ -45,7 +46,17 @@ const ListShops = ()=>{
 
         axios.post(`/api/admin/shops/delete/`,data).then((res)=>{
             // console.log(res);
-            window.location.reload(false);
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getShops();
         })
     }
 
@@ -123,7 +134,7 @@ const ListShops = ()=>{
             <div className="container">
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Shop</button>
             </div>
-
+            <ToastContainer/>
             <DataTable
             title="Shop Lists"
             columns={columns}
@@ -149,7 +160,7 @@ const ListShops = ()=>{
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="addshop">
+                <Button variant="primary" onClick={handleClose} type="submit" form="addshop">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -157,7 +168,7 @@ const ListShops = ()=>{
 
             {/* EDIT SHOP */}
 
-            <Modal size="lg" show={showedit} onHide={editClose}>
+            <Modal size="lg" show={showedit} onHide={editClose} scrollable={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Shop</Modal.Title>
                 </Modal.Header>
@@ -169,7 +180,7 @@ const ListShops = ()=>{
                 <Button variant="secondary" onClick={editClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="updateshop">
+                <Button variant="primary" onClick={editClose} type="submit" form="updateshop">
                     Update
                 </Button>
                 </Modal.Footer>

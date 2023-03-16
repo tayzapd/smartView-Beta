@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext"
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const EditCity = () => {
     const {city,axios,setCities,cities} = useAdminContext();
@@ -47,13 +49,17 @@ const EditCity = () => {
         axios.post(`/api/admin/cities/update`,data)
         .then((res)=>{
             // console.log(res);
-            setCitiesInput({
-                name:'',
-                remark:''
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
 
-            })
-
-            setSelect({});
             getCities();
             
 

@@ -1,18 +1,30 @@
 import { useEffect, useState } from "react";
 import { useAdminContext } from "../../../Context/AdminContext"
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const EditDivision = () => { 
-    const {division,axios} = useAdminContext();
+    const {division,axios,divisions,setDivisions} = useAdminContext();
 
     const [divisionInput,setDivisionInput] = useState({
         id:division.id,
         name:division.name,
         remark:division.remark 
     })
-    // useEffect(() => {
-    //     console.log(`Division name : ${division.name}`)
-    // },[])
 
+    const getDivisions = ()=>{
+        axios.post(`/api/admin/divisions/show`).then(res=>{
+            
+            // console.log(res);
+            setDivisions(res.data);
+           
+        })
+    }
+    useEffect(() => {
+        getDivisions();
+    },[])
+
+    
     const handleInput = (e)=>{
         setDivisionInput({...divisionInput,[e.target.name]:e.target.value});
 
@@ -27,14 +39,19 @@ const EditDivision = () => {
         }
         axios.post(`/api/admin/divisions/update`, data)
         .then(res=>{
-            console.log(res);
+            // console.log(res);
 
-            setDivisionInput({
-                name:'',
-                remark:''
-            })
-
-            window.location.reload(false);  
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getDivisions();
         })
     }
     return(

@@ -5,10 +5,11 @@ import Modal from 'react-bootstrap/Modal';
 import { useAdminContext } from "../../../Context/AdminContext";
 import AddCategory from "./AddCatagory";
 import EditCategory from "./EditCategory";
+import { toast, ToastContainer } from 'react-toastify' ;
+import "react-toastify/dist/ReactToastify.css";
 
 const ListCategories = () => {
-    const {axios,setCategory} = useAdminContext();
-    const [categories,setCategories] = useState([]);
+    const {axios,setCategory,categories,setCategories} = useAdminContext();
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -17,7 +18,7 @@ const ListCategories = () => {
     const getCategories = ()=>{
         axios.post(`/api/admin/categories/showAll`).then((res)=>{
             // console.log(res);
-            setCategories(...categories,res.data);
+            setCategories(res.data);
         })
     }
     useEffect(()=>{
@@ -33,7 +34,6 @@ const ListCategories = () => {
         e.preventDefault();
         setEditShow(true);
         setCategory(row);
-        getCategories()
     }
 
     const deleteCategory = (e,id)=>{
@@ -41,7 +41,17 @@ const ListCategories = () => {
             id:id
         }
         axios.post(`/api/admin/categories/delete`,data).then((res)=>{
-            // console.log(res);
+            console.log(res);
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
             getCategories();
         })
     }
@@ -95,6 +105,8 @@ const ListCategories = () => {
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Category</button>
             </div>
 
+
+            <ToastContainer/>
             <DataTable
             title="Category Lists"
             columns={columns}
@@ -119,7 +131,7 @@ const ListCategories = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="addcategory">
+                <Button variant="primary" onClick={handleClose} type="submit" form="addcategory">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -139,7 +151,7 @@ const ListCategories = () => {
                 <Button variant="secondary" onClick={editClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="updatecategory">
+                <Button variant="primary" onClick={editClose} type="submit" form="updatecategory">
                     Update
                 </Button>
                 </Modal.Footer>

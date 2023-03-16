@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useAdminContext } from "../../../Context/AdminContext";
 import { useState } from "react";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const EditShop = () =>{
-    const {shop,axios} = useAdminContext();
+    const {shop,axios,shops,setShops} = useAdminContext();
     const [shoptypes,setShoptypes] = useState([]);
     const [townships,setTownships] = useState([]);
 
@@ -48,6 +50,13 @@ const EditShop = () =>{
     const handleChange =(e)=>{
         setImage({...imageInput,logo_image:e.target.files[0]});
     }
+
+    const getShops = () => {
+        axios.post(`/api/admin/shops/show`).then((res)=>{
+            // console.log(res.data.shops);
+            setShops(res.data.shops);
+        })
+    }
     
     // console.log(imageInput);
     const updateshop = (e)=>{
@@ -68,15 +77,18 @@ const EditShop = () =>{
         // console.log(data);
         axios.post(`/api/admin/shops/update`,data)
             .then(res=>{
-                // console.log(res);
-                setShopInput({
-                    name:'',
-                    address:'',
-                    phone:'',
-                    remark:''
-    
-                })
-                window.location.reload(false);
+                console.log(res);
+                toast.success(res.data.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+                getShops();
             })
     }
     return(

@@ -34,9 +34,9 @@ class CategoryController extends Controller
             $category->remark = $req->remark;
             $category->shop_id = $req->shop_id;
             if($category->save()){
-                return response()->json(['status'=>true,"Category created successfully."]);
+                return response()->json(['status'=>true,'message'=>"Category created successfully."]);
             }else {
-                return response()->json(['status'=>true,"Category can't created!"]);
+                return response()->json(['status'=>true,'message'=>"Category can't created!"]);
             }
         }
     }
@@ -57,9 +57,9 @@ class CategoryController extends Controller
             $category->shop_id = $req->shop_id;
             $category->remark = $req->remark;
             if($category->update()){
-                return response()->json(['status'=>true,"Category updated successfully."]);
+                return response()->json(['status'=>true,'message'=>"Category updated successfully."]);
             }else {
-                return response()->json(['status'=>true,"Category can't updated!"]);
+                return response()->json(['status'=>true,'message'=>"Category can't updated!"]);
             }
         }
     }
@@ -68,11 +68,11 @@ class CategoryController extends Controller
         $category = Category::find($req->id);
         if($category->delete())
         {
-            return response()->json(['status'=>true,'Message'=>"Category Deleted!"]);
+            return response()->json(['status'=>true,'message'=>"Category Deleted!"]);
         }
         else
         {
-            return response()->json(['status'=>true,'Message'=>"Category can't delete!, Try Again"]);
+            return response()->json(['status'=>true,'message'=>"Category can't delete!, Try Again"]);
         }
 
     }

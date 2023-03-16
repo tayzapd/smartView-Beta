@@ -6,20 +6,20 @@ import Modal from 'react-bootstrap/Modal';
 import AddTownship from "./AddTownship";
 import { useAdminContext } from "../../../Context/AdminContext";
 import EditTownship from "./EditTownship";
-
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const ListTownships = () => {
-    const {axios,setTownship} = useAdminContext();
-    const [townships,setTownships] = useState([]);
+    const {axios,setTownship,townships,setTownships} = useAdminContext();
     const [show, setShow] = useState(false);
     const [pending, setPending] = useState(true);
 
 
-    const getTownships = ()=>{
-        axios.post(`/api/admin/townships/show`).then((res)=>{
-            // console.log(res);
-            setTownships(...townships,res.data);
+    const getTownships = async ()=>{
+        const res = await axios.post(`/api/admin/townships/show`).then((res)=>{
+            // console.log(res.data);
+            setTownships(res.data);
         })
     }
 
@@ -33,7 +33,7 @@ const ListTownships = () => {
         
     },[])
 
-    // console.log(townships);
+    console.log(townships);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -46,7 +46,17 @@ const ListTownships = () => {
 
         axios.post(`/api/admin/townships/delete/`,data).then((res)=>{
             console.log(res);
-            window.location.reload(true);
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getTownships();
         })
     }
 
@@ -109,7 +119,7 @@ const ListTownships = () => {
             <div className="container">
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Township</button>
             </div>
-
+            <ToastContainer/>
             <DataTable
             title="Township Lists"
             columns={columns}
@@ -134,7 +144,7 @@ const ListTownships = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="addtownship">
+                <Button variant="primary" onClick={handleClose} type="submit" form="addtownship">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -153,7 +163,7 @@ const ListTownships = () => {
                 <Button variant="secondary" onClick={editClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="updatetownship">
+                <Button variant="primary" onClick={editClose} type="submit" form="updatetownship">
                     Update
                 </Button>
                 </Modal.Footer>

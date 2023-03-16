@@ -6,26 +6,26 @@ import Form from 'react-bootstrap/Form';
 import AddDivisions from "./AddDivisions";
 import { useAdminContext } from "../../../Context/AdminContext";
 import EditDivision from "./EditDivision";
-
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const ListDivisions = () => {
-    const {setDivision,axios} = useAdminContext();
-    const [divisions,setDivisions] = useState([]);
+    const {setDivision,axios,divisions,setDivisions} = useAdminContext();
     const [pending, setPending] = useState(true);
     const [show, setShow] = useState(false);
 
 
     // SHOW
     const getDivisions = ()=>{
-        axios.post(`/api/admin/divisions/show/`).then(res=>{
+        axios.post(`/api/admin/divisions/show`).then(res=>{
             
             // console.log(res);
-            setDivisions(...divisions,res.data);
+            setDivisions(res.data);
            
         })
     }
-
+    // console.log(divisions);
     useEffect(()=>{
         const timeout = setTimeout(() => {
             getDivisions();
@@ -35,7 +35,7 @@ const ListDivisions = () => {
     },[]);
 
     // DELETE
-    const deleteShoptype = (e,id) => {
+    const deleteDivision = (e,id) => {
         e.preventDefault();
         // console.log(id);
         const data = {
@@ -43,8 +43,19 @@ const ListDivisions = () => {
         }
 
         axios.post(`/api/admin/divisions/delete/`,data).then((res)=>{
-            console.log(res);
-            window.location.reload(false);
+            // console.log(res);
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getDivisions();
+            
         })
     }
 
@@ -58,7 +69,7 @@ const ListDivisions = () => {
         e.preventDefault();
         setEditShow(true);
         setDivision(row);
-        console.log(row);  
+        // console.log(row);  
     }
 
     const columns = [
@@ -92,7 +103,7 @@ const ListDivisions = () => {
             selector: (row) => 
             <button
                 className='btn btn-danger'
-                onClick={(e)=>deleteShoptype(e,row.id)}
+                onClick={(e)=>deleteDivision(e,row.id)}
             >Delete
             </button>,
         },
@@ -105,6 +116,7 @@ const ListDivisions = () => {
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Division</button>
             </div>
 
+            <ToastContainer/>
             <DataTable
             title="Divison Lists"
             columns={columns}
@@ -129,7 +141,7 @@ const ListDivisions = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="adddivision">
+                <Button variant="primary" onClick={handleClose} type="submit" form="adddivision">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -149,7 +161,7 @@ const ListDivisions = () => {
                 <Button variant="secondary" onClick={editClose}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" form="updatedivision">
+                <Button variant="primary" onClick={editClose} type="submit" form="updatedivision">
                     Update
                 </Button>
                 </Modal.Footer>

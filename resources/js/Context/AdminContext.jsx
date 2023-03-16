@@ -16,7 +16,17 @@ const AdminContext = createContext({
     users:[],
     setUsers:() =>{},
     cities:[],
-    setCities:() => {}
+    setCities:() => {},
+    categories:[],
+    setCategories:() => {},
+    divisions:[],
+    setDivisions:() => {},
+    shops:[],
+    setShops:() => {},
+    shoptypes:[],
+    setShopTypes:() => {},
+    townships:[],
+    setTownships:() => {},
 });
 
 
@@ -24,6 +34,11 @@ export const AdminProvider = ({children}) => {
     const [user,_setUser] = useState({});
     const [users,setUsers] = useState([]);
     const [cities,setCities] = useState([]);
+    const [categories,setCategories] = useState([]);
+    const [divisions,setDivisions] = useState([]);
+    const [shops,setShops] = useState([]);
+    const [shoptypes,setShopTypes] = useState([]);
+    const [townships,setTownships] = useState([]);
     const [token,_setToken] = useState(localStorage.getItem('admin_token'));
     const [shoptype,setShopType] = useState({});
     const [division,setDivision] = useState({});
@@ -70,6 +85,16 @@ export const AdminProvider = ({children}) => {
             setCategory,
             cities,
             setCities,
+            categories,
+            setCategories,
+            divisions,
+            setDivisions,
+            shops,
+            setShops,
+            shoptypes,
+            setShopTypes,
+            townships,
+            setTownships,
         }} >
             {children}
         </AdminContext.Provider>

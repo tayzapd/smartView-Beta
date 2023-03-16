@@ -67,9 +67,6 @@ const ItemView = () => {
     return (
         <>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.7.55/css/materialdesignicons.min.css" />
-
-        <div className="container-fluid py-3 ">
-
         <div className="container-fluid py-3 " style={{
             background:"#f0f2f5"
         }}>
@@ -95,6 +92,7 @@ const ItemView = () => {
                   
                 `}
             </style>
+
             {/* ITEM ONE PAGE VIEW   */}
             <Modal
                 width={1000}
@@ -193,27 +191,6 @@ const ItemView = () => {
 
 
             </Modal>
-            <div className="row row-cols-1 row-cols-md-2 px-0">
-                {items.map((item,index) => {
-                     
-                return  <Card
-                            key={index}
-                            className="mx-lg-3 mb-sm-3 "
-                            hoverable
-                            loading={loading}
-                            cover={<img style={{height:250,margin:0,padding:0}} alt="card image" src={`/images/shop/item/`+item.images[0]} />}
-                            style={{ width: 300 ,margin:20,padding:0}}
-                            >
-                                <Meta title={item.name} description={`${item.description}`} />
-                                <p>${item.price}</p>
-                                <Button type="primary" onClick={() => {
-                                    ShowOneItem(index)
-                                }}>View More</Button>
-                        </Card>
-
-                        
-
-=======
             <div className="row mx-md-5 ">
                 {items.map((item,id) => {
                     if(grid == true){
@@ -249,7 +226,6 @@ const ItemView = () => {
                                         }}>View More</Button>
                                 </Card>
                     }
->>>>>>> 8bd81ac2312298af5eae97306801b66b9d37eb6c
                 })}
                 
             </div>

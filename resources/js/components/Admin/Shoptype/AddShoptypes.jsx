@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 const AddShoptypes = ()=>{
-    const {axios} = useAdminContext();
+    const {axios,shoptypes,setShopTypes} = useAdminContext();
     
     const [shoptypesInput,setShoptypes] = useState({
         name:'',
@@ -19,6 +19,13 @@ const AddShoptypes = ()=>{
         setShoptypes({...shoptypesInput,[e.target.name]:e.target.value});
     }
     // console.log(shoptypesInput);
+
+    const getShoptypes = async () => {
+        const res = await axios.post(`/api/admin/shoptypes/show`);
+        console.log(res.data);
+        setShopTypes(res.data);
+
+    }
     const saveShoptype = (e)=>{
         e.preventDefault();
         const data = {
@@ -28,25 +35,10 @@ const AddShoptypes = ()=>{
         axios.post(`/api/admin/shoptypes/create`, data)
         .then(res=>{
             // console.log(res);
-            // Swal.fire({
-            //     position: 'top-end',
-            //     title: 'GOOD JOB!',
-            //     text: res.data.message,
-            //     icon: 'success',
-            //     showConfirmButton: false,
-            //     timer: 1000
-            //   }).then(()=>{
-            //         setShoptypes({
-            //             name:'',
-            //             remark:''
-            //         })
-            //         window.location.reload(false);
-
-            //   })
-
+            
             toast.success(res.data.message, {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: false,
                 pauseOnHover: false,
@@ -54,7 +46,7 @@ const AddShoptypes = ()=>{
                 progress: undefined,
                 theme: "light",
                 });
-                window.location.reload();
+                getShoptypes();
             
     
         })

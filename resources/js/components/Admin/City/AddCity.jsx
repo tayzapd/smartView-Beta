@@ -1,10 +1,11 @@
 import { useState,useEffect } from "react";
 import { useAdminContext } from "../../../Context/AdminContext";
-
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const AddCity = () => {
-    const {axios} = useAdminContext();
+    const {axios,cities,setCities} = useAdminContext();
     const [citiesInput,setCitiesInput] = useState({
         name:'',
         remark:''
@@ -27,6 +28,13 @@ const AddCity = () => {
         setCitiesInput({...citiesInput,[e.target.name]:e.target.value});
 
     }
+
+    const getCities = () => {
+        axios.post(`/api/admin/cities/show`).then(({data})=>{
+            // console.log(res);
+            setCities(data);
+        })
+    }
     // console.log(citiesInput);
     // console.log(selectInput);
 
@@ -40,14 +48,18 @@ const AddCity = () => {
 
         // console.log(data);
         axios.post(`/api/admin/cities/create/`,data).then((res)=>{
-            // console.log(res);
-            setCitiesInput({
-                name:'',
-                remark:'',
-            })
-
-            setSelect({});
-            window.location.reload(false);
+            console.log(res);
+            toast.success(res.data.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+                getCities();
         })
     }
     return(
