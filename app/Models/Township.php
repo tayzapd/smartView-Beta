@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\City;
 use App\Models\Shop;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Township extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    use SoftDeletes,CascadeSoftDeletes;
+
+    protected $cascadeDeletes = ['shops'];
 
     protected $dates = ['deleted_at'];
 

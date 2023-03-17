@@ -18,7 +18,7 @@ const EditCity = () => {
 
     const getCities = () => {
         axios.post(`/api/admin/cities/show`).then(({data})=>{
-            // console.log(res);
+            console.log(res);
             setCities(data);
         })
     }

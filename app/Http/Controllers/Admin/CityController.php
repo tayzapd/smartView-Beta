@@ -12,6 +12,7 @@ class CityController extends Controller
     public function show(Request $req)
     {
         return City::with('division')->get();
+  
     }
     
 

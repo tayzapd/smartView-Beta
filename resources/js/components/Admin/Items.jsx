@@ -179,11 +179,13 @@ const Items = () => {
 
     const getShops = async  () => {
         const { data } = await axios.post(`/api/admin/shops/show`); 
+        // console.log(data);
         setShopList(data.shops);
     }
     const getCategories = async (shop_id) => {
         const { data } = await axios.post('/api/admin/categories/show',{shop_id});
         setCategories(data)
+        console.log(data);
     }
 
     useEffect(() => {
