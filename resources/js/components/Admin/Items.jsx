@@ -211,7 +211,7 @@ return (
                     <form onSubmit={createItem}>
                         <input className="form-control my-2 " type="text" name="name" onChange={(e) => {setItem({...item,[e.target.name]:e.target.value})}} placeholder="Name" />
 
-                        <Form.Select name="shop_id" onChange={(e) => { item.shop_id = e.target.value; getCategories() }} aria-label="Shop List" className="mb-3">
+                        <Form.Select name="shop_id" onChange={(e) => { item.shop_id = e.target.value; getCategories(e.target.value) }} aria-label="Shop List" className="mb-3">
                             <option>Shop</option>
                             {
                                 shopList.length != 0 ?
