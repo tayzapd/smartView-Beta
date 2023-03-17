@@ -1,11 +1,12 @@
 import './User.css'
 import { useUserContext } from '../../../Context/UserContext';
-import { useEffect } from 'react';
-import { AudioOutlined } from '@ant-design/icons';
+import React,{ useEffect,useState } from 'react';
+import { AudioOutlined,FilterFilled } from '@ant-design/icons';
 import { Grid, Input, Space } from 'antd';
 import { List } from '@material-ui/icons';
 import { GridOn } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
+import { Dropdown,Form } from 'react-bootstrap';
 const { Search } = Input;
 const suffix = (
   <AudioOutlined
@@ -15,8 +16,52 @@ const suffix = (
     }}
   />
 );
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+      {/* &#x25bc; */}
+    </a>
+  ));
+  
+  const CustomMenu = React.forwardRef(
+    ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+      const [search, setSearch] = useState('');
+  
+      return (
+        <div
+          ref={ref}
+          style={style}
+          className={className}
+          aria-labelledby={labeledBy}
+        >
+          <Form.Control
+            autoFocus
+            className="mx-3 my-2 w-auto"
+            placeholder="Search..."
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          <ul className="list-unstyled">
+            {React.Children.toArray(children).filter(
+              (child) =>
+                !search || child.props.children.toLowerCase().startsWith(search),
+            )}
+          </ul>
+        </div>
+      );
+    },
+  );
+
+  
 const  UserNavbar = () => {
-    const {shop,grid,setGrid,setItems} = useUserContext();
+    const {shop,grid,setGrid,setItems,setCategories,categories} = useUserContext();
     const {id} = useParams();
     const items = [
         {
@@ -35,8 +80,26 @@ const  UserNavbar = () => {
           key: '3',
         },
       ];
+
+    const getCategories = async () => {
+        const { data } = await axios.post('/api/user/categories/showAll',{shop_id:id});
+        setCategories(data.categories);
+    }
+
+    const getItems = async (cateId) => { 
+        const form = {
+            cate_id:cateId,
+            id:id
+        }
+        const { data } = await axios.post('/api/user/items/search-category',form);
+        setItems(data.items)
+    } 
+
     useEffect(() => {
-    })
+        getCategories();
+    },[]);
+
+
     const onSearch = async (value) => {
         const form = {
             shop_id:id,
@@ -96,13 +159,28 @@ const  UserNavbar = () => {
                 
                 
             </nav>
-            <nav style={{background:"rgba(0,0,0,0.1)"}} className="navbar navbar-dark shadow-md sticky-top px-2 ">
+            <nav style={{background:"rgba(0,0,0,0.1)"}} className="navbar navbar-sm shadow-md sticky-top px-2 col-12 ">
                 <div className="container-fluid">
+                    <div className="col-4"></div>
+                    <div className="col-4"></div>
+                    <div className='col-4'>
+                    <Dropdown style={{float:"right"}} size='sm'>
+                        <Dropdown.Toggle as={CustomToggle} size='sm' variant="primary" id="dropdown-basic">
+                            <FilterFilled />
+                        </Dropdown.Toggle>
 
+                        <Dropdown.Menu as={CustomMenu}>
+                            {categories.map((cate,index) => {
+                                return (
+                                    <Dropdown.Item onClick={() => {getItems(cate.id)}} key={index}>{cate.name}</Dropdown.Item>
+                                )
+                            })}
+                        </Dropdown.Menu>
+                    </Dropdown>
+
+                    </div>
                 </div>
-                <button className="btn btn-sm btn-primary" style={{float:"right"}}>
-                    Filter
-                </button>
+                
             </nav>
             <style>
                 {`

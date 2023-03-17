@@ -12,6 +12,7 @@ import ItemView from './components/User/ItemView';
 import ShopLogin from "./components/Shop/Auth/Login";
 import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
 import AdminLogin from "./components/Admin/Auth/AdminLogin";
+import UsersList from "./components/Admin/User/UserList";
 import ListShopTypes from "./components/Admin/Shoptype/ListShoptypes";
 import ListDivisions from "./components/Admin/Division/ListDivisions";
 import ListCities from "./components/Admin/City/ListCities";
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
             {
                 path:'qrcode',
                 element:<AdminQrCode /> 
+            },
+            {
+                path:'users',
+                element:<UsersList /> 
             }
         ]
     },

@@ -34,6 +34,7 @@ const items = [
   getItem('Categories','/admin/categories',<UserOutlined/>),
   getItem('Items','/admin/items',<UserOutlined/>),
   getItem('Qr Code ','/admin/qrcode',<UserOutlined/>),
+  getItem('Users','/admin/users',<UserOutlined/>),
 ]
 
 

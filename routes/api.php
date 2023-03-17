@@ -39,6 +39,10 @@ Route::prefix('user')->group(function(){
         Route::post('search-name','itemsSearchByName');
         Route::post('search-category','itemsSearchByCategory');
     });
+
+    Route::prefix('categories')->controller(ViewController::class)->group(function(){
+        Route::post('showAll','showAll');
+    });
 });
 
 
@@ -97,6 +101,14 @@ Route::prefix('admin')->group(function(){
     Route::prefix('items')->controller(AdminItemController::class)->group(function() {
         Route::post('show','show');
         Route::post('create','create');
+        Route::post('update','update');
+        Route::post('delete','delete');
+        Route::post('restore','restore');
+    });
+
+    Route::prefix('users')->controller(AdminUserController::class)->group(function() {
+        Route::post('show','show');
+        Route::post('create','add');
         Route::post('update','update');
         Route::post('delete','delete');
         Route::post('restore','restore');
