@@ -10,15 +10,20 @@ use App\Models\Category;
 use App\Models\Shoptype;
 use App\Models\Township;
 use App\Models\Item;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
+
 class Shop extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    use SoftDeletes,CascadeSoftDeletes;
+
+    protected $cascadeDeletes = ['shops'];
+
     protected $dates = ['deleted_at'];
 
     protected $with=['shoptype','township'];
 
-
+    
     public function users()
     {
         return $this->hasMany(User::class);

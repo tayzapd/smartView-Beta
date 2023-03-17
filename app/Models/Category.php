@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Item;
 use App\Models\Shop;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
+
 class Category extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    use SoftDeletes,CascadeSoftDeletes;
+
+    protected $cascadeDeletes = ['items'];
+
     protected $dates = ['deleted_at'];
 
     protected $with = ['shop'];

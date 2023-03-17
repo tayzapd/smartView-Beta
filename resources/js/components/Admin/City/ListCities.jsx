@@ -17,7 +17,7 @@ const ListCities = () => {
 
     const getCities = () => {
         axios.post(`/api/admin/cities/show`).then((res)=>{
-            // console.log(res);
+            console.log(res);
             setCities(res.data);
         })
     }
