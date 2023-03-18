@@ -24,7 +24,7 @@ class AuthController extends Controller
         $check = Auth::attempt(['username' => $request->username, 'password' => $request->password]);
         if($check){
             $user = User::find(Auth::id());
-            if($user->shop_id == $request->shop_id)
+            if($user->shop_id == $request->shop_id && $user->hasRole('shop_admin'))
             {
                 return response()->json(['status'=>true,'token'=>$user->createToken($request->password)->plainTextToken]);
             }
