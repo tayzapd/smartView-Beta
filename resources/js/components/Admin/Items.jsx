@@ -5,6 +5,9 @@ import {
     Button,
  } from "react-bootstrap";
 import DataTable from "react-data-table-component";
+import { toast, ToastContainer } from 'react-toastify' ;
+import "react-toastify/dist/ReactToastify.css";
+
 const Items = () => {
     const columns = [
         {
@@ -87,6 +90,8 @@ const Items = () => {
     }); 
 
 
+    
+
     const createItem = () => {
         const formData = new FormData();
         fileList.forEach(img => {
@@ -106,15 +111,26 @@ const Items = () => {
         formData.append('is_available',item.is_available);
         formData.append('category_id',item.category_id);
         try {
-            axios.post('/api/admin/items/create', formData);
+            axios.post('/api/admin/items/create', formData).then((res)=>{
+                console.log(res);
+                toast.success(res.data.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+                    getItems();
+            });
         } catch (err) {
             console.log(err); // handle error response from server
         }
     };
 
     const editItem = async  () => {
-        
-
 
         // if file data is empty we don't need to add images 
         if(fileList.length != 0){
@@ -133,7 +149,21 @@ const Items = () => {
             formData.append('privacy',item.privacy);
             formData.append('is_available',item.is_available);
             formData.append('category_id',item.category_id);
-            const { data }  = axios.post(`/api/admin/items/update`,formData);
+            const {data} = axios.post(`/api/admin/items/update/`,formData);
+            toast.success("Item Deleted Successfully!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getItems();
+
+            
+            
         }
         else {
             let formData = {
@@ -151,6 +181,18 @@ const Items = () => {
             };
 
             const { data }  = axios.post(`/api/admin/items/update`,formData);
+            toast.success("Item Updated Successfully!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            getItems();
+
 
         }     
 
@@ -160,6 +202,17 @@ const Items = () => {
 
     const deleteItem =  async (id)  => {
         const { data } = axios.post('/api/admin/items/delete',{id:id});
+        toast.success("Item Updated Successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        getItems();
 
 
     }
@@ -182,17 +235,21 @@ const Items = () => {
         // console.log(data);
         setShopList(data.shops);
     }
+
     const getCategories = async (shop_id) => {
         const { data } = await axios.post('/api/admin/categories/show',{shop_id});
         setCategories(data)
-        console.log(data);
     }
-
-    useEffect(() => {
+    
+    // console.log(shops);
+    const getItems = async () =>{
         axios.post(`/api/admin/items/show`).then(({data}) => {
             setShops(data.items);
         });
-
+    }
+    useEffect(() => {
+        
+        getItems();
         getShops();
     },[])
 return (
@@ -271,7 +328,7 @@ return (
                     Save
                 </Button>
                 </Modal.Footer>
-            </Modal>
+        </Modal>
         <Accordion className="my-3 ">
             
             {Object.values(shops).map((shop,index) => {
@@ -284,6 +341,7 @@ return (
 
                         {/* Items Data Table  */}
                         <Accordion.Body>
+                        <ToastContainer/>
                         <DataTable
                             title="Category Lists"
                             columns={columns}
@@ -365,7 +423,7 @@ return (
                     Close
                 </Button>
                 <Button onClick={() => {editItem()}} variant="primary" type="submit" >
-                    Save
+                    Update
                 </Button>
                 </Modal.Footer>
             </Modal>

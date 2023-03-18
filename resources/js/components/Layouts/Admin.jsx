@@ -26,7 +26,7 @@ function getItem(label, key, icon, children) {
 
 
 const items = [
-  getItem('Shoptypes','/admin/shoptypes',<UserOutlined/>),
+  getItem('Shop Types','/admin/shoptypes',<UserOutlined/>),
   getItem('Divisions','/admin/divisions',<UserOutlined/>),
   getItem('Cities','/admin/cities',<UserOutlined/>),
   getItem('Townships','/admin/townships',<UserOutlined/>),

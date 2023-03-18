@@ -5,12 +5,14 @@ import Modal from 'react-bootstrap/Modal';
 import { useAdminContext } from "../../../Context/AdminContext";
 import AddCategory from "./AddCatagory";
 import EditCategory from "./EditCategory";
+import { Accordion } from "react-bootstrap";
 import { toast, ToastContainer } from 'react-toastify' ;
 import "react-toastify/dist/ReactToastify.css";
 
 const ListCategories = () => {
     const {axios,setCategory,categories,setCategories} = useAdminContext();
     const [show, setShow] = useState(false);
+    const [shops,setShops] = useState([]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -20,11 +22,13 @@ const ListCategories = () => {
             setCategories(res.data);
         })
     }
+
     useEffect(()=>{
         getCategories();
+        
     },[])
 
-
+    console.log(categories);
     const [showedit, setEditShow] = useState(false);
     const editClose = () => setEditShow(false);
 
@@ -39,7 +43,7 @@ const ListCategories = () => {
             id:id
         }
         axios.post(`/api/admin/categories/delete`,data).then((res)=>{
-            console.log(res);
+            // console.log(res);
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -57,12 +61,15 @@ const ListCategories = () => {
         {
             name: 'ID',
             selector: row => row.id,
+            width:"60px",
             sortable: true,
     
         },
         {
             name: 'Shop',
             selector: row => row.shop.shop_name,
+            width:"200px",
+            wrap:true,
             sortable: true,
     
         },
@@ -73,6 +80,8 @@ const ListCategories = () => {
         {
             name: 'Remark',
             selector: row => row.remark,
+            width:"200px",
+            wrap:true,
         },
         {
             
@@ -102,21 +111,19 @@ const ListCategories = () => {
             <div className="container">
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Category</button>
             </div>
-
-
             <ToastContainer/>
             <DataTable
-            title="Category Lists"
-            columns={columns}
-            data={categories}
-            // progressPending={pending}
-            fixedHeader
-            fixedHeaderScrollHeight="300px"
-            pagination
-            responsive
-            highlightOnHover
-            />
-
+                title="Category Lists"
+                columns={columns}
+                data={categories}
+                // progressPending={pending}
+                fixedHeader
+                fixedHeaderScrollHeight="300px"
+                pagination
+                responsive
+                highlightOnHover
+                            />
+            
             {/* ADD CATEGORY */}
             <Modal size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
