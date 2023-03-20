@@ -33,17 +33,9 @@ class AuthServiceProvider extends ServiceProvider
 
         });
 
-        Gate::define('manage-shop',function(User $user,Shop $shop){
-
+        Gate::define('admin-auth', function (User $user) {
+            return $user->hasRole('admin') && $user->shop_id == 1;
         });
-
-        Gate::define('manage-shop',function(User $user,Shop $shop){
-
-        });
-
-        Gate::define('manage-shop',function(User $owner,User $user){
-
-        });
-        //
+        
     }
 }

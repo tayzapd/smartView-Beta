@@ -6,17 +6,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
     public function showAll(Request $req)
     {
-        return Category::get();
+        if(Gate::allows('admin-auth',Auth::user())){
+            return Category::get();
+        }
+        
     }
     
     public function showByShop(Request $req)
     {
-        return Category::where('shop_id',$req->shop_id)->get();
+        if(Gate::allows('admin-auth',Auth::user())){
+            return Category::where('shop_id',$req->shop_id)->get();
+        }
+        
     }
     public function create(Request $req)
     {
@@ -28,7 +36,8 @@ class CategoryController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $category = new Category;
             $category->name = $req->name;
             $category->remark = $req->remark;
@@ -51,7 +60,8 @@ class CategoryController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $category = Category::find($req->id);
             $category->name = $req->name;
             $category->shop_id = $req->shop_id;
@@ -65,24 +75,30 @@ class CategoryController extends Controller
     }
     public function delete(Request $req)
     {
-        $category = Category::find($req->id);
-        if($category->delete())
-        {
-            return response()->json(['status'=>true,'message'=>"Category Deleted!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $category = Category::find($req->id);
+            if($category->delete())
+            {
+                return response()->json(['status'=>true,'message'=>"Category Deleted!"]);
+            }
+            else
+            {
+                return response()->json(['status'=>true,'message'=>"Category can't delete!, Try Again"]);
+            }
         }
-        else
-        {
-            return response()->json(['status'=>true,'message'=>"Category can't delete!, Try Again"]);
-        }
+        
 
     }
     public function restore(Request $req)
     {
-        $category = Category::withTrashed()->find($req->id);
-        if($category->restore()){
-            return response()->json(['status'=>true,"Category restored."]);
-        }else {
-            return response()->json(['status'=>true,"Category can't restore!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $category = Category::withTrashed()->find($req->id);
+            if($category->restore()){
+                return response()->json(['status'=>true,"Category restored."]);
+            }else {
+                return response()->json(['status'=>true,"Category can't restore!"]);
+            }
         }
+        
     }
 }

@@ -52,9 +52,15 @@ const Admin = () => {
   )
 
   useEffect(() => {
-    console.log(token)
     if(token == null){
       return navigate('/admin/login');
+    }else {
+      axios.get('/api/user').then(({ data }) => {
+        if(data.shop_id != 1 ){
+          return navigate('/admin/login')
+        }
+      }); 
+      
     }
   },[])
   

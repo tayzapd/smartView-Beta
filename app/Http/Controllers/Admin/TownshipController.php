@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Township;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class TownshipController extends Controller
 {
     public function show(Request $req)
     {
-        return Township::with('city')->get();
+        if(Gate::allows('admin-auth',Auth::user())){
+            return Township::with('city')->get();
+        }
     }
     public function create(Request $req)
     {
@@ -23,7 +27,8 @@ class TownshipController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $township = new Township;
             $township->name = $req->name;
             $township->remark = $req->remark;
@@ -46,7 +51,8 @@ class TownshipController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $township = Township::find($req->id);
             $township->name = $req->name;
             $township->city_id = $req->city_id;
@@ -60,24 +66,29 @@ class TownshipController extends Controller
     }
     public function delete(Request $req)
     {
-        $township = Township::find($req->id);
-        if($township->delete())
-        {
-            return response()->json(['status'=>true,'message'=>"Township Deleted!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $township = Township::find($req->id);
+            if($township->delete())
+            {
+                return response()->json(['status'=>true,'message'=>"Township Deleted!"]);
+            }
+            else
+            {
+                return response()->json(['status'=>true,'message'=>"Township can't delete!, Try Again"]);
+            }
         }
-        else
-        {
-            return response()->json(['status'=>true,'message'=>"Township can't delete!, Try Again"]);
-        }
+        
 
     }
     public function restore(Request $req)
     {
-        $township = Township::withTrashed()->find($req->id);
-        if($township->restore()){
-            return response()->json(['status'=>true,"Township restored."]);
-        }else {
-            return response()->json(['status'=>true,"Township can't restore!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $township = Township::withTrashed()->find($req->id);
+            if($township->restore()){
+                return response()->json(['status'=>true,"Township restored."]);
+            }else {
+                return response()->json(['status'=>true,"Township can't restore!"]);
+            }
         }
     }
 }

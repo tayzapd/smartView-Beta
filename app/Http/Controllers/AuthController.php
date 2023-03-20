@@ -54,7 +54,8 @@ class AuthController extends Controller
 
         // validate user is admin user ? 
         if($check && $user->shop_id == 1 && $user->hasRole('admin')){
-            return response()->json(['status'=>true,'token'=>$user->createToken($req->password)]);
+            $token = $user->createToken($req->password)->plainTextToken;
+            return response()->json(['status'=>true,'token'=>$token]);
         }
         return response()->json(['status'=>false,'token'=>NULL]);
         

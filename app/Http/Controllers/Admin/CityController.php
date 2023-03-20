@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\City;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class CityController extends Controller
 {
     public function show(Request $req)
     {
-        return City::with('division')->get();
-  
+        if(Gate::allows('admin-auth',Auth::user())){
+            return City::with('division')->get();
+        }
+        
     }
     
 
@@ -26,7 +30,8 @@ class CityController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $city = new City;
             $city->name = $req->name;
             $city->division_id = $req->division_id;
@@ -49,7 +54,8 @@ class CityController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $city = City::find($req->id);
             $city->name = $req->name;
             $city->division_id = $req->division_id;
@@ -63,24 +69,30 @@ class CityController extends Controller
     }
     public function delete(Request $req)
     {
-        $city = City::find($req->id);
-        if($city->delete())
-        {
-            return response()->json(['status'=>true,'message'=>"City Deleted!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $city = City::find($req->id);
+            if($city->delete())
+            {
+                return response()->json(['status'=>true,'message'=>"City Deleted!"]);
+            }
+            else
+            {
+                return response()->json(['status'=>true,'message'=>"City can't delete!, Try Again"]);
+            }
+    
         }
-        else
-        {
-            return response()->json(['status'=>true,'message'=>"City can't delete!, Try Again"]);
-        }
-
+        
     }
     public function restore(Request $req)
     {
-        $city = City::withTrashed()->find($req->id);
-        if($city->restore()){
-            return response()->json(['status'=>true,"City restored."]);
-        }else {
-            return response()->json(['status'=>true,"City can't restore!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $city = City::withTrashed()->find($req->id);
+            if($city->restore()){
+                return response()->json(['status'=>true,"City restored."]);
+            }else {
+                return response()->json(['status'=>true,"City can't restore!"]);
+            }
         }
+        
     }
 }
