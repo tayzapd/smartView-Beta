@@ -9,14 +9,17 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Gate;
 
 class ShopController extends Controller
 {
     public function show()
     {
-        $shop = Shop::find(Auth::user()->shop_id);
-        if($shop != null){
-            return response()->json(['status'=>true,'shop'=>$shop]);
+        if(Gate::allows('shop-auth',Auth::user())){
+            $shop = Shop::find(Auth::user()->shop_id);
+            if($shop != null){
+                return response()->json(['status'=>true,'shop'=>$shop]);
+            }
         }
     }
 
@@ -30,7 +33,9 @@ class ShopController extends Controller
         // 'logo_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         if ($validator->fails()) {
             return response()->json(['status'=>false,'Message'=>'Please ']);
-        }else {
+        }
+        
+        if(Gate::allows('shop-auth',Auth::user())){
             
             $user = Auth::user();
             $shop = Shop::find($user->shop_id);

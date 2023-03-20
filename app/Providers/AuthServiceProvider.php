@@ -29,12 +29,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('manage-item',function(User $user,Item $item,Category $category,Shop $shop){
 
-        });
 
         Gate::define('admin-auth', function (User $user) {
             return $user->hasRole('admin') && $user->shop_id == 1;
+        });
+
+        Gate::define('shop-auth', function (User $user,Shop $shop) {
+            return $user->hasRole('shop_admin');
         });
         
     }

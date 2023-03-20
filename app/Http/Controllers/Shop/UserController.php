@@ -9,15 +9,19 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
 
     public function show(Request $req) 
     {
-        $shop_id = Auth::user()->shop_id;
-        $users = User::where('shop_id',$shop_id)->get();
-        return response()->json(['users'=>$users]);
+        if(Gate::allows('shop-auth',Auth::user())){
+            $shop_id = Auth::user()->shop_id;
+            $users = User::where('shop_id',$shop_id)->get();
+            return response()->json(['users'=>$users]);
+        }
+        
     }
     public function create(Request $req)
     {
@@ -32,7 +36,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        else {
+        if(Gate::allows('shop-auth',Auth::user())) {
             if($owner->hasRole('shop_owner'))
             {
                 $user = User::where('username',$req->username)->first();
@@ -70,20 +74,23 @@ class UserController extends Controller
 
     public function delete(Request $req)
     {
-        $owner = User::find(Auth::id());
-        $user = User::find($req->user_id);
-        if($owner->shop_id == $user->shop_id && $owner->hasRole('shop_owner'))
-        {
-            if($user->delete())
+        if(Gate::allows('shop-auth',Auth::user())){
+            $owner = User::find(Auth::id());
+            $user = User::find($req->user_id);
+            if($owner->shop_id == $user->shop_id && $owner->hasRole('shop_owner'))
             {
-                return response()->json(['status'=>true,'message'=>"User successfully deleted!"]);
-            }
-            else {
+                if($user->delete())
+                {
+                    return response()->json(['status'=>true,'message'=>"User successfully deleted!"]);
+                }
+                else {
+                    return response()->json(['status'=>false,'message'=>"User can't delete!"]);
+                }
+            }else {
                 return response()->json(['status'=>false,'message'=>"User can't delete!"]);
             }
-        }else {
-            return response()->json(['status'=>false,'message'=>"User can't delete!"]);
         }
+        
     }
 
 
@@ -98,7 +105,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        else {
+        if(Gate::allows('shop-auth',Auth::user())) {
             $user = User::find($req->id);
             if($owner->shop_id == $user->shop_id && $owner->hasRole('shop_admin') )
             {
@@ -124,17 +131,20 @@ class UserController extends Controller
 
     public function restore(Request $req)
     {
-        $owner = User::find(Auth::id());
-        if($owner->hasRole('shop_admin'))
-        {
-            $shop = User::withTrashed()->find($req->shop_id);
-            if($shop->restore()){
-                return response()->json(['status'=>true,"Item restored."]);
+        if(Gate::allows('shop-auth',Auth::user())){
+            $owner = User::find(Auth::id());
+            if($owner->hasRole('shop_admin'))
+            {
+                $shop = User::withTrashed()->find($req->shop_id);
+                if($shop->restore()){
+                    return response()->json(['status'=>true,"Item restored."]);
+                }else {
+                    return response()->json(['status'=>true,"Item can't restore!"]);
+                }
             }else {
                 return response()->json(['status'=>true,"Item can't restore!"]);
             }
-        }else {
-            return response()->json(['status'=>true,"Item can't restore!"]);
         }
+       
     }
 }
