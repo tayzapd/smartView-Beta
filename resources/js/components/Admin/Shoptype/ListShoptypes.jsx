@@ -12,8 +12,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { GestureSharp } from '@material-ui/icons';
 
 
-
-
 const ListShopTypes = () => {
 
     const {setShopType,axios,shoptypes,setShopTypes} = useAdminContext();

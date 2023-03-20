@@ -13,6 +13,7 @@ const ListCategories = () => {
     const {axios,setCategory,categories,setCategories} = useAdminContext();
     const [show, setShow] = useState(false);
     const [shops,setShops] = useState([]);
+    const [filterText, setFilterText] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -122,7 +123,7 @@ const ListCategories = () => {
                 pagination
                 responsive
                 highlightOnHover
-                            />
+            />
             
             {/* ADD CATEGORY */}
             <Modal size="lg" show={show} onHide={handleClose}>

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
 import { useAdminContext }  from '../../../Context/AdminContext';
 import { Edit,Delete } from '@material-ui/icons';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
+
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [shops, setShops] = useState([]);
@@ -29,21 +33,60 @@ const UserList = () => {
 
   const addUser = async (e) => {
     e.preventDefault();
-    await axios.post('/api/admin/users/create', user);
-    handleClose();
-    getUsers();
+    await axios.post('/api/admin/users/create', user).then((res)=>{
+      // console.log(res);
+      toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        handleClose();
+        getUsers();
+    });
+    
   };
 
   const editUser = async (e) => {
     e.preventDefault();
-    const {data} = await axios.post('/api/admin/users/update',user);
-    setShowEdit(false);
-    getUsers();
+    await axios.post('/api/admin/users/update',user).then((res)=>{
+      // console.log(res);
+      toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        setShowEdit(false);
+        getUsers();
+    })
+    
+    
   }
 
   const deleteUser = async (id) => {
-    const { data } = await axios.post('/api/admin/users/delete',{id:id}); 
-    getUsers(); 
+    await axios.post('/api/admin/users/delete',{id:id}).then((res)=>{
+      // console.log(res);
+      toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        getUsers(); 
+    }) 
   }
 
 
@@ -59,9 +102,10 @@ const UserList = () => {
 
   return (
     <div className='container'>
-      <Button variant="primary" className='rounded-0 my-3 ' onClick={handleShow}>
+      <Button className='my-3 ' style={{ backgroundColor: '#fc6400', color:'#000000', borderColor:'#fc6400' }} onClick={handleShow}>
         Add User +
       </Button>
+      <ToastContainer/>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -82,10 +126,10 @@ const UserList = () => {
                   setShowEdit(true);
                   setUser(user);
 
-                }} size='sm' className="rounded-0 " variant="primary">
+                }} size='sm' className="me-2" variant="primary">
                     <Edit/>
                 </Button>
-                <Button onClick={() => {deleteUser(user.id)}} size='sm' className="rounded-0 " variant="danger">
+                <Button onClick={() => {deleteUser(user.id)}} size='sm' className="" variant="danger">
                     <Delete />
                 </Button>
               </td>

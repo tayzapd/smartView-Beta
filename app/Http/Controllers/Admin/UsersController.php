@@ -41,16 +41,16 @@ class UsersController extends Controller
                 $user->remark = " ";
                 if($user->save())
                 {
-                    return response()->json(['status'=>true,'Message'=>"User Successfully Created!"]);
+                    return response()->json(['status'=>true,'message'=>"User Successfully Created!"]);
                 }
                 else
                 {
-                    return response()->json(['status'=>true,'Message'=>"Can't Created New User."]);
+                    return response()->json(['status'=>true,'message'=>"Can't Created New User."]);
                 }
             }
             else
             {
-                return response()->json(['status'=>true,'Message'=>"The username already exit, can't add new."]);
+                return response()->json(['status'=>true,'message'=>"The username already exit, can't add new."]);
             }
         }
 
@@ -73,11 +73,11 @@ class UsersController extends Controller
             }
             if($user->update())
             {
-                return response()->json(['status'=>true,'Message'=>"User Edited!"]);
+                return response()->json(['status'=>true,'message'=>"User Updated Successfully!"]);
             }
             else
             {
-                return response()->json(['status'=>true,'Message'=>"Can't Edit User"]);
+                return response()->json(['status'=>true,'message'=>"Can't Updated User"]);
             }
         }
 
@@ -87,7 +87,7 @@ class UsersController extends Controller
         $user = User::find($req->id);
         if($user->delete())
         {
-            return response()->json(['status'=>true,'Message'=>"User Deleted!"]);
+            return response()->json(['status'=>true,'message'=>"User Deleted!"]);
         }
         else
         {
