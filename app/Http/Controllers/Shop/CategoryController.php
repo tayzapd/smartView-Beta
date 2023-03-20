@@ -7,19 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Gate;
 class CategoryController extends Controller
 {
 
 
     public function show(Request $req)
     {
-        $user = Auth::user();
-        $categories = Category::where('shop_id',$user->shop_id)->paginate(8);
-        return response()->json([
-            'status'=>true,
-            'categories'=>$categories
-        ]);
+        if(Gate::allows('shop-auth',Auth::user())){
+            $user = Auth::user();
+            $categories = Category::where('shop_id',$user->shop_id)->paginate(8);
+            return response()->json([
+                'status'=>true,
+                'categories'=>$categories
+            ]);
+        }
     }
     public function create(Request $req)
     {
@@ -30,7 +32,8 @@ class CategoryController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('shop-auth',Auth::user())) {
             $category = new Category;
             $category->name = $req->name;
             $category->remark = $req->remark;
@@ -55,7 +58,9 @@ class CategoryController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        
+        if(Gate::allows('shop-auth',Auth::user())){
             if($user->shop_id == $req->shop_id)
             {
                 $category = Category::find($req->id);
@@ -72,37 +77,43 @@ class CategoryController extends Controller
 
     public function delete(Request $req)
     {
-        $user = Auth::user();
+        if(Gate::allows('shop-auth',Auth::user())){
+            $user = Auth::user();
         
-        if($user->shop_id == $req->shop_id)
-        {
-            $category = Category::find($req->id);
-            if($category->delete())
+            if($user->shop_id == $req->shop_id)
             {
-                return response()->json(['status'=>true,'Message'=>"Category Deleted!"]);
-            }
-            else
-            {
+                $category = Category::find($req->id);
+                if($category->delete())
+                {
+                    return response()->json(['status'=>true,'Message'=>"Category Deleted!"]);
+                }
+                else
+                {
+                    return response()->json(['status'=>true,'Message'=>"Category can't delete!, Try Again"]);
+                }
+            }else {
                 return response()->json(['status'=>true,'Message'=>"Category can't delete!, Try Again"]);
             }
-        }else {
-            return response()->json(['status'=>true,'Message'=>"Category can't delete!, Try Again"]);
         }
+        
     }
 
     public function restore(Request $req)
     {
-        $user = Auth::user();
-        if($user->shop_id == $req->shop_id)
-        {
-            $category = Category::withTrashed()->find($req->id);
-            if($category->restore()){
-                return response()->json(['status'=>true,"Category restored."]);
+        if(Gate::allows('shop-auth',Auth::user())){
+            $user = Auth::user();
+            if($user->shop_id == $req->shop_id)
+            {
+                $category = Category::withTrashed()->find($req->id);
+                if($category->restore()){
+                    return response()->json(['status'=>true,"Category restored."]);
+                }else {
+                    return response()->json(['status'=>true,"Category can't restore!"]);
+                }
             }else {
                 return response()->json(['status'=>true,"Category can't restore!"]);
             }
-        }else {
-            return response()->json(['status'=>true,"Category can't restore!"]);
         }
+        
     }
 }

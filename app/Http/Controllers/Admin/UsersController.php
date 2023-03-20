@@ -5,19 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
     public function show(Request $req)
     {
-        $users = User::with('shop:id,shop_name')->get();
-        if($users)
-        {
-            return response()->json(['status'=>true,'users'=>$users]);
-        }else {
-            return response()->json(['status'=>false,"Message"=>"Can't get data because server network error!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $users = User::with('shop:id,shop_name')->get();
+            if($users)
+            {
+                return response()->json(['status'=>true,'users'=>$users]);
+            }else {
+                return response()->json(['status'=>false,"Message"=>"Can't get data because server network error!"]);
+            }
         }
     }
     public function add(Request $req)
@@ -30,7 +34,8 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        else {
+        
+        if(Gate::allows('admin-auth',Auth::user())){
             $user = User::where('username',$req->username)->first();
             if($user == null)
             {
@@ -41,18 +46,20 @@ class UsersController extends Controller
                 $user->remark = " ";
                 if($user->save())
                 {
-                    return response()->json(['status'=>true,'message'=>"User Successfully Created!"]);
+                    $user->assignRole('shop_admin');
+                    return response()->json(['status'=>true,'Message'=>"User Successfully Created!"]);
                 }
                 else
                 {
-                    return response()->json(['status'=>true,'message'=>"Can't Created New User."]);
+                    return response()->json(['status'=>true,'Message'=>"Can't Created New User."]);
                 }
             }
             else
             {
-                return response()->json(['status'=>true,'message'=>"The username already exit, can't add new."]);
+                return response()->json(['status'=>true,'Message'=>"The username already exit, can't add new."]);
             }
         }
+        
 
     }
     public function update(Request $req)
@@ -64,7 +71,7 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        else {
+        if(Gate::allows('admin-auth',Auth::user())){
             $user = User::find($req->id);
             $user->shop_id = $req->shop_id;
             $user->username = $req->username;
@@ -73,36 +80,40 @@ class UsersController extends Controller
             }
             if($user->update())
             {
-                return response()->json(['status'=>true,'message'=>"User Updated Successfully!"]);
+                return response()->json(['status'=>true,'Message'=>"User Edited!"]);
             }
             else
             {
-                return response()->json(['status'=>true,'message'=>"Can't Updated User"]);
+                return response()->json(['status'=>true,'Message'=>"Can't Edit User"]);
             }
         }
 
     }
     public function delete(Request $req)
     {
-        $user = User::find($req->id);
-        if($user->delete())
-        {
-            return response()->json(['status'=>true,'message'=>"User Deleted!"]);
-        }
-        else
-        {
-            return response()->json(['status'=>true,'Message'=>"User can't delete!, Try Again"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $user = User::find($req->id);
+            if($user->delete())
+            {
+                return response()->json(['status'=>true,'Message'=>"User Deleted!"]);
+            }
+            else
+            {
+                return response()->json(['status'=>true,'Message'=>"User can't delete!, Try Again"]);
+            }
         }
 
 
     }
     public function restore(Request $req)
     {
-        $shop = User::withTrashed()->find($req->shop_id);
-        if($shop->restore()){
-            return response()->json(['status'=>true,"Item restored."]);
-        }else {
-            return response()->json(['status'=>true,"Item can't restore!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shop = User::withTrashed()->find($req->shop_id);
+            if($shop->restore()){
+                return response()->json(['status'=>true,"Item restored."]);
+            }else {
+                return response()->json(['status'=>true,"Item can't restore!"]);
+            }
         }
     }
 }

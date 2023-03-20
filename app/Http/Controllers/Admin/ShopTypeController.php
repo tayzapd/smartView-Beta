@@ -7,15 +7,18 @@ use App\Models\Shoptype;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Auth;
 
 class ShopTypeController extends Controller
 {
     public function show(Request $req)
     {
         
-        return ShopType::get(['id','name','remark']);
+        if(Gate::allows('admin-auth',Auth::user())){
+            return ShopType::get(['id','name','remark']);
+        }
 
     }
     
@@ -28,7 +31,8 @@ class ShopTypeController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $shop_type = new ShopType;
             $shop_type->name = $req->name;
             $shop_type->remark = $req->remark;
@@ -49,7 +53,8 @@ class ShopTypeController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $shop_type = ShopType::find($req->id);
             $shop_type->name = $req->name;
             $shop_type->remark = $req->remark;
@@ -62,30 +67,40 @@ class ShopTypeController extends Controller
     }
     public function delete(Request $req)
     {
-        $shop_type = ShopType::find($req->id);
-        if($shop_type->delete())
-        {
-            return response()->json(['status'=>true,'message'=>"ShopType Deleted!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shop_type = ShopType::find($req->id);
+            if($shop_type->delete())
+            {
+                return response()->json(['status'=>true,'message'=>"ShopType Deleted!"]);
+            }
+            else
+            {
+                return response()->json(['status'=>true,'Message'=>"ShopType can't delete!, Try Again"]);
+            }
         }
-        else
-        {
-            return response()->json(['status'=>true,'Message'=>"ShopType can't delete!, Try Again"]);
-        }
+        
 
     }
-    public function trashshow(){
-        $shoptypes = ShopType::onlyTrashed()->get();
-        return response()->json(['status'=>true,'shoptypes'=>$shoptypes]);
+    public function trashshow()
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shoptypes = ShopType::onlyTrashed()->get();
+            return response()->json(['status'=>true,'shoptypes'=>$shoptypes]);
+        }
+        
 
 
     }
     public function restore($id)
     {
-        $shop_type = ShopType::withTrashed()->find($id);
-        if($shop_type->restore()){
-            return response()->json(['status'=>true,"ShopType restored."]);
-        }else {
-            return response()->json(['status'=>true,"ShopType can't restore!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shop_type = ShopType::withTrashed()->find($id);
+            if($shop_type->restore()){
+                return response()->json(['status'=>true,"ShopType restored."]);
+            }else {
+                return response()->json(['status'=>true,"ShopType can't restore!"]);
+            }
         }
+        
     }
 }

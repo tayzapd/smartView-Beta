@@ -8,6 +8,8 @@ use App\Models\Shop;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
@@ -34,7 +36,8 @@ class ShopController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json(['status'=>false,'Message'=>'Please ']);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             if($req->hasFile('logo_image')){
                 $image = $req->file('logo_image');
                 $fileName = time() . '_' . $image->getClientOriginalName();
@@ -67,6 +70,20 @@ class ShopController extends Controller
 
     public function update(Request $req)
     {    
+        $validator = Validator::make($req->all(), [
+            'shop_name' => 'required|min:6|max:120',
+            'address' => 'required|min:6|max:120',
+            'phone' => 'required|min:9|max:120',
+            'logo_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'shoptype_id' => 'required',
+            'township_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['status'=>false,'Message'=>'Please ']);
+        }
+        if(!Gate::allows('admin-auth',Auth::user())){
+            return response()->json(['status'=>false,"message"=>"Access denied!"]);
+        }
         if($req->hasFile('logo_image')){
             $shop = Shop::find($req->id);
             File::delete(public_path('/images/shop/logo/'.$shop->logo_image));
@@ -82,10 +99,9 @@ class ShopController extends Controller
             $shop->township_id = $req->township_id;
             $shop->remark = $req->remark;
             if($shop->update()){
-                return response()->json(['status'=>true,"message"=>"Shop Updated Successfully!"]);
-            }else {
-                return response()->json(['status'=>false,"message"=>"Shop Can't Updated,Something was wrong!"]);
+                
             }
+            return response()->json(['status'=>false,"message"=>"Shop Can't Updated,Something was wrong!"]);
         }else{
             $shop = Shop::find($req->id);
             $shop->logo_image = $req->logo_image;
@@ -107,21 +123,25 @@ class ShopController extends Controller
 
     public function delete(Request $req)
     {
-        $shop = Shop::find($req->id);
-        if($shop->delete()){
-            return response()->json(['status'=>true,'message'=>"Item move to trash."]);
-        }else {
-            return response()->json(['status'=>true,'message'=>"Item can't move trash!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shop = Shop::find($req->id);
+            if($shop->delete()){
+                return response()->json(['status'=>true,'message'=>"Item move to trash."]);
+            }else {
+                return response()->json(['status'=>true,'message'=>"Item can't move trash!"]);
+            }
         }
     }
 
     public function restore(Request $req)
     {
-        $shop = Shop::withTrashed()->find($req->shop_id);
-        if($shop->restore()){
-            return response()->json(['status'=>true,"Item restored."]);
-        }else {
-            return response()->json(['status'=>true,"Item can't restore!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shop = Shop::withTrashed()->find($req->shop_id);
+            if($shop->restore()){
+                return response()->json(['status'=>true,"Item restored."]);
+            }else {
+                return response()->json(['status'=>true,"Item can't restore!"]);
+            }
         }
     }
 }

@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Division;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class DivisionController extends Controller
 {
     public function show(Request $req)
     {
-        return Division::get();
+        if(Gate::allows('admin-auth',Auth::user())){
+            return Division::get();
+        }
+        
     }
     
     public function create(Request $req)
@@ -23,7 +28,8 @@ class DivisionController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $division = new Division;
             $division->name = $req->name;
             $division->remark = $req->remark;
@@ -44,7 +50,8 @@ class DivisionController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
-        }else {
+        }
+        if(Gate::allows('admin-auth',Auth::user())) {
             $division = Division::find($req->id);
             $division->name = $req->name;
             $division->remark = $req->remark;
@@ -57,24 +64,30 @@ class DivisionController extends Controller
     }
     public function delete(Request $req)
     {
-        $division = Division::find($req->id);
-        if($division->delete())
-        {
-            return response()->json(['status'=>true,'message'=>"Division Deleted!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $division = Division::find($req->id);
+            if($division->delete())
+            {
+                return response()->json(['status'=>true,'message'=>"Division Deleted!"]);
+            }
+            else
+            {
+                return response()->json(['status'=>true,'message'=>"Division can't delete!, Try Again"]);
+            }
         }
-        else
-        {
-            return response()->json(['status'=>true,'message'=>"Division can't delete!, Try Again"]);
-        }
+        
 
     }
     public function restore(Request $req)
     {
-        $division = Division::withTrashed()->find($req->id);
-        if($division->restore()){
-            return response()->json(['status'=>true,"Division restored."]);
-        }else {
-            return response()->json(['status'=>true,"Division can't restore!"]);
+        if(Gate::allows('admin-auth',Auth::user())){
+            $division = Division::withTrashed()->find($req->id);
+            if($division->restore()){
+                return response()->json(['status'=>true,"Division restored."]);
+            }else {
+                return response()->json(['status'=>true,"Division can't restore!"]);
+            }
         }
+        
     }
 }

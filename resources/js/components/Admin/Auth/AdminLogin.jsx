@@ -11,18 +11,19 @@ const AdminLogin = ()=>{
 
     const [login,setLogin] = useState({
         username:'',
-        password:''
+        password:'',
+        shop_id:1
     })
 
     const Login = async  (e) => {
         e.preventDefault();
         const {data} = await axios.post('/api/admin/login',login); 
         console.log(data);
-        // if(data.status == true){
-        //     setToken(data.token);
-        //     console.log(token);
-        //     return router('/admin/dashboard');
-        // }
+        if(data.status == true){
+            setToken(data.token);
+            console.log(token);
+            return router('/admin/');
+        }
     }
 
 
