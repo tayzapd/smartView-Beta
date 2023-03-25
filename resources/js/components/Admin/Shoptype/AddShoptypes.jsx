@@ -6,11 +6,12 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 const AddShoptypes = ()=>{
-    const {axios,shoptypes,setShopTypes} = useAdminContext();
+    const {axios,shoptypes,setShopTypes,setDialog} = useAdminContext();
     
     const [shoptypesInput,setShoptypes] = useState({
         name:'',
         remark:'',
+        error_list:[],
     });
 
     const navigate = useNavigate();
@@ -34,8 +35,7 @@ const AddShoptypes = ()=>{
         }
         axios.post(`/api/admin/shoptypes/create`, data)
         .then(res=>{
-            // console.log(res);
-            
+            setDialog(false);
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -48,7 +48,11 @@ const AddShoptypes = ()=>{
                 });
                 getShoptypes();
             
-    
+
+        }).catch((err)=>{
+            setDialog(true);
+            setShoptypes({...shoptypesInput,error_list:err.response.data.error});
+            
         })
         
         
@@ -56,11 +60,12 @@ const AddShoptypes = ()=>{
     }
     return(
         <>
-            
+
             <form onSubmit={saveShoptype} id="addshoptype">
                 <div className="mb-2">
                     <label>Name</label>
-                    <input type="text" name="name" onChange={handleInput} value={shoptypesInput.name} className="form-control" required/>
+                    <input type="text" name="name" onChange={handleInput} value={shoptypesInput.name} className="form-control" />
+                    <span className="text-danger">{shoptypesInput.error_list.name}</span>
 
                 </div>
                 <div className="mb-2">

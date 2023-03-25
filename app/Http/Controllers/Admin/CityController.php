@@ -67,6 +67,7 @@ class CityController extends Controller
             }
         }
     }
+
     public function delete(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
@@ -83,14 +84,37 @@ class CityController extends Controller
         }
         
     }
+
+    public function trashshow()
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $cities = City::onlyTrashed()->get();
+            return response()->json(['status'=>true,'cities'=>$cities]);
+            
+        }
+    }
+
     public function restore(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
             $city = City::withTrashed()->find($req->id);
             if($city->restore()){
-                return response()->json(['status'=>true,"City restored."]);
+                return response()->json(['status'=>true,'message'=>"City restored."]);
             }else {
-                return response()->json(['status'=>true,"City can't restore!"]);
+                return response()->json(['status'=>true,'message'=>"City can't restore!"]);
+            }
+        }
+        
+    }
+
+    public function restoreAll(Request $req)
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $cities = City::onlyTrashed();
+            if($cities->restore()){
+                return response()->json(['status'=>true,'message'=>"All Cities restored."]);
+            }else {
+                return response()->json(['status'=>false,'message'=>"Cities can't restore!"]);
             }
         }
         

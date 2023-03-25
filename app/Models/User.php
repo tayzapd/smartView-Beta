@@ -20,6 +20,8 @@ class User extends Authenticatable
     
     protected $dates = ['deleted_at'];
 
+    protected $with=['shop'];
+
     protected $fillable = [
         'username',
         'password',

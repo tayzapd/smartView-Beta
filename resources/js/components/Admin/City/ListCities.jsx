@@ -8,7 +8,7 @@ import { useAdminContext } from '../../../Context/AdminContext';
 import EditCity from './EditCity';
 import { toast, ToastContainer } from 'react-toastify' ;
 import "react-toastify/dist/ReactToastify.css";
-
+import { Link } from 'react-router-dom';
 
 const ListCities = () => {
     const {setCity,axios,cities,setCities} = useAdminContext();
@@ -114,7 +114,9 @@ const ListCities = () => {
     return (
         <>
             <div className="container">
-                <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add City</button>
+                <button className='btn mb-2' style={{ backgroundColor: '#fc6400', borderColor:'#fc6400' }} onClick={handleShow}>Add City</button>
+                <Link to="/admin/cities/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+
             </div>
 
             <ToastContainer/>

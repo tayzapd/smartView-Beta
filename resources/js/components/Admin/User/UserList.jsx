@@ -4,7 +4,8 @@ import { useAdminContext }  from '../../../Context/AdminContext';
 import { Edit,Delete } from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-
+import { Link } from 'react-router-dom';
+import DataTable from 'react-data-table-component';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -30,7 +31,7 @@ const UserList = () => {
     const res = await axios.post('/api/admin/users/show');
     setUsers(res.data.users);
   };
-
+  // console.log(users);
   const addUser = async (e) => {
     e.preventDefault();
     await axios.post('/api/admin/users/create', user).then((res)=>{
@@ -100,13 +101,53 @@ const UserList = () => {
     getUsers();
   }, []);
 
+  console.log(users);
+  const columns = [
+    {
+        name: 'ID',
+        selector: row => row.id,
+        sortable: true,
+
+    },
+    {
+        name: 'Username',
+        selector: row => row.username,
+        sortable: true,
+
+    },
+    {
+        name: 'Shop Name',
+        selector: row => row.shop.shop_name,
+    },
+    {      
+      selector: (row) => 
+      <Button onClick={() => {
+        setShowEdit(true);
+        setUser(user);
+
+      }} size='sm' className="me-2" variant="primary">
+          <Edit/>
+      </Button>
+    },
+    {      
+      selector: (row) => 
+      <Button onClick={() => {deleteUser(row.id)}} size='sm' className="" variant="danger">
+          <Delete />
+      </Button>
+    },
+    
+    
+
+];
   return (
     <div className='container'>
       <Button className='my-3 ' style={{ backgroundColor: '#fc6400', color:'#000000', borderColor:'#fc6400' }} onClick={handleShow}>
         Add User +
       </Button>
+      <Link to="/admin/users/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+
       <ToastContainer/>
-      <Table striped bordered hover>
+      {/* <Table striped bordered hover>
         <thead>
           <tr>
             <th>#ID</th>
@@ -136,7 +177,18 @@ const UserList = () => {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </Table> */}
+
+      <DataTable
+        title="Users Lists"
+        columns={columns}
+        data={users}
+        fixedHeader
+        fixedHeaderScrollHeight="300px"
+        pagination
+        responsive
+        highlightOnHover
+    />
       
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

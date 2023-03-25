@@ -52,7 +52,7 @@ class ShopTypeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            return response()->json(['error' => $validator->errors()],400);
         }
         if(Gate::allows('admin-auth',Auth::user())) {
             $shop_type = ShopType::find($req->id);
@@ -91,14 +91,27 @@ class ShopTypeController extends Controller
 
 
     }
-    public function restore($id)
+    public function restore(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
-            $shop_type = ShopType::withTrashed()->find($id);
+            $shop_type = ShopType::withTrashed()->find($req->id);
             if($shop_type->restore()){
-                return response()->json(['status'=>true,"ShopType restored."]);
+                return response()->json(['status'=>true,'message'=>"ShopType restored."]);
             }else {
-                return response()->json(['status'=>true,"ShopType can't restore!"]);
+                return response()->json(['status'=>true,'message'=>"ShopType can't restore!"]);
+            }
+        }
+        
+    }
+
+    public function restoreAll(Request $req)
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shoptypes =Shoptype::onlyTrashed();
+            if($shoptypes->restore()){
+                return response()->json(['status'=>true,'message'=>"All Shoptypes restored."]);
+            }else {
+                return response()->json(['status'=>false,'message'=>"Shoptypes can't restore!"]);
             }
         }
         

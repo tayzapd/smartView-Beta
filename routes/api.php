@@ -55,8 +55,9 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function(){
             Route::post('create','create');
             Route::post('update','update');
             Route::post('delete','delete');
-            Route::get('trashshow','trashshow');
-            Route::post('restore/{id}','restore');
+            Route::post('restore','restore');
+            Route::post('trashshow','trashshow');
+            Route::post('restoreAll','restoreAll');
         });
     
         Route::prefix('divisions')->controller(AdminDivisionController::class)->group(function() {
@@ -65,6 +66,8 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function(){
             Route::post('update','update');
             Route::post('delete','delete');
             Route::post('restore','restore');
+            Route::post('trashshow','trashshow');
+            Route::post('restoreAll','restoreAll');
         });
     
         Route::prefix('cities')->controller(AdminCityController::class)->group(function() {
@@ -73,6 +76,8 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function(){
             Route::post('update','update');
             Route::post('delete','delete');
             Route::post('restore','restore');
+            Route::post('trashshow','trashshow');
+            Route::post('restoreAll','restoreAll');
         });
     
         Route::prefix('townships')->controller(AdminTownshipController::class)->group(function() {
@@ -81,6 +86,9 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function(){
             Route::post('update','update');
             Route::post('delete','delete');
             Route::post('restore','restore');
+            Route::post('restoreAll','restoreAll');
+            Route::post('trashshow','trashshow');
+            Route::post('restoreAll','restoreAll');
         });
     
         Route::prefix('shops')->controller(AdminShopController::class)->group(function() {
@@ -89,6 +97,8 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function(){
             Route::post('update','update');
             Route::post('delete','delete');
             Route::post('restore','restore');
+            Route::post('trashshow','trashshow');
+            Route::post('restoreAll','restoreAll');
         });
     
         Route::prefix('categories')->controller(AdminCategoryController::class)->group(function() {
@@ -98,6 +108,8 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function(){
             Route::post('update','update');
             Route::post('delete','delete');
             Route::post('restore','restore');
+            Route::post('trashshow','trashshow');
+            Route::post('restoreAll','restoreAll');
         });
     
         Route::prefix('items')->controller(AdminItemController::class)->group(function() {
@@ -106,6 +118,8 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function(){
             Route::post('update','update');
             Route::post('delete','delete');
             Route::post('restore','restore');
+            Route::post('trashshow','trashshow');
+            Route::post('restoreAll','restoreAll');
         });
     
         Route::prefix('users')->controller(AdminUserController::class)->group(function() {
@@ -114,6 +128,8 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function(){
             Route::post('update','update');
             Route::post('delete','delete');
             Route::post('restore','restore');
+            Route::post('trashshow','trashshow');
+            Route::post('restoreAll','restoreAll');
         });
 });
 

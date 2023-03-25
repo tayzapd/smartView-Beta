@@ -55,7 +55,7 @@ class ItemController extends Controller
         $item->currency = "MMK";
         $item->is_available = json_decode($request->is_available);
         $item->privacy = $request->privacy;
-        $item->tag = $request->tag;
+        $item->tag = "hi";
         $item->special_range = $request->special_range;
         $item->view = 0;
         $item->category_id = $request->category_id;

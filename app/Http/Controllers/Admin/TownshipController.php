@@ -85,10 +85,32 @@ class TownshipController extends Controller
         if(Gate::allows('admin-auth',Auth::user())){
             $township = Township::withTrashed()->find($req->id);
             if($township->restore()){
-                return response()->json(['status'=>true,"Township restored."]);
+                return response()->json(['status'=>true,'message'=>"Township restored."]);
             }else {
-                return response()->json(['status'=>true,"Township can't restore!"]);
+                return response()->json(['status'=>true,'message'=>"Township can't restore!"]);
             }
         }
+    }
+
+    public function trashshow()
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $townships = Township::onlyTrashed()->get();
+            return response()->json(['status'=>true,'townships'=>$townships]);
+            
+        }
+    }
+
+    public function restoreAll(Request $req)
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $townships =Township::onlyTrashed();
+            if($townships->restore()){
+                return response()->json(['status'=>true,'message'=>"All Townships restored."]);
+            }else {
+                return response()->json(['status'=>false,'message'=>"Townships can't restore!"]);
+            }
+        }
+        
     }
 }

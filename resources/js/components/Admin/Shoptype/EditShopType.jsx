@@ -5,13 +5,14 @@ import { toast, ToastContainer } from 'react-toastify';
 
 
 const EditShopType = () => {
-
     const {shoptype,axios,shoptypes,setShopTypes} = useAdminContext();
     const [shoptypesInput,setShoptypes] = useState({
         id:shoptype.id,
         name:shoptype.name,
-        remark:shoptype.remark
+        remark:shoptype.remark,
+        error_list:[]
     })
+    
     const handleInput = (e)=>{
         setShoptypes({...shoptypesInput,[e.target.name]:e.target.value});
 
@@ -23,7 +24,8 @@ const EditShopType = () => {
         setShopTypes(res.data);
 
     }
-
+    
+    
     const updateShoptype = (e)=>{
         e.preventDefault();
         const data = {
@@ -47,6 +49,9 @@ const EditShopType = () => {
                 });
             getShoptypes();
 
+        }).catch((err)=>{
+            setShoptypes({...shoptypesInput,error_list:err.response.data.error});
+            
         })
     }
     return(
@@ -54,12 +59,13 @@ const EditShopType = () => {
             <form onSubmit={updateShoptype} id="updateshoptype">
                 <div className="mb-2">
                     <label>Name</label>
-                    <input type="text" name="name" onChange={handleInput} value={shoptypesInput.name} className="form-control" required/>
+                    <input type="text" name="name" onChange={handleInput} value={shoptypesInput.name} className="form-control" />
+                    <span className="text-danger">{shoptypesInput.error_list.name}</span>
 
                 </div>
                 <div className="mb-2">
                     <label>Remark</label>
-                    <input type="text" name="remark" onChange={handleInput} value={shoptypesInput.remark} className="form-control" required/>
+                    <input type="text" name="remark" onChange={handleInput} value={shoptypesInput.remark} className="form-control" />
                 </div>
             </form>
         </>

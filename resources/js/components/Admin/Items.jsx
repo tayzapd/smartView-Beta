@@ -426,7 +426,7 @@ return (
                     Update
                 </Button>
                 </Modal.Footer>
-            </Modal>
+        </Modal>
     </div>
 </>
 )

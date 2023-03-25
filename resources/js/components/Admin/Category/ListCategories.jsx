@@ -8,6 +8,7 @@ import EditCategory from "./EditCategory";
 import { Accordion } from "react-bootstrap";
 import { toast, ToastContainer } from 'react-toastify' ;
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 const ListCategories = () => {
     const {axios,setCategory,categories,setCategories} = useAdminContext();
@@ -29,7 +30,7 @@ const ListCategories = () => {
         
     },[])
 
-    console.log(categories);
+    // console.log(categories);
     const [showedit, setEditShow] = useState(false);
     const editClose = () => setEditShow(false);
 
@@ -111,6 +112,7 @@ const ListCategories = () => {
         <>
             <div className="container">
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Category</button>
+                <Link to="/admin/categories/detetedrecord" style={{ backgroundColor: '#fc6400' }} className="btn btn-primary float-end mb-2">Deleted Record</Link>
             </div>
             <ToastContainer/>
             <DataTable

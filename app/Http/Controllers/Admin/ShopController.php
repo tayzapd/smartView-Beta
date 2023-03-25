@@ -126,9 +126,9 @@ class ShopController extends Controller
         if(Gate::allows('admin-auth',Auth::user())){
             $shop = Shop::find($req->id);
             if($shop->delete()){
-                return response()->json(['status'=>true,'message'=>"Item move to trash."]);
+                return response()->json(['status'=>true,'message'=>"Shop move to trash."]);
             }else {
-                return response()->json(['status'=>true,'message'=>"Item can't move trash!"]);
+                return response()->json(['status'=>true,'message'=>"Shop can't move trash!"]);
             }
         }
     }
@@ -138,10 +138,32 @@ class ShopController extends Controller
         if(Gate::allows('admin-auth',Auth::user())){
             $shop = Shop::withTrashed()->find($req->shop_id);
             if($shop->restore()){
-                return response()->json(['status'=>true,"Item restored."]);
+                return response()->json(['status'=>true,'message'=>"Shop restored."]);
             }else {
-                return response()->json(['status'=>true,"Item can't restore!"]);
+                return response()->json(['status'=>true,'message'=>"Shop can't restore!"]);
             }
         }
+    }
+
+    public function trashshow()
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shops = Shop::onlyTrashed()->get();
+            return response()->json(['status'=>true,'shops'=>$shops]);
+            
+        }
+    }
+
+    public function restoreAll(Request $req)
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $shops =Shop::onlyTrashed();
+            if($shops->restore()){
+                return response()->json(['status'=>true,'message'=>"All Shops restored."]);
+            }else {
+                return response()->json(['status'=>false,'message'=>"Shops can't restore!"]);
+            }
+        }
+        
     }
 }

@@ -24,6 +24,14 @@ import ListShops from "./components/Admin/Shop/ListShops";
 import ShopProfile from "./components/Shop/Shop";
 import ListCategories from "./components/Admin/Category/ListCategories";
 import AdminItems from "./components/Admin/Items";
+import DeletedCategoriesRecord from "./components/Admin/Category/DeletedCategoriesRecord";
+import DeletedCitiesRecord from "./components/Admin/City/DeletedCitiesRecord";
+import DeletedDivisionsRecord from "./components/Admin/Division/DeletedDivisionsRecord";
+import DeletedShopsRecord from "./components/Admin/Shop/DeletedShopsRecord";
+import DeletedShoptypesRecord from "./components/Admin/Shoptype/DeletedShoptypesRecord";
+import DeletedTownshipsRecord from "./components/Admin/Township/DeleteTownshipsRecord";
+import DeletedUsersRecord from "./components/Admin/User/DeletedUsersRecord";
+
 const router = createBrowserRouter([
     {
         path:"/",
@@ -55,8 +63,20 @@ const router = createBrowserRouter([
             },
             {
                 
+                path:"shoptypes/detetedrecord",
+                element:<DeletedShoptypesRecord/>
+                
+            },
+            {
+                
                 path:"divisions",
                 element:<ListDivisions/>
+                
+            },
+            {
+                
+                path:"divisions/detetedrecord",
+                element:<DeletedDivisionsRecord/>
                 
             },
             {
@@ -67,8 +87,20 @@ const router = createBrowserRouter([
             },
             {
                 
+                path:"cities/detetedrecord",
+                element:<DeletedCitiesRecord/>
+                
+            },
+            {
+                
                 path:"townships",
                 element:<ListTownships/>
+                
+            },
+            {
+                
+                path:"townships/detetedrecord",
+                element:<DeletedTownshipsRecord/>
                 
             },
             {
@@ -79,8 +111,20 @@ const router = createBrowserRouter([
             },
             {
                 
+                path:"shops/detetedrecord",
+                element:<DeletedShopsRecord/>
+                
+            },
+            {
+                
                 path:"categories",
                 element:<ListCategories/>
+                
+            },
+            {
+                
+                path:"categories/detetedrecord",
+                element:<DeletedCategoriesRecord/>
                 
             },
             {
@@ -94,7 +138,13 @@ const router = createBrowserRouter([
             {
                 path:'users',
                 element:<UsersList /> 
-            }
+            },
+            {
+                
+                path:"users/detetedrecord",
+                element:<DeletedUsersRecord/>
+                
+            },
         ]
     },
     {

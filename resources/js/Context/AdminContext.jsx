@@ -5,6 +5,7 @@ const AdminContext = createContext({
     user:null,
     token:null,
     axios:null,
+    dialog:false,
     shoptype:{},
     division:{},
     city:{},
@@ -33,6 +34,7 @@ const AdminContext = createContext({
 export const AdminProvider = ({children}) => {
     const [user,_setUser] = useState({});
     const [users,setUsers] = useState([]);
+    const [dialog,setDialog] = useState(false);
     const [cities,setCities] = useState([]);
     const [categories,setCategories] = useState([]);
     const [divisions,setDivisions] = useState([]);
@@ -69,6 +71,8 @@ export const AdminProvider = ({children}) => {
             users,
             setUser,
             setUsers,
+            dialog,
+            setDialog,
             setToken,
             axios,
             shoptype,
