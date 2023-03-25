@@ -141,12 +141,37 @@ class ItemController extends Controller
         
     }
 
-    public function restore($id)
+    public function restore(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
-            $item = Item::onlyTrashed()->findOrFail($id);
-            $item->restore();
-            return response()->json(['message' => 'Item restored successfully'], 200);
+            $item = Item::withTrashed()->find($req->id);
+            if($item->restore()){
+                return response()->json(['status'=>true,'message'=>"Items restored."]);
+            }else {
+                return response()->json(['status'=>true,'message'=>"Items can't restore!"]);
+            }
+        }
+        
+    }
+
+    public function trashshow()
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $items = Item::onlyTrashed()->get();
+            return response()->json(['status'=>true,'items'=>$items]);
+            
+        }
+    }
+
+    public function restoreAll(Request $req)
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $items =Item::onlyTrashed();
+            if($items->restore()){
+                return response()->json(['status'=>true,'message'=>"All Items restored."]);
+            }else {
+                return response()->json(['status'=>false,'message'=>"Items can't restore!"]);
+            }
         }
         
     }

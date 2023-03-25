@@ -31,6 +31,7 @@ import DeletedShopsRecord from "./components/Admin/Shop/DeletedShopsRecord";
 import DeletedShoptypesRecord from "./components/Admin/Shoptype/DeletedShoptypesRecord";
 import DeletedTownshipsRecord from "./components/Admin/Township/DeleteTownshipsRecord";
 import DeletedUsersRecord from "./components/Admin/User/DeletedUsersRecord";
+import DeletedItemsRecord from "./components/Admin/DeletedItemsRecord";
 
 const router = createBrowserRouter([
     {
@@ -130,6 +131,10 @@ const router = createBrowserRouter([
             {
                 path:'items',
                 element:<AdminItems /> 
+            },
+            {
+                path:'items/detetedrecord',
+                element:<DeletedItemsRecord /> 
             },
             {
                 path:'qrcode',

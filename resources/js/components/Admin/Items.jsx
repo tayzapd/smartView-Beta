@@ -7,6 +7,7 @@ import {
 import DataTable from "react-data-table-component";
 import { toast, ToastContainer } from 'react-toastify' ;
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 const Items = () => {
     const columns = [
@@ -97,9 +98,7 @@ const Items = () => {
         fileList.forEach(img => {
             formData.append('images[]',img)
         })
-
-
-        
+ 
         formData.append('name',item.name);
         formData.append('shop_id',item.shop_id);
         formData.append('price',item.price);
@@ -150,7 +149,7 @@ const Items = () => {
             formData.append('is_available',item.is_available);
             formData.append('category_id',item.category_id);
             const {data} = axios.post(`/api/admin/items/update/`,formData);
-            toast.success("Item Deleted Successfully!", {
+            toast.success("Item Updated Successfully!", {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -224,9 +223,9 @@ const Items = () => {
         }
 
         item.images = e.target.files;
-        console.log(item.images)
-        console.log(e.target.files);
-        console.log(fileList)
+        // console.log(item.images)
+        // console.log(e.target.files);
+        // console.log(fileList)
 
     };
 
@@ -261,6 +260,8 @@ return (
         }}>
             CREATE + 
         </div>
+        <Link to="/admin/items/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+
         {/* CREATE ITEM  */}
         <Modal size="lg" show={create} onHide={() => { setCreate(false)}}>
                 <Modal.Header closeButton>
