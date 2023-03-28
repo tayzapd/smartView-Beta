@@ -17,7 +17,7 @@ class Shop extends Model
     use HasFactory;
     use SoftDeletes,CascadeSoftDeletes;
 
-    protected $cascadeDeletes = ['shops'];
+    protected $cascadeDeletes = ['shops','users'];
 
     protected $dates = ['deleted_at'];
 

@@ -73,6 +73,16 @@ class CategoryController extends Controller
             }
         }
     }
+
+    public function trashshow()
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $categories = Category::onlyTrashed()->get();
+            return response()->json(['status'=>true,'categories'=>$categories]);
+            
+        }
+    }
+
     public function delete(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
@@ -89,14 +99,28 @@ class CategoryController extends Controller
         
 
     }
+    
     public function restore(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
             $category = Category::withTrashed()->find($req->id);
             if($category->restore()){
-                return response()->json(['status'=>true,"Category restored."]);
+                return response()->json(['status'=>true,'message'=>"Category restored."]);
             }else {
-                return response()->json(['status'=>true,"Category can't restore!"]);
+                return response()->json(['status'=>true,'message'=>"Category can't restore!"]);
+            }
+        }
+        
+    }
+
+    public function restoreAll(Request $req)
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $categories = Category::onlyTrashed();
+            if($categories->restore()){
+                return response()->json(['status'=>true,'message'=>"All Categories restored."]);
+            }else {
+                return response()->json(['status'=>false,'message'=>"Category can't restore!"]);
             }
         }
         

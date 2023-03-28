@@ -17,7 +17,10 @@ class User extends Authenticatable
     use HasRoles;
     use SoftDeletes;
 
+    
     protected $dates = ['deleted_at'];
+
+    protected $with=['shop'];
 
     protected $fillable = [
         'username',

@@ -95,11 +95,11 @@ class UsersController extends Controller
             $user = User::find($req->id);
             if($user->delete())
             {
-                return response()->json(['status'=>true,'Message'=>"User Deleted!"]);
+                return response()->json(['status'=>true,'message'=>"User Deleted!"]);
             }
             else
             {
-                return response()->json(['status'=>true,'Message'=>"User can't delete!, Try Again"]);
+                return response()->json(['status'=>true,'message'=>"User can't delete!, Try Again"]);
             }
         }
 
@@ -108,12 +108,34 @@ class UsersController extends Controller
     public function restore(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
-            $shop = User::withTrashed()->find($req->shop_id);
-            if($shop->restore()){
-                return response()->json(['status'=>true,"Item restored."]);
+            $user = User::withTrashed()->find($req->id);
+            if($user->restore()){
+                return response()->json(['status'=>true,'message'=>"Item restored."]);
             }else {
-                return response()->json(['status'=>true,"Item can't restore!"]);
+                return response()->json(['status'=>true,'message'=>"Item can't restore!"]);
             }
         }
+    }
+
+    public function trashshow()
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $users = User::onlyTrashed()->get();
+            return response()->json(['status'=>true,'users'=>$users]);
+            
+        }
+    }
+
+    public function restoreAll(Request $req)
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $users =User::onlyTrashed();
+            if($users->restore()){
+                return response()->json(['status'=>true,'message'=>"All Users restored."]);
+            }else {
+                return response()->json(['status'=>false,'message'=>"Users can't restore!"]);
+            }
+        }
+        
     }
 }

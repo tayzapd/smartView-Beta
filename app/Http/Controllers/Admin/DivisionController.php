@@ -40,6 +40,7 @@ class DivisionController extends Controller
             }
         }
     }
+
     public function update(Request $req)
     {
         $validator = Validator::make($req->all(), [
@@ -62,6 +63,7 @@ class DivisionController extends Controller
             }
         }
     }
+    
     public function delete(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
@@ -83,9 +85,31 @@ class DivisionController extends Controller
         if(Gate::allows('admin-auth',Auth::user())){
             $division = Division::withTrashed()->find($req->id);
             if($division->restore()){
-                return response()->json(['status'=>true,"Division restored."]);
+                return response()->json(['status'=>true,'message'=>"Division restored."]);
             }else {
-                return response()->json(['status'=>true,"Division can't restore!"]);
+                return response()->json(['status'=>true,'message'=>"Division can't restore!"]);
+            }
+        }
+        
+    }
+
+    public function trashshow()
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $divisions = Division::onlyTrashed()->get();
+            return response()->json(['status'=>true,'divisions'=>$divisions]);
+            
+        }
+    }
+
+    public function restoreAll(Request $req)
+    {
+        if(Gate::allows('admin-auth',Auth::user())){
+            $divisions =Division::onlyTrashed();
+            if($divisions->restore()){
+                return response()->json(['status'=>true,'message'=>"All Divisions restored."]);
+            }else {
+                return response()->json(['status'=>false,'message'=>"Divisions can't restore!"]);
             }
         }
         

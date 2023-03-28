@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
 import { useAdminContext }  from '../../../Context/AdminContext';
 import { Edit,Delete } from '@material-ui/icons';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from 'react-router-dom';
+import DataTable from 'react-data-table-component';
+
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [shops, setShops] = useState([]);
@@ -26,24 +31,63 @@ const UserList = () => {
     const res = await axios.post('/api/admin/users/show');
     setUsers(res.data.users);
   };
-
+  // console.log(users);
   const addUser = async (e) => {
     e.preventDefault();
-    await axios.post('/api/admin/users/create', user);
-    handleClose();
-    getUsers();
+    await axios.post('/api/admin/users/create', user).then((res)=>{
+      // console.log(res);
+      toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        handleClose();
+        getUsers();
+    });
+    
   };
 
   const editUser = async (e) => {
     e.preventDefault();
-    const {data} = await axios.post('/api/admin/users/update',user);
-    setShowEdit(false);
-    getUsers();
+    await axios.post('/api/admin/users/update',user).then((res)=>{
+      // console.log(res);
+      toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        setShowEdit(false);
+        getUsers();
+    })
+    
+    
   }
 
   const deleteUser = async (id) => {
-    const { data } = await axios.post('/api/admin/users/delete',{id:id}); 
-    getUsers(); 
+    await axios.post('/api/admin/users/delete',{id:id}).then((res)=>{
+      // console.log(res);
+      toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        getUsers(); 
+    }) 
   }
 
 
@@ -57,12 +101,53 @@ const UserList = () => {
     getUsers();
   }, []);
 
+  console.log(users);
+  const columns = [
+    {
+        name: 'ID',
+        selector: row => row.id,
+        sortable: true,
+
+    },
+    {
+        name: 'Username',
+        selector: row => row.username,
+        sortable: true,
+
+    },
+    {
+        name: 'Shop Name',
+        selector: row => row.shop.shop_name,
+    },
+    {      
+      selector: (row) => 
+      <Button onClick={() => {
+        setShowEdit(true);
+        setUser(user);
+
+      }} size='sm' className="me-2" variant="primary">
+          <Edit/>
+      </Button>
+    },
+    {      
+      selector: (row) => 
+      <Button onClick={() => {deleteUser(row.id)}} size='sm' className="" variant="danger">
+          <Delete />
+      </Button>
+    },
+    
+    
+
+];
   return (
     <div className='container'>
-      <Button variant="primary" className='rounded-0 my-3 ' onClick={handleShow}>
+      <Button className='my-3 ' style={{ backgroundColor: '#fc6400', color:'#000000', borderColor:'#fc6400' }} onClick={handleShow}>
         Add User +
       </Button>
-      <Table striped bordered hover>
+      <Link to="/admin/users/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+
+      <ToastContainer/>
+      {/* <Table striped bordered hover>
         <thead>
           <tr>
             <th>#ID</th>
@@ -82,17 +167,28 @@ const UserList = () => {
                   setShowEdit(true);
                   setUser(user);
 
-                }} size='sm' className="rounded-0 " variant="primary">
+                }} size='sm' className="me-2" variant="primary">
                     <Edit/>
                 </Button>
-                <Button onClick={() => {deleteUser(user.id)}} size='sm' className="rounded-0 " variant="danger">
+                <Button onClick={() => {deleteUser(user.id)}} size='sm' className="" variant="danger">
                     <Delete />
                 </Button>
               </td>
             </tr>
           ))}
         </tbody>
-      </Table>
+      </Table> */}
+
+      <DataTable
+        title="Users Lists"
+        columns={columns}
+        data={users}
+        fixedHeader
+        fixedHeaderScrollHeight="300px"
+        pagination
+        responsive
+        highlightOnHover
+    />
       
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

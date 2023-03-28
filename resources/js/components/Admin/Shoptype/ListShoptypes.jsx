@@ -12,11 +12,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { GestureSharp } from '@material-ui/icons';
 
 
-
-
 const ListShopTypes = () => {
 
-    const {setShopType,axios,shoptypes,setShopTypes} = useAdminContext();
+    const {setShopType,axios,shoptypes,setShopTypes,dialog,setDialog} = useAdminContext();
     const columns = [
         {
             name: 'ID',
@@ -73,8 +71,15 @@ const ListShopTypes = () => {
 
     // console.log(shoptypes);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+        // setShow(false)
+        setDialog(false);
+
+    };
+    const handleShow = () => {
+        // setShow(true)
+        setDialog(true);
+    }
 
 
     const [showedit, setEditShow] = useState(false);
@@ -118,6 +123,7 @@ const ListShopTypes = () => {
             
             <div className="container">
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Shop Type</button>
+                <Link to="/admin/shoptypes/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
 
             </div>
             <ToastContainer />
@@ -135,7 +141,7 @@ const ListShopTypes = () => {
 
             {/* Add Shop Type */}
             
-            <Modal size="lg" show={show} onHide={handleClose}>
+            <Modal size="lg" show={dialog} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Shop Type</Modal.Title>
                 </Modal.Header>
@@ -147,7 +153,7 @@ const ListShopTypes = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleClose} type="submit"  form="addshoptype">
+                <Button variant="primary" type="submit"  form="addshoptype">
                     Save
                 </Button>
                 </Modal.Footer>

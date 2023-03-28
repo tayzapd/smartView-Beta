@@ -7,6 +7,7 @@ import { useAdminContext } from "../../../Context/AdminContext";
 import EditShop from "./EditShop";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 const ListShops = ()=>{
     const {axios,setShop,shops,setShops} = useAdminContext();
@@ -133,6 +134,8 @@ const ListShops = ()=>{
         <>
             <div className="container">
                 <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Shop</button>
+                <Link to="/admin/shops/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+
             </div>
             <ToastContainer/>
             <DataTable
