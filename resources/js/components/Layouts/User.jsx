@@ -4,7 +4,7 @@ const User = () => {
     const {setToken,token} = useUserContext();
     return (
         <UserProvider>
-            <UserLayout />
+            <UserLayout  />
         </UserProvider>
     )
 }

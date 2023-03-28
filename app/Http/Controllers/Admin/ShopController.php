@@ -34,19 +34,24 @@ class ShopController extends Controller
             'shoptype_id' => 'required',
             'township_id' => 'required',
         ]);
-        if ($validator->fails()) {
-            return response()->json(['status'=>false,'Message'=>'Please ']);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json(['status'=>false,'Message'=>'Please ']);
+        // }
         if(Gate::allows('admin-auth',Auth::user())) {
-            if($req->hasFile('logo_image')){
+            
+            if($req->hasFile('logo_image') && $req->hasFile('bg_images')){
+                
                 $image = $req->file('logo_image');
                 $fileName = time() . '_' . $image->getClientOriginalName();
                 
-                $image->move(public_path('shoplogo'),$fileName);
-                
+                $image->move(public_path('images/shop/logo'),$fileName);
                 $shop = new Shop;
-                // $shop->logo_image = $req->file('logo_image')->getClientOriginalName();
                 $shop->logo_image = $fileName;
+
+                
+        
+                
+
                 $shop->shop_name = $req->shop_name;
                 $shop->address = $req->address;
                 $shop->phone = $req->phone;
@@ -54,7 +59,12 @@ class ShopController extends Controller
                 $shop->shoptype_id = $req->shoptype_id;
                 $shop->township_id = $req->township_id;
                 $shop->remark = $req->remark;
-                
+                $images = []; 
+                foreach ($req->file('bg_images') as $image) {
+                    $path = $image->move(public_path('images/shop/background'),$image->getClientOriginalName());
+                    $images[] = basename($path);
+                }
+                $shop->bg_image = serialize($images);
                 if($shop->save()){
                     return response()->json(['status'=>true,"message"=>"Shop Create Successfully!"]);
                 }else {

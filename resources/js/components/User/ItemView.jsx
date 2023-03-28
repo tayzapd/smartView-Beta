@@ -3,10 +3,11 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card,Button,Modal,Carousel } from "antd";
+import { Card,Button,Carousel } from "antd";
+import { Modal } from "react-bootstrap";
 import { useUserContext } from "../../Context/UserContext";
 const { Meta } = Card;
-
+import { ArrowDownOutlined } from "@ant-design/icons";
 import './css/itemView.css'
 const ItemView = () => {
     const {setDialog,grid,items,setItems} = useUserContext()
@@ -14,14 +15,14 @@ const ItemView = () => {
     const [shop,setShop] = useState([]);
     const [loading,setLoading]  = useState(true);
     const [showItem,setShowItem] = useState(false);
-    
+    const [currentImage, setCurrentImage] = useState('https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?cs=srgb&dl=pexels-ash-376464.jpg&fm=jpg');
 
     const [viewItem,setViewItem]  = useState({
         name:"",
         price:"",
         is_available:"",
         privacy:"",
-        taste:"",
+        tag:"",
         images:[],
         time_limited:"",
         special_range:"",
@@ -57,6 +58,10 @@ const ItemView = () => {
         console.log(viewItem)
     }
 
+    const handleClick = (newImage) => {
+        setCurrentImage(newImage);
+    }
+
     useEffect(() => {
         getItems();
         getShopInfo();
@@ -68,14 +73,14 @@ const ItemView = () => {
         <>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.7.55/css/materialdesignicons.min.css" />
         <div className="container-fluid py-3 " style={{
-            background:"#f0f2f5",
+            background:"#fcffa3",
             overflow:"hidden"
         }}>
             
             <style>
                 {`
                 .card-img {
-                    height: 200px;
+                    height: 250;
                     width: 300;
                     border:0;
                     object-fit: cover;
@@ -83,7 +88,7 @@ const ItemView = () => {
                   
                   @media (max-width: 767px) {
                     .card-img {
-                      height: 300;
+                      height: 250;
                       width: 300;
                       object-fit: cover;
                     }
@@ -93,6 +98,126 @@ const ItemView = () => {
             </style>
 
             {/* ITEM ONE PAGE VIEW   */}
+            <Modal show={showItem} onHide={() => {} } fullscreen>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body >
+                    <div className="slider-container">
+                    <img src={currentImage} className="main-image rounded-4 " />
+                    <div className="d-flex flex-row justify-content-center align-item-center  mt-3">
+                            <img 
+                                onClick={() => handleClick('https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')} 
+                                src="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" 
+                                className="small-image rounded-4"  />
+                            <img 
+                                onClick={() => handleClick('https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?cs=srgb&dl=pexels-ash-376464.jpg&fm=jpg')} 
+                                src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?cs=srgb&dl=pexels-ash-376464.jpg&fm=jpg" 
+                                className="small-image rounded-4"  />
+                            <img 
+                                onClick={() => handleClick('https://evoke.ie/wp-content/uploads/2023/03/332748275_873194020580069_1419245163461513321_n.jpg')} 
+                                src="https://evoke.ie/wp-content/uploads/2023/03/332748275_873194020580069_1419245163461513321_n.jpg" 
+                                className="small-image rounded-4"  />
+                        </div>
+                    </div>
+                
+
+                    <div className="container mt-3 d-flex flex-column justify-content-center align-item-center text-center " >
+                        <b>
+                            <h2 className="font-weight-bold" style={{fontWeight:"900"}}>{viewItem.name}  </h2> 
+                        </b>
+
+                        <b>
+                            <h2 className="font-weight-bold text-muted" style={{fontWeight:"900"}}>{viewItem.category.name}  </h2> 
+                        </b>
+
+                        <b>
+                            <h2 className="font-weight-bold text-warning" style={{fontWeight:"900"}}>{viewItem.price} MMK </h2> 
+                        </b>
+
+                    </div>
+
+
+                    <div className="container-fluid mt-3 d-flex flex-column justify-content-startt align-item-start text-start text-muted"  style={{fontWeight:"900"}} >
+                        <b>
+                        <h2 className="font-weight-bold" >Description </h2> 
+                        </b>
+
+                        
+                        <br />
+
+                        <div className="w-100"></div>
+                        <p style={{marginLeft:'12px'}}>
+                            {viewItem.description}
+                        </p>
+
+                        <b>
+                        <h2 className="font-weight-bold" >Tags </h2> 
+
+                        <div style={{marginleft:'12px'}} >
+                            <span className="rounded-2 px-2 py-1 mx-2" style={{background:'#d4fcff'}}>Fish</span>
+                            <span className="rounded-2 px-2 py-1 mx-2" style={{background:'#d4fcff'}}>Rice Noodle</span>
+                            <span className="rounded-2 px-2 py-1 mx-2" style={{background:'#d4fcff'}}>Spicy</span>
+                        </div>
+
+                        </b>
+
+
+                    </div>
+                    
+                </Modal.Body>
+                {/* <Modal.Footer>
+                <Button variant="secondary" onClick={() => {}}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={() => {}}>
+                    Save Changes
+                </Button>
+                </Modal.Footer> */}
+            </Modal>
+            <style>
+                {`
+                .shop-name {
+                    color:black;
+                    font-weght:900;
+                }
+                .slider-container {
+                    width: 100%;
+                    margin: 0 auto ;
+                  }
+                  
+                  .slider-images {
+                    position: relative;
+                    height: 500px;
+                    overflow: hidden;
+                  }
+                  
+                  .main-image {
+                    width: 100%;
+                    height: auto;
+                    transition: opacity 1s;
+                  }
+                  
+                  .small-images {
+                    left: 50%;
+                    transform: translateX(-50%);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  }
+                  
+                  .small-image {
+                    width: 120px;
+                    height: 80px;
+                    margin: 0 10px;
+                    cursor: pointer;
+                  }
+                  
+                  .small-image:hover {
+                    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+                  }
+                `}
+            </style>
+            {/* 
             <Modal
                 width={1000}
                 open={showItem}
@@ -177,7 +302,7 @@ const ItemView = () => {
                         <span className="rounded-pill bg-danger py-1 px-2 ">Not Available </span>
                     }
                     <span className="mx-3 ">
-                    {viewItem.taste}
+                    {viewItem.tag}
                     </span>
                 </div>
 
@@ -189,22 +314,27 @@ const ItemView = () => {
                 </div>
 
 
-            </Modal>
-            <div className="row mx-md-5 mx-3  ">
+            </Modal> */}
+            <div className="row mx-md-5 mx-1  ">
                 {items.map((item,id) => {
                     if(grid == true){
-                        return <div key={id} className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-3 " >
+                        return <div key={id} 
+                            className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-3 rounded-4 " 
+                            onClick={() => {
+                                ShowOneItem(id)
+                            }}>
                                 <div className="row no-gutters">
-                                    <div className="col-5 p-0">
-                                        <img className="card-img rounded-0 col-12" src={`/images/shop/item/`+item.images[0]} />
+                                    <div className="col-6 px-2 py-2">
+                                        <img style={{height:'175px'}} className="card-img rounded-4 col-12 " src={`/images/shop/item/`+item.images[0]} />
                                     </div>
-                                    <div className="col-7">
+                                    <div className="col-6">
                                         <div className="card-body py-2 px-2 mr-2 ">
-                                            <h5 className="card-title mt-3 ">{item.name}</h5>
-                                            <p className="card-text">{item.description} - <span className="text-muted">{item.price} Kyats </span></p>
-                                            <a onClick={() => {
-                                                ShowOneItem(id)
-                                            }} className="btn btn-primary">View More </a>
+                                            <h6 style={{fontSize:"20px",fontWeight:'900'}} className="col-12 mt-2 ">{item.name}</h6>
+                                            <p className="card-title ">{item.category.name}</p>
+
+                                            <div className="text-warning" style={{marginTop:'60px'}}>
+                                                {item.price} MMK 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -215,14 +345,15 @@ const ItemView = () => {
                                     className="mx-lg-3 mb-sm-3 col-md-3 my-3 col-12 "
                                     hoverable
                                     loading={loading}
+                                    onClick={() => {
+                                        ShowOneItem(id)
+                                    }}
                                     cover={<img style={{height:200,margin:0,padding:0}} alt="card image" src={`/images/shop/item/`+item.images[0]} />}
                                     style={{ width: 300 ,margin:20,padding:0}}
                                     >
                                         <Meta title={item.name} description={`${item.description}`} />
                                         <p>${item.price}</p>
-                                        <Button type="primary" onClick={() => {
-                                            ShowOneItem(id)
-                                        }}>View More</Button>
+                                    
                                 </Card>
                     }
                 })}

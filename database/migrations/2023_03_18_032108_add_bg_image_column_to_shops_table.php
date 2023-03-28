@@ -14,7 +14,7 @@ class AddBgImageColumnToShopsTable extends Migration
     public function up()
     {
         Schema::table('shops', function (Blueprint $table) {
-            $table->string('bg_image')->after('phone');
+            $table->text('bg_image')->after('phone');
         });
     }
 

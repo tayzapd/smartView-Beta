@@ -9,6 +9,7 @@ import Items from "./components/Shop/Items";
 import ShopQRCode from "./components/Shop/QrCode";
 import Categories from "./components/Shop/Category";
 import ItemView from './components/User/ItemView';
+import ShopView from './components/User/ShopView';
 import ShopLogin from "./components/Shop/Auth/Login";
 import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
 import AdminLogin from "./components/Admin/Auth/AdminLogin";
@@ -32,10 +33,14 @@ const router = createBrowserRouter([
             {
                 path:'/sh/:id/',
                 element:<ItemView/>
-            }
+            },
+  
         ]
     },
-
+    {
+        path:'/sh/:id/profile',
+        element:<ShopView /> 
+    },
     {
         path:"/admin",
         element:<AdminLayout />, 

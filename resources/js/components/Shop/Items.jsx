@@ -26,7 +26,7 @@ const Items = () => {
         price:"",
         is_available:"",
         privacy:"",
-        taste:"",
+        tag:"",
         images:[],
         time_limited:"",
         special_range:"",
@@ -42,7 +42,7 @@ const Items = () => {
         price:"",
         is_available:"",
         privacy:"",
-        taste:"",
+        tag:"",
         images:[],
         time_limited:"",
         special_range:"",
@@ -58,7 +58,7 @@ const Items = () => {
 
     const [item,setItem] = useState({
         name:'',
-        taste:'',
+        tag:'',
         price:null,
         is_available:true,
         privacy:'public',
@@ -101,7 +101,7 @@ const Items = () => {
         formData.append('price',item.price);
         formData.append('description',item.description);
         formData.append('remark',item.remark);
-        formData.append('taste',item.taste);
+        formData.append('tag',item.tag);
         formData.append('special_range',item.special_date);
         formData.append('privacy',item.privacy);
         formData.append('is_available',item.is_available);
@@ -126,7 +126,7 @@ const Items = () => {
         formData.append('price',editCItem.price);
         formData.append('description',editCItem.description);
         formData.append('remark',editCItem.remark);
-        formData.append('taste',editCItem.taste);
+        formData.append('tag',editCItem.tag);
         formData.append('special_range',editCItem.special_range);
         formData.append('privacy',editCItem.privacy);
         formData.append('is_available',editCItem.is_available);
@@ -200,7 +200,7 @@ const Items = () => {
 
                     <Input name="name" onChange={(e) => {item.name = e.target.value}} className="my-2 " allowClear placeholder="Name" />
 
-                    <Input name="taste" onChange={(e) => {item.taste = e.target.value}} className="my-2 " placeholder="Taste" />
+                    <Input name="tag" onChange={(e) => {item.tag = e.target.value}} className="my-2 " placeholder="tag" />
                     <TextArea name="description" onChange={(e) => {item.description = e.target.value}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Description" maxLength={250} />
 
                     <InputNumber name="price" onChange={(value) => {item.price = value }} className="col-12 my-2" addonBefore="+" addonAfter="$" placeholder="Price " />
@@ -280,7 +280,7 @@ const Items = () => {
 
                     <Input value={editCItem.name} name="name" onChange={(e) => {setditCItem({...editCItem,[e.target.name]:e.target.value})}} className="my-2 " allowClear placeholder="Name" />
 
-                    <Input value={editCItem.taste} name="taste" onChange={(e) => {setditCItem({...item,[e.target.name]:e.target.value})}} className="my-2 " placeholder="Taste" />
+                    <Input value={editCItem.tag} name="tag" onChange={(e) => {setditCItem({...item,[e.target.name]:e.target.value})}} className="my-2 " placeholder="tag" />
                     <TextArea value={editCItem.description} name="description" onChange={(e) => {setditCItem({...item,[e.target.name]:e.target.value})}} className="my-2 " style={{resize:'none'}} allowClear rows={4} placeholder="Description" maxLength={250} />
 
                     <InputNumber value={editCItem.price} name="price" onChange={(value) => {setditCItem({...editCItem,price:value})}} className="col-12 my-2" addonBefore="+" addonAfter="$" placeholder="Price " />
@@ -470,7 +470,7 @@ const Items = () => {
                         <span className="rounded-pill bg-danger py-1 px-2 ">Not Available </span>
                     }
                     <span className="mx-3 ">
-                    {viewItem.taste}
+                    {viewItem.tag}
                     </span>
                 </div>
 

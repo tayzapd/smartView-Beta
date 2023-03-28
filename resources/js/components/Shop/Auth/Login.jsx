@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const ShopLogin = () => {
     const {user,token,setToken,setUser,axios} = useShopContext();
     const {id} = useParams();
+    const [start,setStart] = useState(false);
     const [login,setLogin] = useState({
         username:'',
         password:'',
@@ -38,7 +39,7 @@ const ShopLogin = () => {
 
     return (
         <>
-            <div className="responsive-box my-lg-3    ">
+            {start == true ? <div className="responsive-box my-lg-3    ">
                 <div className="container d-flex  justify-content-center align-item-center  ">
                     <div className="d-flex justify-content-center align-item center px-3   logo-image-main" >
                         <div className="d-flex justify-content-center align-item center px-4 py-2   logo-image-box">
@@ -79,19 +80,43 @@ const ShopLogin = () => {
                         </b>
                     </div>
                 </div>
-
-
-                {/* <div className="container d-flex  justify-content-center align-item-center mt-5 s ">
-                    <div className="d-flex justify-content-center align-item center px-4   ">
-                        <p className="text-muted mx-2 ">
-                            You don't have an account? 
-                        </p>
-                        <b>
-                            Sing up
-                        </b>
-                    </div>
-                </div> */}
             </div>
+            :
+            <div className="container d-flex flex-column  justify-content-center align-item-center   ">
+                <img 
+                    style={{marginTop:"100px"}}
+                    src="https://eat-to-eat.com/new/assets/images/custom/commandez.png" 
+                />
+
+                <div className="w-100"></div>
+
+                <h1 className="text-center" style={{fontSize:"2rem",fontWeight:"900",marginTop:'50px'}}>
+                    Pick <span className="text-warning">Your</span>
+                    <br />
+                     Choice Peacefully  
+                </h1>
+                
+
+                <div className="w-100"></div>
+
+                <p className="mt-5 text-muted" style={{textAlign:'center'}}>
+                    <span className="text-warning">
+                        Smart View 
+                    </span>  
+                     is bring your smart life <br />
+                    for looking menu in shop.
+                </p>
+                
+
+                <div className="w-100"></div>
+
+                <div className="d-flex justify-content-center align-item-center" style={{marginTop:"60px",height:'50px'}} >
+                    <button onClick={() => {setStart(true)}}  className="btn rounded-2 col-8 " style={{background:"#5227cc",color:"white",buttom:'0'}}>
+                        Get Started
+                    </button>
+                </div>
+            </div>
+            }
             <style>
                 {`  
                 
