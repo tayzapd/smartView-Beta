@@ -1,3 +1,4 @@
+import '../admin.css';
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import Button from 'react-bootstrap/Button';
@@ -63,7 +64,7 @@ const ListCategories = () => {
         {
             name: 'ID',
             selector: row => row.id,
-            width:"60px",
+            width:"70px",
             sortable: true,
     
         },
@@ -89,10 +90,11 @@ const ListCategories = () => {
             
             selector: (row) => 
             <button
-                className='btn btn-primary'
+                className='btn btns'
                 onClick={(e)=>editShow(e,row)}
             >Edit
             </button>,
+            width:"90px"
         },
         {
             
@@ -111,15 +113,14 @@ const ListCategories = () => {
     return (
         <>
             <div className="container">
-                <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Category</button>
-                <Link to="/admin/categories/detetedrecord" style={{ backgroundColor: '#fc6400' }} className="btn btn-primary float-end mb-2">Deleted Record</Link>
+                <button className='btn mb-2 btns' onClick={handleShow}>Add Category</button>
+                <Link to="/admin/categories/detetedrecord" className="btn float-end mb-2 btns">Deleted Record</Link>
             </div>
             <ToastContainer/>
             <DataTable
                 title="Category Lists"
                 columns={columns}
                 data={categories}
-                // progressPending={pending}
                 fixedHeader
                 fixedHeaderScrollHeight="300px"
                 pagination
@@ -137,9 +138,9 @@ const ListCategories = () => {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Cancel
                 </Button>
-                <Button variant="primary" onClick={handleClose} type="submit" form="addcategory">
+                <Button className='btns' onClick={handleClose} type="submit" form="addcategory">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -157,13 +158,15 @@ const ListCategories = () => {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
-                    Close
+                    Cancel
                 </Button>
-                <Button variant="primary" onClick={editClose} type="submit" form="updatecategory">
+                <Button className='btns' onClick={editClose} type="submit" form="updatecategory">
                     Update
                 </Button>
                 </Modal.Footer>
             </Modal>
+
+            
         </>
     )
 }

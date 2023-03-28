@@ -1,3 +1,4 @@
+import '../admin.css';
 import { useEffect, useState } from "react";
 import DataTable from 'react-data-table-component';
 import Button from 'react-bootstrap/Button';
@@ -93,7 +94,7 @@ const ListDivisions = () => {
             
             selector: (row) => 
             <button
-                className='btn btn-primary'
+                className='btn btns'
                 onClick={(e)=>editShow(e,row)}
             >Edit
             </button>,
@@ -113,8 +114,8 @@ const ListDivisions = () => {
         
         <>
             <div className="container">
-                <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Division</button>
-                <Link to="/admin/divisions/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+                <button className='btn mb-2 btns' onClick={handleShow}>Add Division</button>
+                <Link to="/admin/divisions/detetedrecord" className="btn btns float-end mb-2 ">Deleted Record</Link>
 
             </div>
 
@@ -125,7 +126,7 @@ const ListDivisions = () => {
             data={divisions}
             progressPending={pending}
             fixedHeader
-            fixedHeaderScrollHeight="300px"
+            fixedHeaderScrollHeight="350px"
             pagination
             responsive
             highlightOnHover
@@ -141,9 +142,9 @@ const ListDivisions = () => {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Cancel
                 </Button>
-                <Button variant="primary" onClick={handleClose} type="submit" form="adddivision">
+                <Button className="btns" onClick={handleClose} type="submit" form="adddivision">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -161,9 +162,9 @@ const ListDivisions = () => {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
-                    Close
+                    Cancel
                 </Button>
-                <Button variant="primary" onClick={editClose} type="submit" form="updatedivision">
+                <Button className="btns" onClick={editClose} type="submit" form="updatedivision">
                     Update
                 </Button>
                 </Modal.Footer>

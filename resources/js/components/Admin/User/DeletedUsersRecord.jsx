@@ -92,8 +92,8 @@ const DeletedUsersRecord = () => {
     return (
         <>
             <div className="container">
-                <Link to="/admin/users/" style={{ backgroundColor: '#fc6400', borderColor:'#fc6400' }} className="btn btn-primary mb-2 text-dark">All Users</Link>
-                <button className="btn btn-success float-end mb-2 text-dark" style={{ backgroundColor: '#fc6400', borderColor:'#fc6400' }} onClick={allRestore}>All Restore</button>
+                <Link to="/admin/users/" className="btn btns mb-2">All Users</Link>
+                <button className="btn btns float-end mb-2" onClick={allRestore}>All Restore</button>
             </div>
             <ToastContainer/>
             <DataTable

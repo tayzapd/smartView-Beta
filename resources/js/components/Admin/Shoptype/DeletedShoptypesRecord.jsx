@@ -79,7 +79,7 @@ const DeletedShoptypesRecord = () => {
         {
             selector: (row) => 
             <button
-                className='btn btn-primary'
+                className='btn btns'
                 onClick={(e)=>restore(e,row.id)}
             >Restore
             </button>,
@@ -92,8 +92,8 @@ const DeletedShoptypesRecord = () => {
     return (
         <>
             <div className="container">
-                <Link to="/admin/shoptypes/" style={{ backgroundColor: '#fc6400', borderColor:'#fc6400' }} className="btn btn-primary mb-2 text-dark">All Shoptypes</Link>
-                <button className="btn btn-success float-end mb-2 text-dark" style={{ backgroundColor: '#fc6400', borderColor:'#fc6400' }} onClick={allRestore}>All Restore</button>
+                <Link to="/admin/shoptypes/" className="btn btns mb-2">All Shoptypes</Link>
+                <button className="btn btns float-end mb-2" onClick={allRestore}>All Restore</button>
             </div>
             <ToastContainer/>
             <DataTable

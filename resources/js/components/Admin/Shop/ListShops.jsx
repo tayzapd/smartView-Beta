@@ -8,6 +8,8 @@ import EditShop from "./EditShop";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import '../admin.css';
+
 
 const ListShops = ()=>{
     const {axios,setShop,shops,setShops} = useAdminContext();
@@ -113,7 +115,7 @@ const ListShops = ()=>{
             
             selector: (row) => 
             <button
-                className='btn btn-primary'
+                className='btn btns'
                 onClick={(e)=>editShow(e,row)}
             >Edit
             </button>,
@@ -133,8 +135,8 @@ const ListShops = ()=>{
     return (
         <>
             <div className="container">
-                <button className='btn mb-2' style={{ backgroundColor: '#fc6400' }} onClick={handleShow}>Add Shop</button>
-                <Link to="/admin/shops/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+                <button className='btn mb-2 btns' onClick={handleShow}>Add Shop</button>
+                <Link to="/admin/shops/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
 
             </div>
             <ToastContainer/>
@@ -161,9 +163,9 @@ const ListShops = ()=>{
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Cancel
                 </Button>
-                <Button variant="primary" onClick={handleClose} type="submit" form="addshop">
+                <Button className="btns" onClick={handleClose} type="submit" form="addshop">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -181,9 +183,9 @@ const ListShops = ()=>{
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
-                    Close
+                    Cancel
                 </Button>
-                <Button variant="primary" onClick={editClose} type="submit" form="updateshop">
+                <Button className="btns" onClick={editClose} type="submit" form="updateshop">
                     Update
                 </Button>
                 </Modal.Footer>

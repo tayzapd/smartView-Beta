@@ -87,7 +87,7 @@ const DeletedItemsRecord = () => {
         {
             selector: (row) => 
             <button
-                className='btn btn-primary'
+                className='btn btns'
                 onClick={(e)=>restore(e,row.id)}
             >Restore
             </button>,
@@ -98,8 +98,8 @@ const DeletedItemsRecord = () => {
     return (
         <>
             <div className="container">
-                <Link to="/admin/items/" style={{ backgroundColor: '#fc6400', borderColor:'#fc6400' }} className="btn btn-primary mb-2 text-dark">All Items</Link>
-                <button className="btn btn-success float-end mb-2 text-dark" style={{ backgroundColor: '#fc6400', borderColor:'#fc6400' }} onClick={allRestore}>All Restore</button>
+                <Link to="/admin/items/" className="btn btns mb-2">All Items</Link>
+                <button className="btn btns float-end mb-2" onClick={allRestore}>All Restore</button>
             </div>
             <ToastContainer/>
             <DataTable

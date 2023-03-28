@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
+import '../admin.css';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -125,7 +126,7 @@ const UserList = () => {
         setShowEdit(true);
         setUser(user);
 
-      }} size='sm' className="me-2" variant="primary">
+      }} size='sm' className="me-2 btns">
           <Edit/>
       </Button>
     },
@@ -141,10 +142,10 @@ const UserList = () => {
 ];
   return (
     <div className='container'>
-      <Button className='my-3 ' style={{ backgroundColor: '#fc6400', color:'#000000', borderColor:'#fc6400' }} onClick={handleShow}>
+      <Button className='my-3 btns' onClick={handleShow}>
         Add User +
       </Button>
-      <Link to="/admin/users/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+      <Link to="/admin/users/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
 
       <ToastContainer/>
       {/* <Table striped bordered hover>
@@ -228,10 +229,10 @@ const UserList = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Cancel
           </Button>
-          <Button variant="primary" onClick={addUser}>
-            Save Changes
+          <Button className='btns' onClick={addUser}>
+            Save
           </Button>
         </Modal.Footer>
       </Modal>
@@ -274,10 +275,10 @@ const UserList = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => {setShowEdit(false)} }>
-            Close
+            Cancel
           </Button>
-          <Button variant="primary" onClick={editUser}>
-            Save Changes
+          <Button className='btns' onClick={editUser}>
+            Update
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,3 +1,4 @@
+import '../admin.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
@@ -93,7 +94,7 @@ const ListCities = () => {
             
             selector: (row) => 
             <button
-                className='btn btn-primary'
+                className='btn btns'
                 onClick={(e)=>editShow(e,row)}
             >Edit
             </button>,
@@ -114,8 +115,8 @@ const ListCities = () => {
     return (
         <>
             <div className="container">
-                <button className='btn mb-2' style={{ backgroundColor: '#fc6400', borderColor:'#fc6400' }} onClick={handleShow}>Add City</button>
-                <Link to="/admin/cities/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+                <button className='btn mb-2 btns'  onClick={handleShow}>Add City</button>
+                <Link to="/admin/cities/detetedrecord" className="btn float-end mb-2 btns">Deleted Record</Link>
 
             </div>
 
@@ -142,9 +143,9 @@ const ListCities = () => {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Cancel
                 </Button>
-                <Button variant="primary" onClick={handleClose} type="submit" form="addcity">
+                <Button className='btns' onClick={handleClose} type="submit" form="addcity">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -161,9 +162,9 @@ const ListCities = () => {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={() => {setEditShow(false) }}>
-                    Close
+                    Cancel
                 </Button>
-                <Button variant="primary" onClick={() => {setEditShow(false) }} type="submit" form="updatecity">
+                <Button className='btns' onClick={() => {setEditShow(false) }} type="submit" form="updatecity">
                     Update
                 </Button>
                 </Modal.Footer>

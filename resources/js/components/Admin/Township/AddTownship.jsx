@@ -8,7 +8,8 @@ const AddTownship = () =>{
     const {axios,townships,setTownships} = useAdminContext();
     const [townshipsInput,setTownshipsInput] = useState({
         name:'',
-        remark:''
+        remark:'',
+        error_list:[],
     })
 
     const [cities,setCities] = useState([]);
@@ -62,6 +63,9 @@ const AddTownship = () =>{
                 theme: "light",
                 });
             getTownships();
+        }).catch((err)=>{
+            console.log(err);
+            // setTownshipsInput({...townshipsInput,error_list:err.response.data.error});
         })
     }
     return(
@@ -69,7 +73,6 @@ const AddTownship = () =>{
             <form onSubmit={saveTownship} id="addtownship">
             <div className="mb-2">
                     <label>City</label>
-                    
                     <select name="city" onChange={(e)=>setSelect(...selectInput,e.target.value)} value={selectInput.division_id}   className="form-select">
                     <option>Select City</option>
                         {cities.map((city, index) => (
@@ -81,12 +84,12 @@ const AddTownship = () =>{
                 </div>
                 <div className="mb-2">
                     <label>Name</label>
-                    <input type="text" name="name" onChange={handleInput} value={townshipsInput.name} className="form-control" required/>
+                    <input type="text" name="name" onChange={handleInput} value={townshipsInput.name} className="form-control"/>
 
                 </div> 
                 <div className="mb-2">
                     <label>Remark</label>
-                    <input type="text" name="remark" onChange={handleInput} value={townshipsInput.remark} className="form-control" required/>
+                    <input type="text" name="remark" onChange={handleInput} value={townshipsInput.remark} className="form-control"/>
                 </div>
                 
             </form>
