@@ -50,11 +50,6 @@ class ItemController extends Controller
         }
         
 
-        // $images = @unserialize($item->images); // Unserialize the images field
-
-        // if($item != null){
-        //     return response()->json(['status'=>true,'items'=>$item]);
-        // }
     }
 
     public function create(Request $request)
@@ -70,7 +65,6 @@ class ItemController extends Controller
             'special_range' => 'required|date_format:Y-m-d',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
-            'remark' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -173,12 +167,7 @@ class ItemController extends Controller
     {
         if(Gate::allows('shop-auth',Auth::user())){
             $item = Item::findOrFail($id);
-            // $images = unserialize($item->images);
-            // foreach ($images as $image) {
-            //     Storage::delete('public/images/'.$image);
-            // }
             $item->delete();
-    
             return response()->json(['message' => 'Item deleted successfully'], 200);
         }
     }

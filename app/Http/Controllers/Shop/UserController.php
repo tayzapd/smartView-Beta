@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Gate;
 class UserController extends Controller
 {
 
-    public function show(Request $req) 
+    public function show() 
     {
         if(Gate::allows('shop-auth',Auth::user())){
             $shop_id = Auth::user()->shop_id;

@@ -27,7 +27,6 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string',
-            'remark' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +51,6 @@ class CategoryController extends Controller
         $validator = Validator::make($req->all(), [
             'id'=> 'required',
             'name' => 'required|string',
-            'remark' => 'required|string',
             'shop_id' => 'required',
         ]);
 
