@@ -98,12 +98,6 @@ const Admin = () => {
         />
       </Sider>
       <Layout>
-
-<<<<<<< HEAD
-=======
-        >
-        </Header> */}
->>>>>>> refs/remotes/origin/main
         <Content
           style={{
             margin: '24px 16px 0',
@@ -119,43 +113,43 @@ const Admin = () => {
             <Main/>
           </div>
         </Content>
-        <Footer
-          style={{
-            textAlign: 'center',
-          }}
-        > <div className="col-md-12 col-sm-6">
+          <Footer
+            style={{
+              textAlign: 'center',
+            }}
+          > <div className="col-md-12 col-sm-6">
 
-            Admin Desgin ©2023 Created by XyberPlanet Developement Team 
-        </div>
-        </Footer>
+              Admin Desgin ©2023 Created by XyberPlanet Developement Team 
+          </div>
+          </Footer>
       </Layout>
-      <style>
-        {`
-            .logo {
-                height: 32px;
-                margin: 16px;
-                background: rgba(255, 255, 255, 0.2);
+        <style>
+          {`
+              .logo {
+                  height: 32px;
+                  margin: 16px;
+                  background: rgba(255, 255, 255, 0.2);
+                }
+
+              .h-screen {
+                  height:100vh;
               }
 
-            .h-screen {
-                height:100vh;
-            }
-
-            .ant-menu-light .ant-menu-item-selected{
-              background-color:transparent;
-              color:#faee02;
-            }
-            
-            .ant-menu-title-content:hover{
-              color:#faee02;
-            }
-            .ant-layout .ant-layout-sider-zero-width-trigger{
-              background-color:#fc6400;
-            }
-            
-        `}
-      </style>
-    </Layout> 
+              .ant-menu-light .ant-menu-item-selected{
+                background-color:transparent;
+                color:#faee02;
+              }
+              
+              .ant-menu-title-content:hover{
+                color:#faee02;
+              }
+              .ant-layout .ant-layout-sider-zero-width-trigger{
+                background-color:#fc6400;
+              }
+              
+          `}
+        </style>
+      </Layout>
             : <Main />
     }
     </>

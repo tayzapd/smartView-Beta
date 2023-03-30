@@ -104,7 +104,7 @@ const ListCategories = () => {
                 onClick={(e)=>deleteCategory(e,row.id)}
             >Delete
             </button>,
-        },
+        }, 
 
         
         

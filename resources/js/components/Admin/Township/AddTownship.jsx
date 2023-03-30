@@ -5,7 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 const AddTownship = () =>{
-    const {axios,townships,setTownships} = useAdminContext();
+    const {axios,townships,setTownships,setDialog} = useAdminContext();
     const [townshipsInput,setTownshipsInput] = useState({
         name:'',
         remark:'',
@@ -51,7 +51,8 @@ const AddTownship = () =>{
 
         // console.log(data);
         axios.post(`/api/admin/townships/create/`,data).then((res)=>{
-            console.log(res);
+            // console.log(res);
+            setDialog(false);
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -64,10 +65,14 @@ const AddTownship = () =>{
                 });
             getTownships();
         }).catch((err)=>{
-            console.log(err);
-            // setTownshipsInput({...townshipsInput,error_list:err.response.data.error});
+            // console.log(err.response.data.error);
+            setDialog(true);
+            setTownshipsInput({...townshipsInput,error_list:err.response.data.error});        
         })
+
+
     }
+
     return(
         <>
             <form onSubmit={saveTownship} id="addtownship">
@@ -81,10 +86,13 @@ const AddTownship = () =>{
                             </option>
                         ))}
                     </select>
+                    <span className="text-danger">{townshipsInput.error_list.city_id}</span>
+
                 </div>
                 <div className="mb-2">
                     <label>Name</label>
                     <input type="text" name="name" onChange={handleInput} value={townshipsInput.name} className="form-control"/>
+                    <span className="text-danger">{townshipsInput.error_list.name}</span>
 
                 </div> 
                 <div className="mb-2">

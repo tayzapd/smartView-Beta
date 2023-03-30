@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import '../admin.css';
 
 const ListTownships = () => {
-    const {axios,setTownship,townships,setTownships} = useAdminContext();
+    const {axios,setTownship,townships,setTownships,dialog,setDialog} = useAdminContext();
     const [show, setShow] = useState(false);
     const [pending, setPending] = useState(true);
 
@@ -36,8 +36,8 @@ const ListTownships = () => {
 
     console.log(townships);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setDialog(false);
+    const handleShow = () => setDialog(true);
 
     const deleteTownship = (e,id)=>{
         e.preventDefault();
@@ -136,7 +136,7 @@ const ListTownships = () => {
             />
 
             {/* ADD TOWNSHIP */}
-            <Modal size="lg" show={show} onHide={handleClose}>
+            <Modal size="lg" show={dialog} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Township</Modal.Title>
                 </Modal.Header>
@@ -147,7 +147,7 @@ const ListTownships = () => {
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button className="btns" onClick={handleClose} type="submit" form="addtownship">
+                <Button className="btns" type="submit" form="addtownship">
                     Save
                 </Button>
                 </Modal.Footer>
