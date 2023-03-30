@@ -80,7 +80,7 @@ const Admin = () => {
           backgroundImage: 'linear-gradient(to left bottom, #f26d00, #f16103, #ef5407, #ed460d, #eb3612)'
         }}
       >
-        <div className="logo" style={{ textAlign: 'center', fontSize:'20px', backgroundColor:'transparent'}}>Smart View</div>
+        <div className="logo" style={{ textAlign: 'center', fontSize:'20px', backgroundColor:'transparent', color:'#274256'}}>Smart View</div>
         <Menu 
           onClick={({key})=>{
             if(key != "singout"){
@@ -89,7 +89,8 @@ const Admin = () => {
           }}
           defaultSelectedKeys={[window.location.pathname]}
           style={{ 
-            backgroundColor:'transparent'
+            backgroundColor:'transparent',
+            color:'#ffffff'
           }}
           theme="light" 
           mode="inline" 
@@ -98,6 +99,11 @@ const Admin = () => {
       </Sider>
       <Layout>
 
+<<<<<<< HEAD
+=======
+        >
+        </Header> */}
+>>>>>>> refs/remotes/origin/main
         <Content
           style={{
             margin: '24px 16px 0',
@@ -117,8 +123,10 @@ const Admin = () => {
           style={{
             textAlign: 'center',
           }}
-        >
-          Admin Desgin ©2023 Created by XyberPlanet Developement Team 
+        > <div className="col-md-12 col-sm-6">
+
+            Admin Desgin ©2023 Created by XyberPlanet Developement Team 
+        </div>
         </Footer>
       </Layout>
       <style>
@@ -130,14 +138,17 @@ const Admin = () => {
               }
 
             .h-screen {
-                height:665px;
+                height:100vh;
             }
 
             .ant-menu-light .ant-menu-item-selected{
               background-color:transparent;
-              color:#ffffff;
+              color:#faee02;
             }
-
+            
+            .ant-menu-title-content:hover{
+              color:#faee02;
+            }
             .ant-layout .ant-layout-sider-zero-width-trigger{
               background-color:#fc6400;
             }

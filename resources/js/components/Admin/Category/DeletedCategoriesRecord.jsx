@@ -89,7 +89,7 @@ const DeletedCategoriesRecord = () => {
             
             selector: (row) => 
             <button
-                className='btn btn-primary'
+                className='btn btns'
                 onClick={(e)=>restore(e,row.id)}
             >Restore
             </button>,
@@ -101,8 +101,8 @@ const DeletedCategoriesRecord = () => {
     return (
         <>
         <div className="container">
-            <Link to="/admin/categories/" className="btn btn-primary mb-2">All Categories</Link>
-            <button className="btn btn-success float-end mb-2" style={{ backgroundColor: '#fc6400' }} onClick={allRestore}>All Restore</button>
+            <Link to="/admin/categories/" className="btn mb-2 btns">All Categories</Link>
+            <button className="btn btns float-end mb-2" onClick={allRestore}>All Restore</button>
         </div>
         <ToastContainer/>
         <DataTable

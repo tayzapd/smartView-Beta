@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Form } from 'react-bootstrap';
 import { QRCode } from "antd";
+import './admin.css';
+
 // Admin Qr Code Generator 
 const AdminQrCode = () => {
     const [shops,setShops] = useState([]);
@@ -57,7 +59,7 @@ const AdminQrCode = () => {
                 :
                 <div></div>
             }
-            <button onClick={downloadQRCode} style={{float:'right'}} className="btn mt-4 col btn-block btn-primary">
+            <button onClick={downloadQRCode} style={{float:'right'}} className="btn btns mt-4 col btn-block">
                 Download QRCode 
             </button>
         </div>

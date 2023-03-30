@@ -8,6 +8,7 @@ import DataTable from "react-data-table-component";
 import { toast, ToastContainer } from 'react-toastify' ;
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import './admin.css';
 
 const Items = () => {
     const columns = [
@@ -39,7 +40,7 @@ const Items = () => {
             name:"Edit",
             selector: (row) => 
             <button
-                className='btn btn-primary'
+                className='btn btns'
                 onClick={(e)=> {
                     row.special_range = row.special_range.substring(0,10);
                     setItem(row);
@@ -257,12 +258,12 @@ return (
 <>
     <div className="container">
         
-        <div className="btn "  style={{ backgroundColor: '#fc6400', color:'#000000', borderColor:'#fc6400' }} onClick={() => { 
+        <div className="btn btns" onClick={() => { 
             setCreate(true)
         }}>
             CREATE + 
         </div>
-        <Link to="/admin/items/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+        <Link to="/admin/items/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
 
         {/* CREATE ITEM  */}
         <Modal size="lg" show={create} onHide={() => { setCreate(false)}}>
@@ -325,9 +326,9 @@ return (
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={() => { setCreate(false)}}>
-                    Close
+                    Cancel
                 </Button>
-                <Button onClick={() => {createItem()}} variant="primary" type="submit" >
+                <Button onClick={() => {createItem()}} className='btns' type="submit" >
                     Save
                 </Button>
                 </Modal.Footer>
@@ -423,9 +424,9 @@ return (
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={() => { setEdit(false)}}>
-                    Close
+                    Cancel
                 </Button>
-                <Button onClick={() => {editItem()}} variant="primary" type="submit" >
+                <Button onClick={() => {editItem()}} className='btns' type="submit" >
                     Update
                 </Button>
                 </Modal.Footer>

@@ -1,0 +1,21 @@
+.btns{
+    background-color: #fc6400 !important;
+    border-color: #fc6400 !important;
+    color:#ffffff !important;
+    /* color:#274256 !important; */
+    transition:all 0.8s !important;
+}
+.btns:hover{
+    color:#faee02 !important;
+}
+
+.rdt_TableHead{
+    color:#274256 !important;
+    font-size:15px !important;
+    font-weight:bold !important;
+}
+
+.rdt_TableCell{
+    color:#274256 !important;
+
+}
