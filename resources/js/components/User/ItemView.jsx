@@ -219,13 +219,13 @@ const ItemView = () => {
                     {
                         items.map((item,id) => {
                             return <div key={id} 
-                                className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-3 rounded-4 " 
-                                onClick={() => {
-                                    ShowOneItem(id)
-                                }}>
+                                        className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-1 rounded-4 " 
+                                        onClick={() => {
+                                            ShowOneItem(id)
+                                        }}>
                                     <div className="row no-gutters">
                                         <div className="col-6 px-2 py-2">
-                                            <img style={{height:'130px',marginLeft:'3px'}} className="card-img rounded-4 col-12 " src={`/images/shop/item/`+item.images[0]} />
+                                            <img style={{height:'130px',marginLeft:'10px'}} className="card-img rounded-4 col-12 " src={`/images/shop/item/`+item.images[0]} />
                                         </div>
                                         <div className="col-6">
                                             <div className="card-body py-2 px-2 mr-2 text-center">
@@ -274,21 +274,7 @@ const ItemView = () => {
             </div>
             
         </>
-    //     return  <Card
-    //     key={id}
-    //     className="mx-lg-3 mb-sm-3 col-md-3 my-3 col-3 "
-    //     hoverable
-    //     loading={loading}
-    //     onClick={() => {
-    //         ShowOneItem(id)
-    //     }}
-    //     cover={<img style={{height:200,margin:0,padding:0}} alt="card image" src={`/images/shop/item/`+item.images[0]} />}
-    //     style={{ width: 300 ,margin:20,padding:0}}
-    //     >
-    //         <Meta title={item.name} description={`${item.description}`} />
-    //         <p>${item.price}</p>
-        
-    // </Card>
+
     )
 }
 

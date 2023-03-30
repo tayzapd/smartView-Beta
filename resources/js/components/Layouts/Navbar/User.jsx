@@ -96,7 +96,7 @@ const  UserNavbar = () => {
             
 
             <div className="sticky-top">
-              <nav className="navbar navbar-sm sticky-top shadow-md  navbar-white rounded-4 mx-2 px-3   ">
+              <nav className="navbar navbar-sm sticky-top navbar-white rounded-4 mx-2 px-3 shadow-none   ">
                 <a className="navbar-brand" style={{fontWeight:'900'}}>
                       {
                           shop != null ? 
@@ -150,7 +150,7 @@ const  UserNavbar = () => {
 
               </nav>
 
-              <nav className="navbar sticky-top navbar-sm shadow-md  navbar-white rounded-4 mx-2 px-3 mt-3  " onClick={() => {setCateDialog(true)}}>
+              <nav className="navbar sticky-top navbar-sm navbar-white rounded-4 mx-2 px-3 mt-2 shadow-none " onClick={() => {setCateDialog(true)}}>
                 
                 <div className="col-12 text-center ">
                   All
@@ -164,9 +164,9 @@ const  UserNavbar = () => {
             </div>
             
             <Modal 
-            aria-labelledby="contained-modal-title-vcenter"
-            centered size="lg"
-            show={cateDialog} onHide={() => {setCateDialog(false)}}>
+              aria-labelledby="contained-modal-title-vcenter"
+              centered size="lg"
+              show={cateDialog} onHide={() => {setCateDialog(false)}}>
               <Modal.Header closeButton>
                   <h3 style={{fontWeight:'900'}}>Category</h3>
               </Modal.Header>
