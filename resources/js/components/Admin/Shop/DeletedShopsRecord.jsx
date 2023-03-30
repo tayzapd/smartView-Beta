@@ -130,7 +130,7 @@ const DeletedShopsRecord = () => {
                 columns={columns}
                 data={shops}
                 fixedHeader
-                fixedHeaderScrollHeight="350px"
+                fixedHeaderScrollHeight="300px"
                 pagination
                 responsive
                 highlightOnHover

@@ -154,7 +154,6 @@ const ListCategories = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <EditCategory/>
-
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
@@ -165,8 +164,7 @@ const ListCategories = () => {
                 </Button>
                 </Modal.Footer>
             </Modal>
-
-            
+   
         </>
     )
 }
