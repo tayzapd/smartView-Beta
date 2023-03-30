@@ -29,8 +29,8 @@ const Items = () => {
             selector: row => row.category.name,
         },
         {
-            name: 'Taste',
-            selector: row => row.taste,
+            name: 'tag',
+            selector: row => row.tag,
         },
         {
             name: 'Privacy',
@@ -105,11 +105,13 @@ const Items = () => {
         formData.append('price',item.price);
         formData.append('description',item.description);
         formData.append('remark',item.remark);
-        formData.append('taste',item.taste);
+        formData.append('tag',item.tag);
         formData.append('special_range',item.special_date);
         formData.append('privacy',item.privacy);
         formData.append('is_available',item.is_available);
         formData.append('category_id',item.category_id);
+
+        
         try {
             axios.post('/api/admin/items/create', formData).then((res)=>{
                 console.log(res);
@@ -144,7 +146,7 @@ const Items = () => {
             formData.append('price',item.price);
             formData.append('description',item.description);
             formData.append('remark',item.remark);
-            formData.append('taste',item.taste);
+            formData.append('tag',item.tag);
             formData.append('special_range',item.special_date);
             formData.append('privacy',item.privacy);
             formData.append('is_available',item.is_available);
@@ -173,7 +175,7 @@ const Items = () => {
                 price:item.price,
                 description:item.description,
                 remark:item.remark,
-                taste:item.taste,
+                tag:item.tag,
                 special_range:item.special_date,
                 privacy:item.privacy,
                 is_available:item.is_available,
@@ -311,7 +313,7 @@ return (
 
                         <input type="file" className="form-control" multiple  name="images" onChange={handleChange} placeholder="Item images" />
 
-                        <input className="form-control my-2 " type="text" name="taste" onChange={(e) => {setItem({...item,[e.target.name]:e.target.value})}} placeholder="Taste" />
+                        <input className="form-control my-2 " type="text" name="tag" onChange={(e) => {setItem({...item,[e.target.name]:e.target.value})}} placeholder="tag" />
 
                         <input className="form-control my-2 " type="number" name="price" onChange={(e) => {setItem({...item,[e.target.name]:e.target.value})}} placeholder="Price" />
 
@@ -409,7 +411,7 @@ return (
 
                         <input  type="file" className="form-control" multiple  name="images" onChange={handleChange} placeholder="Item images" />
 
-                        <input value={item.taste} className="form-control my-2 " type="text" name="taste" onChange={(e) => {setItem({...item,[e.target.name]:e.target.value})}} placeholder="Taste" />
+                        <input value={item.tag} className="form-control my-2 " type="text" name="tag" onChange={(e) => {setItem({...item,[e.target.name]:e.target.value})}} placeholder="tag" />
 
                         <input value={item.price} className="form-control my-2 " type="number" name="price" onChange={(e) => {setItem({...item,[e.target.name]:e.target.value})}} placeholder="Price" />
 

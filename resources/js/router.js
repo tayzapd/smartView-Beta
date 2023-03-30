@@ -9,6 +9,7 @@ import Items from "./components/Shop/Items";
 import ShopQRCode from "./components/Shop/QrCode";
 import Categories from "./components/Shop/Category";
 import ItemView from './components/User/ItemView';
+import ShopView from './components/User/ShopView';
 import ShopLogin from "./components/Shop/Auth/Login";
 import AddShoptypes from "./components/Admin/Shoptype/AddShoptypes";
 import AdminLogin from "./components/Admin/Auth/AdminLogin";
@@ -18,6 +19,7 @@ import ListDivisions from "./components/Admin/Division/ListDivisions";
 import ListCities from "./components/Admin/City/ListCities";
 import ListTownships from "./components/Admin/Township/ListTownships";
 import AdminQrCode from './components/Admin/QrCode';
+import AdminList from "./components/Admin/Admin/AdminList";
 import { element } from "prop-types";
 import ListShops from "./components/Admin/Shop/ListShops";
 
@@ -41,10 +43,14 @@ const router = createBrowserRouter([
             {
                 path:'/sh/:id/',
                 element:<ItemView/>
-            }
+            },
+  
         ]
     },
-
+    {
+        path:'/sh/:id/profile',
+        element:<ShopView /> 
+    },
     {
         path:"/admin",
         element:<AdminLayout />, 
@@ -150,6 +156,10 @@ const router = createBrowserRouter([
                 element:<DeletedUsersRecord/>
                 
             },
+            {
+                path:"admins",
+                element:<AdminList /> 
+            }
         ]
     },
     {

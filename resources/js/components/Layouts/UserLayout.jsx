@@ -23,10 +23,10 @@ const UserLayout = () => {
         <>
             {
                 dialog != true ? 
-                <UserNavbar /> : <span></span>
+                <UserNavbar  /> : <span></span>
             
             }
-            <Outlet style={{ height: 'calc(100vh - 110px)'}} /> 
+            <Outlet style={{height: 'calc(100vh - 110px)',background:"black"}} /> 
         
         </>
     )

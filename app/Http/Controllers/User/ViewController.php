@@ -17,6 +17,7 @@ class ViewController extends Controller
         $items = Item::whereHas('category', function ($query) use ($shopId) {
                         $query->where('shop_id', $shopId);
                     })
+                    ->where('is_available','1')
                     ->with('category:id,name')
                     ->get();
 
@@ -85,6 +86,7 @@ class ViewController extends Controller
         $shop = Shop::where('id',$req->id)
                     ->with('categories','type','township')
                     ->first();
+        $shop->bg_image = @unserialize($shop->bg_image);
         return response()->json(['status'=>true,'shop'=>$shop]);
     }
 }

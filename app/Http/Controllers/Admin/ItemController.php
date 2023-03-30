@@ -33,7 +33,7 @@ class ItemController extends Controller
             'price' => 'required|numeric',
             'is_available' => 'required',
             'privacy' => 'required|in:public,private',
-            'tag' => 'required|string',
+            // 'tag' => 'required|string',
             'images'=>'array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'special_range' => 'required|date_format:Y-m-d',

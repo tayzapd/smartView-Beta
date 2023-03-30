@@ -16,19 +16,31 @@ const AddShop = () => {
     const [selectShoptype,setSelctShoptype] = useState();
     const [selectTownship,setSelctTownship] = useState();
     const [imageInput, setImage] = useState('');
+    const [bgImage, setBgImage] = useState([]);
     const [expired_date,setExpiredDate] = useState(null);
 
     const getShoptypes = ()=>{
         axios.post(`/api/admin/shoptypes/show`).then(res=>{
-            // console.log(res);
             setShoptypes(...shoptypes,res.data);
            
         })
     }
 
+
+
+
+    const handleBgImageChange = (e) => {
+
+        let files = e.target.files;
+        setBgImage(files)
+        // files.forEach((img) => {
+        //     setBgImage([...bgImage,img]);
+        // })
+    };
+
+
     const getTownships = ()=>{
         axios.post(`/api/admin/townships/show`).then((res)=>{
-            // console.log(res);
             setTownships(...townships,res.data);
         })
     }
@@ -37,8 +49,7 @@ const AddShop = () => {
         getShoptypes();
         getTownships();
     },[])
-    // console.log(shoptypes);
-    // console.log(townships);
+
 
     const handleChange = (e)=>{
         setImage({logo_image:e.target.files[0]});
@@ -50,15 +61,16 @@ const AddShop = () => {
 
     const getShops = () => {
         axios.post(`/api/admin/shops/show`).then((res)=>{
-            // console.log(res.data.shops);
             setShops(res.data.shops);
         })
     }
-    // console.log(expired_date);
     const saveshop = (e)=>{
         e.preventDefault();
-        // const {name,address,phone} = shopInput;
+        
         const data = new FormData();
+        
+        console.log(bgImage);
+        
         data.append('shop_name',shopInput.shop_name);
         data.append('address',shopInput.address);
         data.append('phone',shopInput.phone);
@@ -67,11 +79,18 @@ const AddShop = () => {
         data.append('township_id',selectTownship);
         data.append('remark',shopInput.remark);
         data.append('logo_image',imageInput.logo_image);
+        for (let i = 0; i < bgImage.length; i++) {
+            const img = bgImage[i];
+            
+            data.append('bg_images[]',img);
+            
+        }
+     
         
-        // console.log(data);
+        console.log(data);
+        console.log(bgImage)
         axios.post(`/api/admin/shops/create`,data)
             .then(res=>{
-                console.log(res);
                 toast.success(res.data.message, {
                     position: "top-right",
                     autoClose: 3000,
@@ -116,6 +135,12 @@ const AddShop = () => {
                     <label>Logo Image</label>
                     <input type="file" name="logo_image" onChange={handleChange} className="form-control"/>
                 </div>
+
+                <div className="mb-2">
+                    <label>Bg Images</label>
+                    <input type="file" className="form-control" multiple   onChange={handleBgImageChange} placeholder="Background Images" />
+                </div>
+
                 <div className="mb-2">
                     <label>Shop Name</label>
                     <input type="text" name="shop_name" onChange={handleInput} value={shopInput.shop_name} className="form-control" required/>
