@@ -33,7 +33,6 @@ class ItemController extends Controller
             'price' => 'required|numeric',
             'is_available' => 'required',
             'privacy' => 'required|in:public,private',
-            // 'tag' => 'required|string',
             'images'=>'array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'special_range' => 'required|date_format:Y-m-d',
@@ -125,9 +124,10 @@ class ItemController extends Controller
 
             if($item->update()){
                 return response()->json(['message' => 'Item updated successfully'], 200);
-            }else {
-                return response()->json(['message' => "Item can't updated"], 505);
             }
+            
+            return response()->json(['message' => "Item can't updated"], 505);
+            
         }
     }
 
@@ -147,9 +147,10 @@ class ItemController extends Controller
             $item = Item::withTrashed()->find($req->id);
             if($item->restore()){
                 return response()->json(['status'=>true,'message'=>"Items restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Items can't restore!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Items can't restore!"]);
+            
         }
         
     }
@@ -169,9 +170,10 @@ class ItemController extends Controller
             $items =Item::onlyTrashed();
             if($items->restore()){
                 return response()->json(['status'=>true,'message'=>"All Items restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Items can't restore!"]);
             }
+            
+            return response()->json(['status'=>false,'message'=>"Items can't restore!"]);
+            
         }
         
     }

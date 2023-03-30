@@ -27,7 +27,6 @@ class AdminsController extends Controller
     public function add(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'shop_id' => 'required',
             'username' => 'required|string',
             'password' => 'required',
         ]);
@@ -35,7 +34,7 @@ class AdminsController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
         
-        if(Gate::allows('admin-auth',Auth::user())){
+        if(Gate::allows('admin-auth',Auth::user()) && Auth::id() == 1){
             $admin = User::where('username',$req->username)->first();
             if($admin == null)
             {
@@ -49,19 +48,15 @@ class AdminsController extends Controller
                     $admin->assignRole('admin');
                     return response()->json(['status'=>true,'Message'=>"admin Successfully Created!"]);
                 }
-                else
-                {
-                    return response()->json(['status'=>true,'Message'=>"Can't Created New admin."]);
-                }
+                return response()->json(['status'=>true,'Message'=>"Can't Created New admin."]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'Message'=>"The username already exit, can't add new."]);
-            }
+            return response()->json(['status'=>true,'Message'=>"The username already exit, can't add new."]);
         }
         
 
     }
+
+
     public function update(Request $req)
     {
         $validator = Validator::make($req->all(), [
@@ -95,10 +90,8 @@ class AdminsController extends Controller
             {
                 return response()->json(['status'=>true,'message'=>"Admin Deleted!"]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'message'=>"User can't delete!, Try Again"]);
-            }
+            return response()->json(['status'=>true,'message'=>"User can't delete!, Try Again"]);
+            
         }
 
 
@@ -109,9 +102,9 @@ class AdminsController extends Controller
             $admin = User::withTrashed()->find($req->id);
             if($admin->restore()){
                 return response()->json(['status'=>true,'message'=>"Admin restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Admin can't restore!"]);
             }
+            return response()->json(['status'=>true,'message'=>"Admin can't restore!"]);
+            
         }
     }
 
@@ -130,9 +123,10 @@ class AdminsController extends Controller
             $admins =User::onlyTrashed();
             if($admins->restore()){
                 return response()->json(['status'=>true,'message'=>"All Admins restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Admins can't restore!"]);
             }
+            
+            return response()->json(['status'=>false,'message'=>"Admins can't restore!"]);
+            
         }
         
     }

@@ -26,7 +26,6 @@ class ShopTypeController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string',
-            'remark' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -38,9 +37,10 @@ class ShopTypeController extends Controller
             $shop_type->remark = $req->remark;
             if($shop_type->save()){
                 return response()->json(['status'=>true,'message'=>"Shop Type created successfully."]);
-            }else {
-                return response()->json(['status'=>false,"Shop Type can't created!"]);
             }
+            
+            return response()->json(['status'=>false,"Shop Type can't created!"]);
+            
         }
     }
     public function update(Request $req)
@@ -48,7 +48,6 @@ class ShopTypeController extends Controller
         $validator = Validator::make($req->all(), [
             'id'=> 'required',
             'name' => 'required|string',
-            'remark' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -60,9 +59,10 @@ class ShopTypeController extends Controller
             $shop_type->remark = $req->remark;
             if($shop_type->update()){
                 return response()->json(['status'=>true,'message'=>"Shop Type updated successfully."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Shop Type can't updated!"]);
             }
+            
+            return response()->json(['status'=>false,'message'=>"Shop Type can't updated!"]);
+            
         }
     }
     public function delete(Request $req)
@@ -73,10 +73,8 @@ class ShopTypeController extends Controller
             {
                 return response()->json(['status'=>true,'message'=>"ShopType Deleted!"]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'Message'=>"ShopType can't delete!, Try Again"]);
-            }
+            return response()->json(['status'=>true,'Message'=>"ShopType can't delete!, Try Again"]);
+            
         }
         
 
@@ -97,9 +95,10 @@ class ShopTypeController extends Controller
             $shop_type = ShopType::withTrashed()->find($req->id);
             if($shop_type->restore()){
                 return response()->json(['status'=>true,'message'=>"ShopType restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"ShopType can't restore!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"ShopType can't restore!"]);
+            
         }
         
     }
@@ -110,9 +109,10 @@ class ShopTypeController extends Controller
             $shoptypes =Shoptype::onlyTrashed();
             if($shoptypes->restore()){
                 return response()->json(['status'=>true,'message'=>"All Shoptypes restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Shoptypes can't restore!"]);
             }
+            
+            return response()->json(['status'=>false,'message'=>"Shoptypes can't restore!"]);
+            
         }
         
     }

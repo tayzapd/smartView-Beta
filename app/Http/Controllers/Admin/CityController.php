@@ -24,7 +24,6 @@ class CityController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string',
-            'remark' => 'required|string',
             'division_id' => 'required'
         ]);
 
@@ -38,9 +37,10 @@ class CityController extends Controller
             $city->remark = $req->remark;
             if($city->save()){
                 return response()->json(['status'=>true,'message'=>"City created successfully."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"City can't created!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"City can't created!"]);
+            
         }
     }
     public function update(Request $req)
@@ -48,7 +48,6 @@ class CityController extends Controller
         $validator = Validator::make($req->all(), [
             'id'=> 'required',
             'name' => 'required|string',
-            'remark' => 'required|string',
             'division_id' => 'required'
         ]);
 
@@ -62,9 +61,10 @@ class CityController extends Controller
             $city->remark = $req->remark;
             if($city->update()){
                 return response()->json(['status'=>true,'message'=>"City updated successfully."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"City can't updated!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"City can't updated!"]);
+            
         }
     }
 
@@ -76,10 +76,9 @@ class CityController extends Controller
             {
                 return response()->json(['status'=>true,'message'=>"City Deleted!"]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'message'=>"City can't delete!, Try Again"]);
-            }
+            
+            return response()->json(['status'=>true,'message'=>"City can't delete!, Try Again"]);
+        
     
         }
         
@@ -100,9 +99,10 @@ class CityController extends Controller
             $city = City::withTrashed()->find($req->id);
             if($city->restore()){
                 return response()->json(['status'=>true,'message'=>"City restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"City can't restore!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"City can't restore!"]);
+            
         }
         
     }
@@ -113,9 +113,10 @@ class CityController extends Controller
             $cities = City::onlyTrashed();
             if($cities->restore()){
                 return response()->json(['status'=>true,'message'=>"All Cities restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Cities can't restore!"]);
             }
+            
+            return response()->json(['status'=>false,'message'=>"Cities can't restore!"]);
+            
         }
         
     }

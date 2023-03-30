@@ -47,11 +47,6 @@ class ShopController extends Controller
                 $image->move(public_path('images/shop/logo'),$fileName);
                 $shop = new Shop;
                 $shop->logo_image = $fileName;
-
-                
-        
-                
-
                 $shop->shop_name = $req->shop_name;
                 $shop->address = $req->address;
                 $shop->phone = $req->phone;
@@ -67,9 +62,10 @@ class ShopController extends Controller
                 $shop->bg_image = serialize($images);
                 if($shop->save()){
                     return response()->json(['status'=>true,"message"=>"Shop Create Successfully!"]);
-                }else {
-                    return response()->json(['status'=>false,"message"=>"Shop Can't Create,Something was wrong!"]);
                 }
+                
+                return response()->json(['status'=>false,"message"=>"Shop Can't Create,Something was wrong!"]);
+                
 
 
             }  
@@ -109,7 +105,7 @@ class ShopController extends Controller
             $shop->township_id = $req->township_id;
             $shop->remark = $req->remark;
             if($shop->update()){
-                
+                return response()->json(['status'=>true,"message"=>"Shop Updated Successfully!"]);
             }
             return response()->json(['status'=>false,"message"=>"Shop Can't Updated,Something was wrong!"]);
         }else{
@@ -124,9 +120,9 @@ class ShopController extends Controller
             $shop->remark = $req->remark;
             if($shop->update()){
                 return response()->json(['status'=>true,"message"=>"Shop Updated Successfully!"]);
-            }else {
-                return response()->json(['status'=>false,"message"=>"Shop Can't Updated,Something was wrong!"]);
             }
+            return response()->json(['status'=>false,"message"=>"Shop Can't Updated,Something was wrong!"]);
+            
         }
 
     }
@@ -137,9 +133,10 @@ class ShopController extends Controller
             $shop = Shop::find($req->id);
             if($shop->delete()){
                 return response()->json(['status'=>true,'message'=>"Shop move to trash."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Shop can't move trash!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Shop can't move trash!"]);
+            
         }
     }
 
@@ -149,9 +146,10 @@ class ShopController extends Controller
             $shop = Shop::withTrashed()->find($req->shop_id);
             if($shop->restore()){
                 return response()->json(['status'=>true,'message'=>"Shop restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Shop can't restore!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Shop can't restore!"]);
+            
         }
     }
 
@@ -164,16 +162,17 @@ class ShopController extends Controller
         }
     }
 
-    public function restoreAll(Request $req)
+    public function restoreAll()
     {
         if(Gate::allows('admin-auth',Auth::user())){
             $shops =Shop::onlyTrashed();
             if($shops->restore()){
                 return response()->json(['status'=>true,'message'=>"All Shops restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Shops can't restore!"]);
             }
+            return response()->json(['status'=>false,'message'=>"Shops can't restore!"]); 
         }
         
     }
+
+
 }

@@ -15,15 +15,16 @@ class UsersController extends Controller
     public function show(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
-            $users = User::with('shop:id,shop_name')->get();
+            $users = User::with('shop:id,shop_name')->role('shop_admin')->get();
             if($users)
             {
                 return response()->json(['status'=>true,'users'=>$users]);
-            }else {
-                return response()->json(['status'=>false,"Message"=>"Can't get data because server network error!"]);
             }
+            return response()->json(['status'=>false,"Message"=>"Can't get data because server network error!"]);
         }
     }
+
+
     public function add(Request $req)
     {
         $validator = Validator::make($req->all(), [
@@ -31,6 +32,7 @@ class UsersController extends Controller
             'username' => 'required|string',
             'password' => 'required',
         ]);
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
@@ -49,15 +51,11 @@ class UsersController extends Controller
                     $user->assignRole('shop_admin');
                     return response()->json(['status'=>true,'Message'=>"User Successfully Created!"]);
                 }
-                else
-                {
-                    return response()->json(['status'=>true,'Message'=>"Can't Created New User."]);
-                }
+                return response()->json(['status'=>true,'Message'=>"Can't Created New User."]);
+                
             }
-            else
-            {
-                return response()->json(['status'=>true,'Message'=>"The username already exit, can't add new."]);
-            }
+            return response()->json(['status'=>true,'Message'=>"The username already exit, can't add new."]);
+            
         }
         
 
@@ -82,10 +80,8 @@ class UsersController extends Controller
             {
                 return response()->json(['status'=>true,'Message'=>"User Edited!"]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'Message'=>"Can't Edit User"]);
-            }
+            return response()->json(['status'=>true,'Message'=>"Can't Edit User"]);
+            
         }
 
     }
@@ -97,10 +93,8 @@ class UsersController extends Controller
             {
                 return response()->json(['status'=>true,'message'=>"User Deleted!"]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'message'=>"User can't delete!, Try Again"]);
-            }
+            return response()->json(['status'=>true,'message'=>"User can't delete!, Try Again"]);
+            
         }
 
 
@@ -111,9 +105,9 @@ class UsersController extends Controller
             $user = User::withTrashed()->find($req->id);
             if($user->restore()){
                 return response()->json(['status'=>true,'message'=>"Item restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Item can't restore!"]);
             }
+            return response()->json(['status'=>true,'message'=>"Item can't restore!"]);
+            
         }
     }
 
@@ -132,9 +126,9 @@ class UsersController extends Controller
             $users =User::onlyTrashed();
             if($users->restore()){
                 return response()->json(['status'=>true,'message'=>"All Users restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Users can't restore!"]);
             }
+            return response()->json(['status'=>false,'message'=>"Users can't restore!"]);
+            
         }
         
     }

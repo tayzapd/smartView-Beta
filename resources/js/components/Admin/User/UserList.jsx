@@ -148,37 +148,7 @@ const UserList = () => {
       <Link to="/admin/users/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
 
       <ToastContainer/>
-      {/* <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#ID</th>
-            <th>Name</th>
-            <th>Shop-Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.username}</td>
-              <td>{user.shop.shop_name}</td>
-              <td>
-                <Button onClick={() => {
-                  setShowEdit(true);
-                  setUser(user);
-
-                }} size='sm' className="me-2" variant="primary">
-                    <Edit/>
-                </Button>
-                <Button onClick={() => {deleteUser(user.id)}} size='sm' className="" variant="danger">
-                    <Delete />
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table> */}
+     
 
       <DataTable
         title="Users Lists"
@@ -196,10 +166,10 @@ const UserList = () => {
           <Modal.Title>Add User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={addUser}>
             <Form.Group>
                 <Form.Label>Shop</Form.Label>
-                <Form.Select name="shop_id" onChange={(e) => { user.shop_id = e.target.value }} aria-label="Shop Name" className="mb-3">
+                <Form.Select required name="shop_id" onChange={(e) => { user.shop_id = e.target.value }} aria-label="Shop Name" className="mb-3">
                     {shops.map((shop,index) => {
                         return (
                             <option key={index} value={shop.id}>{shop.shop_name} </option>
@@ -210,6 +180,7 @@ const UserList = () => {
             <Form.Group>
               <Form.Label>Username</Form.Label>
               <Form.Control
+                required
                 type="text"
                 name="username"
                 value={user.username}
@@ -219,22 +190,25 @@ const UserList = () => {
             <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control
+                required
                 type="password"
                 name="password"
                 value={user.password}
                 onChange={handleChange}
               />
             </Form.Group>
+
+            <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button className='btns' type="submit">
+                Save
+              </Button>
+            </Modal.Footer>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button className='btns' onClick={addUser}>
-            Save
-          </Button>
-        </Modal.Footer>
+       
       </Modal>
 
       <Modal show={showEdit} onHide={() => {setShowEdit(false)}}>

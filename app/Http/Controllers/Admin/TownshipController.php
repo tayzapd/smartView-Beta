@@ -21,7 +21,6 @@ class TownshipController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string',
-            'remark' => 'required|string',
             'city_id' => 'required',
         ]);
 
@@ -35,9 +34,9 @@ class TownshipController extends Controller
             $township->city_id = $req->city_id;
             if($township->save()){
                 return response()->json(['status'=>true,'message'=>"Township created successfully."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Township can't created!"]);
             }
+            return response()->json(['status'=>true,'message'=>"Township can't created!"]);
+            
         }
     }
     public function update(Request $req)
@@ -45,7 +44,6 @@ class TownshipController extends Controller
         $validator = Validator::make($req->all(), [
             'id'=> 'required',
             'name' => 'required|string',
-            'remark' => 'required|string',
             'city_id' => 'required',
         ]);
 
@@ -59,9 +57,10 @@ class TownshipController extends Controller
             $township->remark = $req->remark;
             if($township->update()){
                 return response()->json(['status'=>true,'message'=>"Township updated successfully."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Township can't updated!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Township can't updated!"]);
+            
         }
     }
     public function delete(Request $req)
@@ -72,10 +71,8 @@ class TownshipController extends Controller
             {
                 return response()->json(['status'=>true,'message'=>"Township Deleted!"]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'message'=>"Township can't delete!, Try Again"]);
-            }
+            return response()->json(['status'=>true,'message'=>"Township can't delete!, Try Again"]);
+            
         }
         
 
@@ -86,9 +83,10 @@ class TownshipController extends Controller
             $township = Township::withTrashed()->find($req->id);
             if($township->restore()){
                 return response()->json(['status'=>true,'message'=>"Township restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Township can't restore!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Township can't restore!"]);
+            
         }
     }
 
@@ -107,9 +105,10 @@ class TownshipController extends Controller
             $townships =Township::onlyTrashed();
             if($townships->restore()){
                 return response()->json(['status'=>true,'message'=>"All Townships restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Townships can't restore!"]);
             }
+            
+            return response()->json(['status'=>false,'message'=>"Townships can't restore!"]);
+            
         }
         
     }
