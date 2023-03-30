@@ -30,7 +30,6 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string',
-            'remark' => 'required|string',
             'shop_id' => 'required',
         ]);
 
@@ -44,9 +43,10 @@ class CategoryController extends Controller
             $category->shop_id = $req->shop_id;
             if($category->save()){
                 return response()->json(['status'=>true,'message'=>"Category created successfully."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Category can't created!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Category can't created!"]);
+            
         }
     }
     public function update(Request $req)
@@ -54,7 +54,6 @@ class CategoryController extends Controller
         $validator = Validator::make($req->all(), [
             'id'=> 'required',
             'name' => 'required|string',
-            'remark' => 'required|string',
             'shop_id' => 'required',
         ]);
 
@@ -68,9 +67,10 @@ class CategoryController extends Controller
             $category->remark = $req->remark;
             if($category->update()){
                 return response()->json(['status'=>true,'message'=>"Category updated successfully."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Category can't updated!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Category can't updated!"]);
+            
         }
     }
 
@@ -91,10 +91,8 @@ class CategoryController extends Controller
             {
                 return response()->json(['status'=>true,'message'=>"Category Deleted!"]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'message'=>"Category can't delete!, Try Again"]);
-            }
+            return response()->json(['status'=>true,'message'=>"Category can't delete!, Try Again"]);
+            
         }
         
 
@@ -106,9 +104,10 @@ class CategoryController extends Controller
             $category = Category::withTrashed()->find($req->id);
             if($category->restore()){
                 return response()->json(['status'=>true,'message'=>"Category restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Category can't restore!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Category can't restore!"]);
+            
         }
         
     }
@@ -119,9 +118,10 @@ class CategoryController extends Controller
             $categories = Category::onlyTrashed();
             if($categories->restore()){
                 return response()->json(['status'=>true,'message'=>"All Categories restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Category can't restore!"]);
             }
+            
+            return response()->json(['status'=>false,'message'=>"Category can't restore!"]);
+            
         }
         
     }

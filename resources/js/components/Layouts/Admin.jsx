@@ -1,17 +1,10 @@
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import {  UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import React, { useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Image } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import AddShoptypes from '../Admin/Shoptype/AddShoptypes';
-import ItemView from '../User/ItemView';
 import Main from '../../Main';
-import { Button } from '@material-ui/core';
-import { useAdminContext, useAuthContext } from '../../Context/AdminContext';
+import { useAdminContext } from '../../Context/AdminContext';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -98,6 +91,10 @@ const Admin = () => {
         />
       </Sider>
       <Layout>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0753f38ccf313799f677ec9e2ba4d0a1b949922b
         <Content
           style={{
             margin: '24px 16px 0',

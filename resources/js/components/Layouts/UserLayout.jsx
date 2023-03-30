@@ -18,17 +18,18 @@ const UserLayout = () => {
 
     useEffect(() => {
         getShopInfo();
+        document.body.style.backgroundColor = "#fcffa3";
     },[])
     return (
-        <>
+        <div >
             {
                 dialog != true ? 
                 <UserNavbar  /> : <span></span>
             
             }
-            <Outlet style={{height: 'calc(100vh - 110px)',background:"black"}} /> 
+            <Outlet /> 
         
-        </>
+        </div>
     )
 }
 

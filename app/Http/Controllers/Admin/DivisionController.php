@@ -23,7 +23,6 @@ class DivisionController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string',
-            'remark' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -35,9 +34,10 @@ class DivisionController extends Controller
             $division->remark = $req->remark;
             if($division->save()){
                 return response()->json(['status'=>true,'message'=>"Division created successfully."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Division can't created!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Division can't created!"]);
+            
         }
     }
 
@@ -58,9 +58,10 @@ class DivisionController extends Controller
             $division->remark = $req->remark;
             if($division->update()){
                 return response()->json(['status'=>true,'message'=>"Division updated successfully."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Division can't updated!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Division can't updated!"]);
+            
         }
     }
     
@@ -72,10 +73,8 @@ class DivisionController extends Controller
             {
                 return response()->json(['status'=>true,'message'=>"Division Deleted!"]);
             }
-            else
-            {
-                return response()->json(['status'=>true,'message'=>"Division can't delete!, Try Again"]);
-            }
+            return response()->json(['status'=>true,'message'=>"Division can't delete!, Try Again"]);
+            
         }
         
 
@@ -86,9 +85,10 @@ class DivisionController extends Controller
             $division = Division::withTrashed()->find($req->id);
             if($division->restore()){
                 return response()->json(['status'=>true,'message'=>"Division restored."]);
-            }else {
-                return response()->json(['status'=>true,'message'=>"Division can't restore!"]);
             }
+            
+            return response()->json(['status'=>true,'message'=>"Division can't restore!"]);
+            
         }
         
     }
@@ -108,9 +108,10 @@ class DivisionController extends Controller
             $divisions =Division::onlyTrashed();
             if($divisions->restore()){
                 return response()->json(['status'=>true,'message'=>"All Divisions restored."]);
-            }else {
-                return response()->json(['status'=>false,'message'=>"Divisions can't restore!"]);
             }
+            
+            return response()->json(['status'=>false,'message'=>"Divisions can't restore!"]);
+            
         }
         
     }

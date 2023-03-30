@@ -32,6 +32,7 @@ const AdminList = () => {
   const addAdmin = async (e) => {
     e.preventDefault();
     await axios.post('/api/admin/admins/create', admin).then((res)=>{
+      setAdmin({username:'',password:''});
       toast.success(res.data.message, {
         position: "top-right",
         autoClose: 3000,
@@ -105,25 +106,22 @@ const AdminList = () => {
 
     },
 
-    {      
+    {     
+      name:"Action", 
       selector: (row) => 
-      <Button onClick={() => {
-        setShowEdit(true);
-        setAdmin(row);
+      <div>
+        <Button onClick={() => {
+          setShowEdit(true);
+          setAdmin(row);
 
-      }} size='sm' className="me-2" variant="primary">
-          <Edit/>
-      </Button>
+        }} size='sm' className="me-2" variant="primary">
+            <Edit/>
+        </Button>
+        <Button onClick={() => {deleteAdmin(row.id)}} size='sm' className="" variant="danger">
+            <Delete />
+        </Button>
+      </div>
     },
-    {      
-      selector: (row) => 
-      <Button onClick={() => {deleteAdmin(row.id)}} size='sm' className="" variant="danger">
-          <Delete />
-      </Button>
-    },
-    
-    
-
 ];
   return (
     <div className='container'>
@@ -151,11 +149,12 @@ const AdminList = () => {
           <Modal.Title>Add Admin</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={addAdmin}>
 
             <Form.Group>
               <Form.Label>Username</Form.Label>
               <Form.Control
+                required
                 type="text"
                 name="username"
                 value={admin.username}
@@ -165,22 +164,24 @@ const AdminList = () => {
             <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control
+                required
                 type="password"
                 name="password"
                 value={admin.password}
                 onChange={handleChange}
               />
             </Form.Group>
+            <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type='submit' >
+              Save Changes
+            </Button>
+          </Modal.Footer>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={addAdmin}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        
       </Modal>
 
       <Modal show={showEdit} onHide={() => {setShowEdit(false)}}>
@@ -188,7 +189,7 @@ const AdminList = () => {
           <Modal.Title>Edit Admin <Edit />  </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={editAdmin}>
 
             <Form.Group>
               <Form.Label>Username</Form.Label>
@@ -208,16 +209,18 @@ const AdminList = () => {
                 onChange={handleChange}
               />
             </Form.Group>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => {setShowEdit(false)} }>
+                Close
+              </Button>
+              <Button variant="primary" type='submit'>
+                Save Changes
+              </Button>
+            </Modal.Footer>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => {setShowEdit(false)} }>
-            Close
-          </Button>
-          <Button variant="primary" onClick={editAdmin}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        
       </Modal>
     </div>
   );
