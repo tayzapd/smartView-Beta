@@ -1,24 +1,15 @@
 import './User.css'
 import { useUserContext } from '../../../Context/UserContext';
 import React,{ useEffect,useState } from 'react';
-import { AudioOutlined,FilterFilled } from '@ant-design/icons';
-import { Grid, Input, Space } from 'antd';
+import { FilterFilled } from '@ant-design/icons';
 import { List } from '@material-ui/icons';
 import { GridOn } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
-import { Dropdown,Form } from 'react-bootstrap';
+import { Dropdown,Form,Modal } from 'react-bootstrap';
 
 import { ArrowDropDownCircle } from '@material-ui/icons';
 
-const { Search } = Input;
-const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: '#1890ff',
-    }}
-  />
-);
+
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
       href=""
@@ -65,6 +56,8 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   
 const  UserNavbar = () => {
     const {shop,grid,setGrid,setItems,setCategories,categories} = useUserContext();
+    const [cateDialog,setCateDialog] = useState(false); 
+
     const {id} = useParams();
     
 
@@ -103,8 +96,8 @@ const  UserNavbar = () => {
             
 
             <div className="sticky-top">
-              <nav className="navbar navbar-sm shadow-md  navbar-white rounded-4 mx-2 px-3   ">
-                <a class="navbar-brand" style={{fontWeight:'900'}}>
+              <nav className="navbar navbar-sm sticky-top shadow-md  navbar-white rounded-4 mx-2 px-3   ">
+                <a className="navbar-brand" style={{fontWeight:'900'}}>
                       {
                           shop != null ? 
                           <span>
@@ -157,7 +150,7 @@ const  UserNavbar = () => {
 
               </nav>
 
-              <nav className="navbar navbar-sm shadow-md  navbar-white rounded-4 mx-2 px-3 mt-3  ">
+              <nav className="navbar sticky-top navbar-sm shadow-md  navbar-white rounded-4 mx-2 px-3 mt-3  " onClick={() => {setCateDialog(true)}}>
                 
                 <div className="col-12 text-center ">
                   All
@@ -169,7 +162,29 @@ const  UserNavbar = () => {
                 
               </nav>
             </div>
-        
+            
+            <Modal 
+            aria-labelledby="contained-modal-title-vcenter"
+            centered size="lg"
+            show={cateDialog} onHide={() => {setCateDialog(false)}}>
+              <Modal.Header closeButton>
+                  <h3 style={{fontWeight:'900'}}>Category</h3>
+              </Modal.Header>
+              <Modal.Body className="d-flex flex-column justify-content-center align-item-center ">
+                  {
+                    categories.map((cate,index) => {
+                      return <div
+                              onClick={() => {getItems(cate.id);setCateDialog(false)}}
+                              style={{fontSize:'18px',fontWeight:'900',boxShadow:"rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px"}} 
+                              className="col-12 text-center  py-3 my-3 px-2  rounded-5" 
+                              key={index}>
+                                { cate.name }
+                              </div>
+                    })
+                  }
+              </Modal.Body>
+            </Modal>
+            
             <style>
                 {`
                     .ant-input-search-button {

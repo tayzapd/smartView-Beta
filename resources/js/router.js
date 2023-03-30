@@ -19,6 +19,7 @@ import ListDivisions from "./components/Admin/Division/ListDivisions";
 import ListCities from "./components/Admin/City/ListCities";
 import ListTownships from "./components/Admin/Township/ListTownships";
 import AdminQrCode from './components/Admin/QrCode';
+import AdminList from "./components/Admin/Admin/AdminList";
 import { element } from "prop-types";
 import ListShops from "./components/Admin/Shop/ListShops";
 
@@ -155,6 +156,10 @@ const router = createBrowserRouter([
                 element:<DeletedUsersRecord/>
                 
             },
+            {
+                path:"admins",
+                element:<AdminList /> 
+            }
         ]
     },
     {

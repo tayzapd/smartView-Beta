@@ -91,7 +91,7 @@ const ShopLogin = () => {
                 <div className="w-100"></div>
 
                 <h1 className="text-center" style={{fontSize:"2rem",fontWeight:"900",marginTop:'50px'}}>
-                    Pick <span className="text-warning">Your</span>
+                    Pick <span className="text-warning">Your</span> 
                     <br />
                      Choice Peacefully  
                 </h1>

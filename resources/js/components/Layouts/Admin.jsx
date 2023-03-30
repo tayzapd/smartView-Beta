@@ -35,6 +35,7 @@ const items = [
   getItem('Items','/admin/items',<UserOutlined/>),
   getItem('Qr Code ','/admin/qrcode',<UserOutlined/>),
   getItem('Users','/admin/users',<UserOutlined/>),
+  getItem('Admins','/admin/admins',<UserOutlined/>),
 ]
 
 
@@ -96,19 +97,7 @@ const Admin = () => {
         />
       </Sider>
       <Layout>
-        {/* <Header
-          style={{
-            
-            padding: '0',
-            
-           
-          }}
 
-        >
-          
-      
-          
-        </Header> */}
         <Content
           style={{
             margin: '24px 16px 0',

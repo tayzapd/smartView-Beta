@@ -224,14 +224,10 @@ const Items = () => {
             setFileList([...fileList,e.target.files[i]])
         }
 
-<<<<<<< HEAD
-
-=======
         item.images = e.target.files;
         // console.log(item.images)
         // console.log(e.target.files);
         // console.log(fileList)
->>>>>>> refs/remotes/origin/main
 
     };
 
