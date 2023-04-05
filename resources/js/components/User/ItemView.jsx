@@ -18,6 +18,7 @@ const ItemView = () => {
     const [loading,setLoading]  = useState(true);
     const [showItem,setShowItem] = useState(false);
     const [currentImage, setCurrentImage] = useState('https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?cs=srgb&dl=pexels-ash-376464.jpg&fm=jpg');
+    const [itemImages,setItemImages] = useState([]);
 
     const [viewItem,setViewItem]  = useState({
         name:"",
@@ -107,21 +108,33 @@ const ItemView = () => {
                     <div className="slider-container">
                     <img src={currentImage} className="main-image rounded-4 " />
                     <div className="d-flex flex-row justify-content-center align-item-center  mt-3">
-                            <img 
+                            {itemImages[1] ? 
+                                <img 
                                 onClick={() => handleClick('https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')} 
-                                src="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" 
+                                src={'/images/shop/item/'+itemImages[1]}
                                 className="small-image rounded-4"  />
-                            <img 
+                                :
+                                <span></span> 
+                            }
+                            {itemImages[2] ? 
+                                <img 
                                 onClick={() => handleClick('https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?cs=srgb&dl=pexels-ash-376464.jpg&fm=jpg')} 
-                                src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?cs=srgb&dl=pexels-ash-376464.jpg&fm=jpg" 
+                                src={'/images/shop/item/'+itemImages[1]}
                                 className="small-image rounded-4"  />
-                            <img 
+                                :
+                                <span></span>
+                            }
+                            {itemImages[3] ? 
+                                <img 
                                 onClick={() => handleClick('https://evoke.ie/wp-content/uploads/2023/03/332748275_873194020580069_1419245163461513321_n.jpg')} 
-                                src="https://evoke.ie/wp-content/uploads/2023/03/332748275_873194020580069_1419245163461513321_n.jpg" 
+                                src={'/images/shop/item/'+itemImages[1]}
                                 className="small-image rounded-4"  />
+                                : 
+                                <span></span>
+                            }
                         </div>
                     </div>
-                
+            
 
                     <div className="container mt-3 d-flex flex-column justify-content-center align-item-center text-center " >
                         <b>
@@ -222,6 +235,8 @@ const ItemView = () => {
                                         className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-1 rounded-4 " 
                                         onClick={() => {
                                             ShowOneItem(id)
+                                            setItemImages(item.images)
+                                            setCurrentImage(`/images/shop/item/`+item.images[0])
                                         }}>
                                     <div className="row no-gutters">
                                         <div className="col-6 px-2 py-2">
@@ -251,6 +266,8 @@ const ItemView = () => {
                             return <div className="card col-5 mx-1 my-2 rounded-3 pt-2" 
                                     onClick={() => {
                                         ShowOneItem(id)
+                                        setItemImages(item.images)
+                                        setCurrentImage(`/images/shop/item/`+item.images[0])
                                     }}
                                     style={{width:'190px'}}
                                     key={id} >

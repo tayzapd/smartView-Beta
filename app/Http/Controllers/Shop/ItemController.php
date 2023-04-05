@@ -59,10 +59,8 @@ class ItemController extends Controller
             'price' => 'required|numeric',
             'is_available' => 'required',
             'privacy' => 'required|in:public,private',
-            'taste' => 'required|string',
             'images'=>'array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'special_range' => 'required|date_format:Y-m-d',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
         ]);
@@ -77,21 +75,21 @@ class ItemController extends Controller
             $item->currency = "MMK";
             $item->is_available = json_decode($request->is_available);
             $item->privacy = $request->privacy;
-            $item->taste = $request->taste;
-            $item->special_range = $request->special_range;
+            $item->tag = $request->tag;
+            $item->special_range = date('Y-m-d');
             $item->view = 0;
             $item->category_id = $request->category_id;
             $item->description = $request->description;
             $item->remark = $request->remark;
     
+
             $images = [];
+        
             foreach ($request->file('images') as $image) {
                 $path = $image->move(public_path('images/shop/item'),$image->getClientOriginalName());
                 $images[] = basename($path);
             }
-    
-    
-    
+
             $item->images = serialize($images);
     
             if($item->save()){
