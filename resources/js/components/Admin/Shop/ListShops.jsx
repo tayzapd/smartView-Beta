@@ -68,36 +68,40 @@ const ListShops = ()=>{
             name: 'ID',
             selector: row => row.id,
             sortable: true,
+            width:'70px'
     
         },
         {   
             name: 'Logo Image',
             selector: (row) => 
-            <img src={window.location.origin+"/shoplogo/"+ row.logo_image} width={70} alt="shoplogo"/>,
+            <img src={window.location.origin+"/images/shop/logo/"+ row.logo_image} width={70} alt="shoplogo"/>,
             
         
         },
         {
             name: 'Shop Type',
             selector: row => row.shoptype.name,
-            width:"200px",
+            width:"180px",
             sortable: true,
     
         },
         {
             name: 'Township',
             selector: row => row.township.name,
-            width:"200px",
+            width:"180px",
+            sortable: true,
             wrap:true
         },
         {
             name: 'Shop Name',
             selector: row => row.shop_name,
+            width:'180px',
+            sortable:true,
         },
         {
             name: 'Address',
             selector: row => row.address,
-            width:"200px",
+            width:"220px",
             wrap:true
         },
         {
@@ -112,22 +116,21 @@ const ListShops = ()=>{
 
         },
         {
-            
+            name: 'Action',
             selector: (row) => 
-            <button
-                className='btn btns'
-                onClick={(e)=>editShow(e,row)}
-            >Edit
-            </button>,
-        },
-        {
-            
-            selector: (row) => 
-            <button
-                className='btn btn-danger'
-                onClick={(e)=>deleteShop(e,row.id)}
-            >Delete
-            </button>,
+            <div>
+                <button
+                    className='btn btns me-2'
+                    onClick={(e)=>editShow(e,row)}
+                >Edit
+                </button>
+                <button
+                    className='btn btn-danger'
+                    onClick={(e)=>deleteShop(e,row.id)}
+                >Delete
+                </button>
+            </div>,
+            width:'200px'
         },  
     ];
 
@@ -136,7 +139,7 @@ const ListShops = ()=>{
         <>
             <div className="container">
                 <button className='btn mb-2 btns' onClick={handleShow}>Add Shop</button>
-                <Link to="/admin/shops/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
+                <Link to="/admin/shops/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
 
             </div>
             <ToastContainer/>
@@ -159,13 +162,13 @@ const ListShops = ()=>{
                     <Modal.Title>Add Shop</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddShop/>
+                    <AddShop handleClose={handleClose}/>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button className="btns" onClick={handleClose} type="submit" form="addshop">
+                <Button className="btns" type="submit" form="addshop">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -178,14 +181,14 @@ const ListShops = ()=>{
                     <Modal.Title>Edit Shop</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditShop/>
+                    <EditShop handleClose={editClose}/>
 
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
                     Cancel
                 </Button>
-                <Button className="btns" onClick={editClose} type="submit" form="updateshop">
+                <Button className="btns" type="submit" form="updateshop">
                     Update
                 </Button>
                 </Modal.Footer>

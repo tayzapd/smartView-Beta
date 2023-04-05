@@ -3,13 +3,14 @@ import { useAdminContext } from "../../../Context/AdminContext"
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const EditDivision = () => { 
+const EditDivision = ({handleClose}) => { 
     const {division,axios,divisions,setDivisions} = useAdminContext();
 
     const [divisionInput,setDivisionInput] = useState({
         id:division.id,
         name:division.name,
-        remark:division.remark 
+        remark:division.remark,
+        error_list:[],
     })
 
     const getDivisions = ()=>{
@@ -40,7 +41,7 @@ const EditDivision = () => {
         axios.post(`/api/admin/divisions/update`, data)
         .then(res=>{
             // console.log(res);
-
+            handleClose();
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -52,6 +53,10 @@ const EditDivision = () => {
                 theme: "light",
                 });
             getDivisions();
+        }).catch((err)=>{
+            // console.log(err.response.data.error);
+            setDivisionInput({...divisionInput,error_list:err.response.data.error});
+            
         })
     }
     return(
@@ -59,12 +64,13 @@ const EditDivision = () => {
             <form onSubmit={updateDivision} id="updatedivision">
                 <div className="mb-2">
                     <label>Name</label>
-                    <input type="text" name="name" onChange={handleInput} value={divisionInput.name} className="form-control" required/>
+                    <input type="text" name="name" onChange={handleInput} value={divisionInput.name} className="form-control" />
+                    <span className="text-danger">{divisionInput.error_list.name}</span>
 
                 </div>
                 <div className="mb-2">
                     <label>Remark</label>
-                    <input type="text" name="remark" onChange={handleInput} value={divisionInput.remark} className="form-control" required/>
+                    <input type="text" name="remark" onChange={handleInput} value={divisionInput.remark} className="form-control" />
                 </div>
             </form>
         </>

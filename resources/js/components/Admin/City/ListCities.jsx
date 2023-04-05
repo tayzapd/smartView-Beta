@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify' ;
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
 
+
 const ListCities = () => {
     const {setCity,axios,cities,setCities} = useAdminContext();
     const [pending, setPending] = useState(true);
@@ -74,49 +75,57 @@ const ListCities = () => {
             name: 'ID',
             selector: row => row.id,
             sortable: true,
+            width:'70px'
     
         },
         {
             name: 'Division',
             selector: row => row.division.name,
             sortable: true,
+            width:'150px'
     
         },
         {
             name: 'Name',
             selector: row => row.name,
+            sortable: true,
+            width:'150px',
+            
         },
         {
             name: 'Remark',
             selector: row => row.remark,
+            sortable: true,
+            width:'200px',
+            wrap:true,
         },
         {
-            
+            name: 'Action',
             selector: (row) => 
-            <button
-                className='btn btns'
-                onClick={(e)=>editShow(e,row)}
-            >Edit
-            </button>,
+            <div>
+                <button
+                    className='btn btns me-2'
+                    onClick={(e)=>editShow(e,row)}
+                >Edit
+                </button>
+                <button
+                    className='btn btn-danger'
+                    onClick={(e)=>deleteCity(e,row.id)}
+                >Delete
+                </button>
+            </div>,
+            width:'200px'
         },
-        {
-            
-            selector: (row) => 
-            <button
-                className='btn btn-danger'
-                onClick={(e)=>deleteCity(e,row.id)}
-            >Delete
-            </button>,
-        },
+        
 
         
         
     ];
     return (
         <>
-            <div className="container">
+            <div className="container-fluid">
                 <button className='btn mb-2 btns'  onClick={handleShow}>Add City</button>
-                <Link to="/admin/cities/detetedrecord" className="btn float-end mb-2 btns">Deleted Record</Link>
+                <Link to="/admin/cities/detetedrecord" className="btn float-end mb-2 btns">Trashed Record</Link>
 
             </div>
 
@@ -139,13 +148,13 @@ const ListCities = () => {
                     <Modal.Title>Add City</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddCity/>
+                    <AddCity handleClose={handleClose}/>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button className='btns' onClick={handleClose} type="submit" form="addcity">
+                <Button className='btns' type="submit" form="addcity">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -157,14 +166,14 @@ const ListCities = () => {
                     <Modal.Title>Edit City</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditCity />
+                    <EditCity handleClose={editClose}/>
 
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={() => {setEditShow(false) }}>
                     Cancel
                 </Button>
-                <Button className='btns' onClick={() => {setEditShow(false) }} type="submit" form="updatecity">
+                <Button className='btns' type="submit" form="updatecity">
                     Update
                 </Button>
                 </Modal.Footer>

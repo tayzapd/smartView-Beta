@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 
 
-const EditShopType = () => {
+const EditShopType = ({handleClose}) => {
     const {shoptype,axios,shoptypes,setShopTypes} = useAdminContext();
     const [shoptypesInput,setShoptypes] = useState({
         id:shoptype.id,
@@ -17,7 +17,7 @@ const EditShopType = () => {
         setShoptypes({...shoptypesInput,[e.target.name]:e.target.value});
 
     }
-    // console.log(shoptypesInput);
+    console.log(shoptypesInput);
     const getShoptypes = async () => {
         const res = await axios.post(`/api/admin/shoptypes/show`);
         console.log(res.data);
@@ -37,6 +37,7 @@ const EditShopType = () => {
         axios.post(`/api/admin/shoptypes/update`, data)
         .then(res=>{
             // console.log(res);
+            handleClose();
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -50,6 +51,7 @@ const EditShopType = () => {
             getShoptypes();
 
         }).catch((err)=>{
+            console.log(err.response.data.error);
             setShoptypes({...shoptypesInput,error_list:err.response.data.error});
             
         })

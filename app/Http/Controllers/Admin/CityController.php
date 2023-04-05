@@ -23,7 +23,7 @@ class CityController extends Controller
     public function create(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string|min:3|max:120',
             'division_id' => 'required'
         ]);
 
@@ -47,8 +47,9 @@ class CityController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'id'=> 'required',
-            'name' => 'required|string',
-            'division_id' => 'required'
+            'name' => 'required|string|min:3|max:120',
+            'division_id' => 'required',
+            
         ]);
 
         if ($validator->fails()) {

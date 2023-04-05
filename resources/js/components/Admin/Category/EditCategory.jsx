@@ -3,12 +3,13 @@ import { useAdminContext } from "../../../Context/AdminContext";
 import { toast, ToastContainer } from 'react-toastify' ;
 import "react-toastify/dist/ReactToastify.css";
 
-const EditCategory = () => {
+const EditCategory = ({handleClose}) => {
     const {category,axios,categories,setCategories} = useAdminContext();
     const [categoriesInput,setCategoriesInput] = useState({
         id:category.id,
         name:category.name,
         remark:category.remark,
+        error_list:[],
     });
 
     const [selectInput,setSelect] = useState({
@@ -46,9 +47,10 @@ const EditCategory = () => {
                 remark:categoriesInput.remark,
                 shop_id:selectInput.shop_id
             }
-
+        console.log(data);
         axios.post(`/api/admin/categories/update`,data)
         .then((res)=>{
+            handleClose();
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -60,6 +62,10 @@ const EditCategory = () => {
                 theme: "light",
                 });
             getCategories();
+            
+        }).catch((err)=>{
+            // console.log(err.response.data.error);
+            setCategoriesInput({...categoriesInput,error_list:err.response.data.error});
             
         })
     }
@@ -80,12 +86,13 @@ const EditCategory = () => {
                 </div>
                 <div className="mb-2">
                     <label>Name</label>
-                    <input type="text" name="name" onChange={handleInput} value={categoriesInput.name} className="form-control" required/>
+                    <input type="text" name="name" onChange={handleInput} value={categoriesInput.name} className="form-control"/>
+                    <span className="text-danger">{categoriesInput.error_list.name}</span>
 
                 </div> 
                 <div className="mb-2">
                     <label>Remark</label>
-                    <input type="text" name="remark" onChange={handleInput} value={categoriesInput.remark} className="form-control" required/>
+                    <input type="text" name="remark" onChange={handleInput} value={categoriesInput.remark} className="form-control"/>
                 </div>
                 
             </form>

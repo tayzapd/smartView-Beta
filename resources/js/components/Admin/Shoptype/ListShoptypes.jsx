@@ -12,45 +12,50 @@ import "react-toastify/dist/ReactToastify.css";
 import { GestureSharp } from '@material-ui/icons';
 import '../admin.css';
 
-
 const ListShopTypes = () => {
 
-    const {setShopType,axios,shoptypes,setShopTypes,dialog,setDialog} = useAdminContext();
+    const {setShopType,axios,shoptypes,setShopTypes} = useAdminContext();
     const columns = [
         {
             name: 'ID',
             selector: row => row.id,
             sortable: true,
+            width:'70px'
     
         },
         {
             name: 'Name',
             selector: row => row.name,
             sortable: true,
+            width:'180px'
     
         },
         {
             name: 'Remark',
             selector: row => row.remark,
+            sortable:true,
+            width:'200px',
+            wrap:true
         },
         {
-            
+            name: 'Action',
             selector: (row) => 
-            <button
-                className='btn btns'
-                onClick={(e)=>editShow(e,row)}
-            >Edit
-            </button>,
-        },
-        {
+            <div>
+                <button
+                    className='btn btns me-2'
+                    onClick={(e)=>editShow(e,row)}
+                >Edit
+                </button>
+                <button
+                    className='btn btn-danger'
+                    onClick={(e)=>deleteShoptype(e,row.id)}
+                >Delete
+                </button>
+            </div>,
+            width:'200px'
             
-            selector: (row) => 
-            <button
-                className='btn btn-danger'
-                onClick={(e)=>deleteShoptype(e,row.id)}
-            >Delete
-            </button>,
         },
+        
     
     ];
 
@@ -73,13 +78,11 @@ const ListShopTypes = () => {
     // console.log(shoptypes);
 
     const handleClose = () => {
-        // setShow(false)
-        setDialog(false);
+        setShow(false)
 
     };
     const handleShow = () => {
-        // setShow(true)
-        setDialog(true);
+        setShow(true)
     }
 
 
@@ -122,9 +125,9 @@ const ListShopTypes = () => {
     return (
         <>
             
-            <div className="container">
+            <div className="container-fluid">
                 <button className='btn btns mb-2' onClick={handleShow}>Add Shop Type</button>
-                <Link to="/admin/shoptypes/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
+                <Link to="/admin/shoptypes/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
 
             </div>
             <ToastContainer />
@@ -142,12 +145,12 @@ const ListShopTypes = () => {
 
             {/* Add Shop Type */}
             
-            <Modal size="lg" show={dialog} onHide={handleClose}>
+            <Modal size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Shop Type</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddShoptypes/>
+                    <AddShoptypes handleClose={handleClose}/>
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -166,14 +169,14 @@ const ListShopTypes = () => {
                     <Modal.Title>Edit Shop Type</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditShopType />
+                    <EditShopType handleClose={editClose}/>
 
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
                     Cancel
                 </Button>
-                <Button className='btns' onClick={editClose} type="submit" form="updateshoptype">
+                <Button className='btns' type="submit" form="updateshoptype">
                     Update
                 </Button>
                 </Modal.Footer>

@@ -4,8 +4,9 @@ import { useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const EditShop = () =>{
+const EditShop = ({handleClose}) =>{
     const {shop,axios,shops,setShops} = useAdminContext();
+    // const [shops,setShops] = useState([]);
     const [shoptypes,setShoptypes] = useState([]);
     const [townships,setTownships] = useState([]);
 
@@ -34,13 +35,14 @@ const EditShop = () =>{
         shop_name:shop.shop_name,
         address:shop.address,
         phone:shop.phone,
-        remark:shop.remark 
+        remark:shop.remark,
+        error_list:[],
     });
 
     const [selectShoptype,setSelctShoptype] = useState({shoptype_id:shop.shoptype_id});
     const [selectTownship,setSelctTownship] = useState({township_id:shop.township_id});
     const [imageInput, setImage] = useState({
-        logo_image:shop.logo_image
+        logo_image:shop.logo_image,
     });
     const [expired_date,setExpiredDate] = useState(shop.expired_date);
     const handleInput = (e)=>{
@@ -58,7 +60,7 @@ const EditShop = () =>{
         })
     }
     
-    // console.log(imageInput);
+    console.log(imageInput);
     const updateshop = (e)=>{
         e.preventDefault();
         // const {name,address,phone} = shopInput;
@@ -72,12 +74,13 @@ const EditShop = () =>{
         data.append('township_id',selectTownship.township_id);
         data.append('remark',shopInput.remark);
         data.append('logo_image',imageInput.logo_image);
-        data.append('old_logo',shop.logo_image);
+        // data.append('old_logo',shop.logo_image);
         
-        // console.log(data);
+        console.log(data);  
         axios.post(`/api/admin/shops/update`,data)
             .then(res=>{
                 console.log(res);
+                handleClose();
                 toast.success(res.data.message, {
                     position: "top-right",
                     autoClose: 3000,
@@ -89,55 +92,66 @@ const EditShop = () =>{
                     theme: "light",
                     });
                 getShops();
+            }).catch((err)=>{
+                console.log(err.response.data.error);
+                setShopInput({...shopInput,error_list:err.response.data.error});
+                
             })
     }
     return(
         <>
             <form onSubmit={updateshop} id="updateshop">
                 <div className="mb-2">
-                    <img src={window.location.origin+"/shoplogo/"+ shop.logo_image} className="img-thumbnail" alt="shoplogo" width={150} />
+                    <img src={window.location.origin+"/images/shop/logo/"+ shop.logo_image} className="img-thumbnail" alt="shoplogo" width={150} />
                 </div>
                 <div className="mb-2">
                     <label>Logo Image</label>
-                    <input type="file" name="logo_image" onChange={handleChange}  className="form-control"/>
+                    <input type="file" name="logo_image" onChange={handleChange} className="form-control"/>
                 </div>
                 <div className="mb-2">
                     <label>Shop Type</label>
                     
                     <select name="shoptype" onChange={(e)=>setSelctShoptype({shoptype_id:e.target.value})} value={selectShoptype.shoptype_id}  className="form-control">
-                    <option>Select Shop Type</option>
                         {shoptypes.map((shoptype, index) => (
                             <option key={index} value={shoptype.id} selected={(shoptype.id == selectShoptype.shoptype_id)?'selected':''}>
                                 {shoptype.name}
                             </option>
                         ))}
                     </select>
+                    <span className="text-danger">{shopInput.error_list.shoptype_id}</span>
+
                 </div>
                 <div className="mb-2">
                     <label>Township</label>
                     
                     <select name="township" onChange={(e)=>setSelctTownship({township_id:e.target.value})} value={selectTownship.township_id}   className="form-select">
-                    <option>Select Township</option>
                         {townships.map((township, index) => (
                             <option key={index} value={township.id} selected={(township.id == selectTownship.township_id)?'selected':''}>
                                 {township.name}
                             </option>
                         ))}
+                        {/* <span className="text-danger">{shopInput.error_list.township_id}</span> */}
+
                     </select>
                 </div>
                 
                 <div className="mb-2">
                     <label>Shop Name</label>
-                    <input type="text" name="shop_name" onChange={handleInput} value={shopInput.shop_name} className="form-control" required/>
+                    <input type="text" name="shop_name" onChange={handleInput} value={shopInput.shop_name} className="form-control"/>
+                    <span className="text-danger">{shopInput.error_list.shop_name}</span>
 
                 </div> 
                 <div className="mb-2">
                     <label>Phone</label>
-                    <input type="text" name="phone" onChange={handleInput} value={shopInput.phone} className="form-control" required/>
+                    <input type="text" name="phone" onChange={handleInput} value={shopInput.phone} className="form-control"/>
+                    <span className="text-danger">{shopInput.error_list.phone}</span>
+
                 </div>
                 <div className="mb-2">
                     <label>Address</label>
                     <textarea name="address" onChange={handleInput} value={shopInput.address} className="form-control"></textarea>
+                    <span className="text-danger">{shopInput.error_list.address}</span>
+
                 </div>
 
                 

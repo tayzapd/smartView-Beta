@@ -3,7 +3,7 @@ import { useAdminContext } from "../../../Context/AdminContext"
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const EditTownship = ()=>{
+const EditTownship = ({handleClose})=>{
     const {township,axios,townships,setTownships} = useAdminContext();
     const [cities,setCities] = useState([]);
 
@@ -11,6 +11,7 @@ const EditTownship = ()=>{
         id:township.id,
         name:township.name,
         remark:township.remark,
+        error_list:[],
     })
 
     const [selectInput,setSelect] = useState({
@@ -51,6 +52,7 @@ const EditTownship = ()=>{
         axios.post(`/api/admin/townships/update`,data)
         .then((res)=>{
             // console.log(res);
+            handleClose();
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -63,10 +65,13 @@ const EditTownship = ()=>{
                 });
             getTownships();
             
+        }).catch((err)=>{
+            // console.log(err);
+            setTownshipsInput({...townshipsInput,error_list:err.response.data.error});        
         })
     }
 
-    // console.log(townshipsInput);
+    console.log(townshipsInput);
     // console.log(selectInput);
     return(
         <>
@@ -75,22 +80,24 @@ const EditTownship = ()=>{
                     <label>City</label>
                     
                     <select name="city" onChange={(e)=>setSelect({...selectInput,city_id:e.target.value})}   className="form-select">
-                    <option>Select City</option>
                         {cities.map((city, index) => (
                             <option key={index} value={city.id} selected={(city.id == selectInput.city_id)?'selected':''}>
                                 {city.name}
                             </option>
                         ))}
                     </select>
+                    <span className="text-danger">{townshipsInput.error_list.city_id}</span>
+
                 </div>
                 <div className="mb-2">
                     <label>Name</label>
-                    <input type="text" name="name" onChange={handleInput} value={townshipsInput.name} className="form-control" required/>
+                    <input type="text" name="name" onChange={handleInput} value={townshipsInput.name} className="form-control"/>
+                    <span className="text-danger">{townshipsInput.error_list.name}</span>
 
                 </div> 
                 <div className="mb-2">
                     <label>Remark</label>
-                    <input type="text" name="remark" onChange={handleInput} value={townshipsInput.remark} className="form-control" required/>
+                    <input type="text" name="remark" onChange={handleInput} value={townshipsInput.remark} className="form-control"/>
                 </div>
                 
             </form>

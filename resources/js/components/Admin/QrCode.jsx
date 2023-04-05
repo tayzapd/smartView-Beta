@@ -48,6 +48,7 @@ const AdminQrCode = () => {
 
             {url != '' ? 
                 <div className="mt-4 d-flex justify-content-center align-item-center" id="QrCode">
+                    <div className="col-md-6 col-sm-12">
                     <QRCode
                         
                         size={qrSize}
@@ -55,6 +56,7 @@ const AdminQrCode = () => {
                         value={url}
                         // icon="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
                     />
+                    </div>
                 </div>
                 :
                 <div></div>

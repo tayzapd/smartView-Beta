@@ -41,7 +41,7 @@ const ListDivisions = () => {
         // console.log(id);
         const data = {
             id:id
-        }
+        }  
 
         axios.post(`/api/admin/divisions/delete/`,data).then((res)=>{
             // console.log(res);
@@ -78,44 +78,48 @@ const ListDivisions = () => {
             name: 'ID',
             selector: row => row.id,
             sortable: true,
+            width:'70px'
     
         },
         {
             name: 'Name',
             selector: row => row.name,
             sortable: true,
+            width:'180px'
     
         },
         {
             name: 'Remark',
             selector: row => row.remark,
+            sortable: true,
+            width:'200px',
+            wrap:true,
         },
         {
-            
+            name: 'Action',
             selector: (row) => 
-            <button
-                className='btn btns'
-                onClick={(e)=>editShow(e,row)}
-            >Edit
-            </button>,
-        },
-        {
-            
-            selector: (row) => 
-            <button
-                className='btn btn-danger'
-                onClick={(e)=>deleteDivision(e,row.id)}
-            >Delete
-            </button>,
-        },
+            <div>
+                <button
+                    className='btn btns me-2'
+                    onClick={(e)=>editShow(e,row)}
+                >Edit
+                </button>
+                <button
+                    className='btn btn-danger'
+                    onClick={(e)=>deleteDivision(e,row.id)}
+                >Delete
+                </button>
+            </div>,
+            width:'200px'
+        }
         
     ];
     return(
         
         <>
-            <div className="container">
+            <div className="container-fluid">
                 <button className='btn mb-2 btns' onClick={handleShow}>Add Division</button>
-                <Link to="/admin/divisions/detetedrecord" className="btn btns float-end mb-2 ">Deleted Record</Link>
+                <Link to="/admin/divisions/detetedrecord" className="btn btns float-end mb-2 ">Trashed Record</Link>
 
             </div>
 
@@ -138,13 +142,13 @@ const ListDivisions = () => {
                     <Modal.Title>Add Division</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddDivisions/>
+                    <AddDivisions handleClose={handleClose}/>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button className="btns" onClick={handleClose} type="submit" form="adddivision">
+                <Button className="btns" type="submit" form="adddivision">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -157,14 +161,14 @@ const ListDivisions = () => {
                     <Modal.Title>Edit Division</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditDivision />
+                    <EditDivision handleClose={editClose}/>
 
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
                     Cancel
                 </Button>
-                <Button className="btns" onClick={editClose} type="submit" form="updatedivision">
+                <Button className="btns" type="submit" form="updatedivision">
                     Update
                 </Button>
                 </Modal.Footer>

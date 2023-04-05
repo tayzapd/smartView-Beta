@@ -3,7 +3,7 @@ import { useAdminContext } from "../../../Context/AdminContext";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const AddShop = () => {
+const AddShop = ({handleClose}) => {
     const {axios,shops,setShops} = useAdminContext();
     const [shoptypes,setShoptypes] = useState([]);
     const [townships,setTownships] = useState([]);
@@ -11,7 +11,8 @@ const AddShop = () => {
         shop_name:'',
         address:'',
         phone:'',
-        remark:'' 
+        remark:'',
+        error_list:[],
     });
     const [selectShoptype,setSelctShoptype] = useState();
     const [selectTownship,setSelctTownship] = useState();
@@ -87,10 +88,11 @@ const AddShop = () => {
         }
      
         
-        console.log(data);
-        console.log(bgImage)
+        // console.log(data);
+        // console.log(bgImage)
         axios.post(`/api/admin/shops/create`,data)
             .then(res=>{
+                handleClose();
                 toast.success(res.data.message, {
                     position: "top-right",
                     autoClose: 3000,
@@ -102,6 +104,10 @@ const AddShop = () => {
                     theme: "light",
                     });
                 getShops();
+            }).catch((err)=>{
+                console.log(err.response.data.error);
+                setShop({...shopInput,error_list:err.response.data.error});
+                
             })
     }
     return(
@@ -118,6 +124,8 @@ const AddShop = () => {
                             </option>
                         ))}
                     </select>
+                    <span className="text-danger">{shopInput.error_list.shoptype_id}</span>
+
                 </div>
                 <div className="mb-2">
                     <label>Township</label>
@@ -130,29 +138,39 @@ const AddShop = () => {
                             </option>
                         ))}
                     </select>
+                    <span className="text-danger">{shopInput.error_list.township_id}</span>
+
                 </div>
                 <div className="mb-2">
                     <label>Logo Image</label>
                     <input type="file" name="logo_image" onChange={handleChange} className="form-control"/>
+                    <span className="text-danger">{shopInput.error_list.logo_image}</span>
+
                 </div>
 
                 <div className="mb-2">
                     <label>Bg Images</label>
                     <input type="file" className="form-control" multiple   onChange={handleBgImageChange} placeholder="Background Images" />
+
                 </div>
 
                 <div className="mb-2">
                     <label>Shop Name</label>
-                    <input type="text" name="shop_name" onChange={handleInput} value={shopInput.shop_name} className="form-control" required/>
+                    <input type="text" name="shop_name" onChange={handleInput} value={shopInput.shop_name} className="form-control"/>
+                    <span className="text-danger">{shopInput.error_list.shop_name}</span>
 
                 </div> 
                 <div className="mb-2">
                     <label>Phone</label>
-                    <input type="text" name="phone" onChange={handleInput} value={shopInput.phone} className="form-control" required/>
+                    <input type="text" name="phone" onChange={handleInput} value={shopInput.phone} className="form-control"/>
+                    <span className="text-danger">{shopInput.error_list.phone}</span>
+
                 </div>
                 <div className="mb-2">
                     <label>Address</label>
                     <textarea name="address" onChange={handleInput} value={shopInput.address} className="form-control"></textarea>
+                    <span className="text-danger">{shopInput.error_list.address}</span>
+
                 </div>
 
                 

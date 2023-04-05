@@ -25,7 +25,7 @@ class ShopTypeController extends Controller
     public function create(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string|min:3|max:120',
         ]);
 
         if ($validator->fails()) {
@@ -47,7 +47,7 @@ class ShopTypeController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'id'=> 'required',
-            'name' => 'required|string',
+            'name' => 'required|string|min:3|max:120',
         ]);
 
         if ($validator->fails()) {

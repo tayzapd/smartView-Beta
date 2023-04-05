@@ -108,33 +108,38 @@ const UserList = () => {
         name: 'ID',
         selector: row => row.id,
         sortable: true,
+        width:'70px'
 
     },
     {
         name: 'Username',
         selector: row => row.username,
         sortable: true,
+        width:'150px'
 
     },
     {
         name: 'Shop Name',
         selector: row => row.shop.shop_name,
+        sortable:true,
+        width:'150px'
     },
-    {      
+    {     
+      name: 'Action', 
       selector: (row) => 
-      <Button onClick={() => {
-        setShowEdit(true);
-        setUser(user);
+      <div>
+        <Button onClick={() => {
+          setShowEdit(true);
+          setUser(user);
 
-      }} size='sm' className="me-2 btns">
-          <Edit/>
-      </Button>
-    },
-    {      
-      selector: (row) => 
-      <Button onClick={() => {deleteUser(row.id)}} size='sm' className="" variant="danger">
+        }} size='sm me-2' className="me-2 btns">
+            <Edit/>
+        </Button>
+        <Button onClick={() => {deleteUser(row.id)}} size='sm' className="" variant="danger">
           <Delete />
-      </Button>
+        </Button>
+      </div>,
+      width:'200px'
     },
     
     
@@ -145,7 +150,7 @@ const UserList = () => {
       <Button className='my-3 btns' onClick={handleShow}>
         Add User +
       </Button>
-      <Link to="/admin/users/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
+      <Link to="/admin/users/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
 
       <ToastContainer/>
      
