@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
+import '../admin.css';
 
 const AdminList = () => {
   const [admins, setAdmins] = useState([]);
@@ -97,12 +98,14 @@ const AdminList = () => {
         name: 'ID',
         selector: row => row.id,
         sortable: true,
+        width:'100px',
 
     },
     {
         name: 'Username',
         selector: row => row.username,
         sortable: true,
+        width:'200px'
 
     },
 
@@ -114,7 +117,7 @@ const AdminList = () => {
           setShowEdit(true);
           setAdmin(row);
 
-        }} size='sm' className="me-2" variant="primary">
+        }} size='sm' className="me-2 btns">
             <Edit/>
         </Button>
         <Button onClick={() => {deleteAdmin(row.id)}} size='sm' className="" variant="danger">
@@ -125,10 +128,10 @@ const AdminList = () => {
 ];
   return (
     <div className='container'>
-      <Button className='my-3 ' style={{ backgroundColor: '#fc6400', color:'#000000', borderColor:'#fc6400' }} onClick={handleShow}>
+      <Button className='my-3 btns' onClick={handleShow}>
         Add Admin +
       </Button>
-      <Link to="/admin/admins/detetedrecord" style={{ backgroundColor: '#fc6400' , borderColor:'#fc6400' }} className="btn btn-primary float-end mb-2 text-dark">Deleted Record</Link>
+      <Link to="/admin/admins/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
 
       <ToastContainer/>
  

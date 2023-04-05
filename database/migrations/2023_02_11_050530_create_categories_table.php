@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('shop_id')->constrained('shops');
-            $table->text('remark');
+            $table->text('remark')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

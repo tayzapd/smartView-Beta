@@ -4,8 +4,9 @@ import { useAdminContext } from "../../../Context/AdminContext";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const AddTownship = () =>{
-    const {axios,townships,setTownships,setDialog} = useAdminContext();
+const AddTownship = ({handleClose}) =>{
+    // console.log(handleClose);
+    const {axios,townships,setTownships} = useAdminContext();
     const [townshipsInput,setTownshipsInput] = useState({
         name:'',
         remark:'',
@@ -14,6 +15,7 @@ const AddTownship = () =>{
 
     const [cities,setCities] = useState([]);
     const [selectInput,setSelect] = useState([]);
+
 
     const getTownships = ()=>{
         axios.post(`/api/admin/townships/show`).then((res)=>{
@@ -52,7 +54,7 @@ const AddTownship = () =>{
         // console.log(data);
         axios.post(`/api/admin/townships/create/`,data).then((res)=>{
             // console.log(res);
-            setDialog(false);
+            handleClose();
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -65,8 +67,6 @@ const AddTownship = () =>{
                 });
             getTownships();
         }).catch((err)=>{
-            // console.log(err.response.data.error);
-            setDialog(true);
             setTownshipsInput({...townshipsInput,error_list:err.response.data.error});        
         })
 

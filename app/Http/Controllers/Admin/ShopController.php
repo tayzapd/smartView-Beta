@@ -27,16 +27,16 @@ class ShopController extends Controller
     {
         
         $validator = Validator::make($req->all(), [
-            'shop_name' => 'required|min:6|max:120',
+            'shop_name' => 'required|string|min:3|max:120',
             'address' => 'required|min:6|max:120',
             'phone' => 'required|min:9|max:120',
             'logo_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'shoptype_id' => 'required',
             'township_id' => 'required',
         ]);
-        // if ($validator->fails()) {
-        //     return response()->json(['status'=>false,'Message'=>'Please ']);
-        // }
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
         if(Gate::allows('admin-auth',Auth::user())) {
             
             if($req->hasFile('logo_image') && $req->hasFile('bg_images')){
@@ -63,11 +63,7 @@ class ShopController extends Controller
                 if($shop->save()){
                     return response()->json(['status'=>true,"message"=>"Shop Create Successfully!"]);
                 }
-                
                 return response()->json(['status'=>false,"message"=>"Shop Can't Create,Something was wrong!"]);
-                
-
-
             }  
 
         }
@@ -77,22 +73,21 @@ class ShopController extends Controller
     public function update(Request $req)
     {    
         $validator = Validator::make($req->all(), [
-            'shop_name' => 'required|min:6|max:120',
+            'shop_name' => 'required|string|min:3|max:120',
             'address' => 'required|min:6|max:120',
             'phone' => 'required|min:9|max:120',
-            'logo_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'shoptype_id' => 'required',
             'township_id' => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status'=>false,'Message'=>'Please ']);
+            return response()->json(['error' => $validator->errors()], 400);
         }
         if(!Gate::allows('admin-auth',Auth::user())){
             return response()->json(['status'=>false,"message"=>"Access denied!"]);
         }
         if($req->hasFile('logo_image')){
             $shop = Shop::find($req->id);
-            File::delete(public_path('/images/shop/logo/'.$shop->logo_image));
+            File::delete(public_path('/images/shop/logo/'.$shop->old_logo));
             $image = $req->file('logo_image');
             $fileName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('/images/shop/logo/'),$fileName);
@@ -125,6 +120,7 @@ class ShopController extends Controller
             
         }
 
+
     }
 
     public function delete(Request $req)
@@ -134,9 +130,7 @@ class ShopController extends Controller
             if($shop->delete()){
                 return response()->json(['status'=>true,'message'=>"Shop move to trash."]);
             }
-            
-            return response()->json(['status'=>true,'message'=>"Shop can't move trash!"]);
-            
+            return response()->json(['status'=>true,'message'=>"Shop can't move trash!"]);  
         }
     }
 
@@ -147,12 +141,10 @@ class ShopController extends Controller
             if($shop->restore()){
                 return response()->json(['status'=>true,'message'=>"Shop restored."]);
             }
-            
-            return response()->json(['status'=>true,'message'=>"Shop can't restore!"]);
-            
+            return response()->json(['status'=>true,'message'=>"Shop can't restore!"]);   
         }
     }
-
+    
     public function trashshow()
     {
         if(Gate::allows('admin-auth',Auth::user())){

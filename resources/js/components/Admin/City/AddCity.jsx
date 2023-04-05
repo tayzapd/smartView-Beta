@@ -4,11 +4,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 
-const AddCity = () => {
+const AddCity = ({handleClose}) => {
     const {axios,cities,setCities} = useAdminContext();
     const [citiesInput,setCitiesInput] = useState({
         name:'',
-        remark:''
+        remark:'',
+        error_list:[],
     })
 
     const [divisions,setDivisions] = useState([]);
@@ -49,6 +50,7 @@ const AddCity = () => {
         // console.log(data);
         axios.post(`/api/admin/cities/create/`,data).then((res)=>{
             console.log(res);
+            handleClose();
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -60,6 +62,10 @@ const AddCity = () => {
                 theme: "light",
                 });
                 getCities();
+        }).catch((err)=>{
+            // console.log(err.response.data.error);
+            setCitiesInput({...citiesInput,error_list:err.response.data.error});
+            
         })
     }
     return(
@@ -76,16 +82,18 @@ const AddCity = () => {
                             </option>
                         ))}
                     </select>
+                    <span className="text-danger">{citiesInput.error_list.division_id}</span>
+
                 </div>
                 <div className="mb-2">
                     <label>Name</label>
-                    <input type="text" name="name" onChange={handleInput} value={citiesInput.name} className="form-control" required/>
-
+                    <input type="text" name="name" onChange={handleInput} value={citiesInput.name} className="form-control"/>
+                    <span className="text-danger">{citiesInput.error_list.name}</span>
                 </div> 
                 
                 <div className="mb-2">
                     <label>Remark</label>
-                    <input type="text" name="remark" onChange={handleInput} value={citiesInput.remark} className="form-control" required/>
+                    <input type="text" name="remark" onChange={handleInput} value={citiesInput.remark} className="form-control"/>
                 </div>
                 
             </form>

@@ -71,7 +71,6 @@ const ListCategories = () => {
         {
             name: 'Shop',
             selector: row => row.shop.shop_name,
-            width:"200px",
             wrap:true,
             sortable: true,
     
@@ -79,32 +78,37 @@ const ListCategories = () => {
         {
             name: 'Name',
             selector: row => row.name,
+            sortable: true,
         },
         {
             name: 'Remark',
             selector: row => row.remark,
-            width:"200px",
             wrap:true,
         },
         {
+            name: 'Action',
+            selector: (row) =>
+            <div>
+                <button
+                    className='btn btns me-2'
+                    onClick={(e)=>editShow(e,row)}
+                >Edit
+                </button>
+                
+            </div>,
+            width:'200px'
             
-            selector: (row) => 
-            <button
-                className='btn btns'
-                onClick={(e)=>editShow(e,row)}
-            >Edit
-            </button>,
-            width:"90px"
+            
         },
-        {
-            
-            selector: (row) => 
+        {   
+            selector: (row) =>
             <button
-                className='btn btn-danger'
-                onClick={(e)=>deleteCategory(e,row.id)}
-            >Delete
-            </button>,
-        }, 
+                    className='btn btn-danger'
+                    onClick={(e)=>deleteCategory(e,row.id)}
+                >Delete
+            </button>   
+        }
+ 
 
         
         
@@ -112,10 +116,10 @@ const ListCategories = () => {
 
     return (
         <>
-            <div className="container">
+            {/* <div className="container">
                 <button className='btn mb-2 btns' onClick={handleShow}>Add Category</button>
-                <Link to="/admin/categories/detetedrecord" className="btn float-end mb-2 btns">Deleted Record</Link>
-            </div>
+                <Link to="/admin/categories/detetedrecord" className="btn float-end mb-2 btns">Trashed Record</Link>
+            </div> */}
             <ToastContainer/>
             <DataTable
                 title="Category Lists"
@@ -134,13 +138,13 @@ const ListCategories = () => {
                     <Modal.Title>Add Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddCategory/>
+                    <AddCategory handleClose={handleClose}/>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button className='btns' onClick={handleClose} type="submit" form="addcategory">
+                <Button className='btns' type="submit" form="addcategory">
                     Save
                 </Button>
                 </Modal.Footer>
@@ -153,13 +157,13 @@ const ListCategories = () => {
                     <Modal.Title>Edit Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditCategory/>
+                    <EditCategory handleClose={editClose}/>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
                     Cancel
                 </Button>
-                <Button className='btns' onClick={editClose} type="submit" form="updatecategory">
+                <Button className='btns' type="submit" form="updatecategory">
                     Update
                 </Button>
                 </Modal.Footer>

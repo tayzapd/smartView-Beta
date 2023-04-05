@@ -36,8 +36,8 @@ const ListTownships = () => {
 
     console.log(townships);
 
-    const handleClose = () => setDialog(false);
-    const handleShow = () => setDialog(true);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const deleteTownship = (e,id)=>{
         e.preventDefault();
@@ -76,40 +76,45 @@ const ListTownships = () => {
             name: 'ID',
             selector: row => row.id,
             sortable: true,
+            width:'70px'
     
         },
         {
             name: 'City',
             selector: row => row.city.name,
             sortable: true,
+            width:'150px'
     
         },
         {
             name: 'Name',
             selector: row => row.name,
+            sortable:true,
+            width:'180px'
         },
         {
             name: 'Remark',
             selector: row => row.remark,
+            sortable:true,
+            width:'200px',
+            wrap:true
         },
         {
-            
+            name: 'Action',
             selector: (row) => 
-            <button
-                className='btn btns'
-                onClick={(e)=>editShow(e,row)}
-            >Edit
-            </button>,
-        },
-        {
-            
-            selector: (row) => 
-            <button
-                className='btn btn-danger'
-                onClick={(e)=>deleteTownship(e,row.id)}
-            >Delete
-            </button>,
-        },
+            <div>
+                <button
+                    className='btn btns me-2'
+                    onClick={(e)=>editShow(e,row)}
+                >Edit
+                </button>
+                <button
+                    className='btn btn-danger'
+                    onClick={(e)=>deleteTownship(e,row.id)}
+                >Delete
+                </button>
+            </div>
+        }
 
         
         
@@ -119,7 +124,7 @@ const ListTownships = () => {
         <>
             <div className="container">
                 <button className='btn btns mb-2' onClick={handleShow}>Add Township</button>
-                <Link to="/admin/townships/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
+                <Link to="/admin/townships/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
 
             </div>
             <ToastContainer/>
@@ -136,12 +141,12 @@ const ListTownships = () => {
             />
 
             {/* ADD TOWNSHIP */}
-            <Modal size="lg" show={dialog} onHide={handleClose}>
+            <Modal size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Township</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddTownship/>
+                    <AddTownship handleClose={handleClose}/>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
@@ -159,14 +164,14 @@ const ListTownships = () => {
                     <Modal.Title>Edit Township</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditTownship/>
+                    <EditTownship handleClose={editClose}/>
 
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={editClose}>
                     Cancel
                 </Button>
-                <Button className="btns" onClick={editClose} type="submit" form="updatetownship">
+                <Button className="btns" type="submit" form="updatetownship">
                     Update
                 </Button>
                 </Modal.Footer>

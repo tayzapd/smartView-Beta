@@ -16,25 +16,35 @@ const Items = () => {
             name: 'ID',
             selector: row => row.id,
             sortable: true,
+            width:'70px'
     
         },
         {
             name: 'Name',
             selector: row => row.name,
             sortable: true,
+            width:'150px'
     
         },
         {
             name: 'Category Name',
             selector: row => row.category.name,
+            sortable:true,
+            width:'200px'
         },
         {
             name: 'tag',
             selector: row => row.tag,
+            sortable:true,
+            width:'200px',
+            wrap:true
         },
         {
             name: 'Privacy',
             selector: row => row.privacy,
+            sortable:true,
+            width:'150px',
+            warp:true
         },
         {
             name:"Edit",
@@ -263,7 +273,7 @@ return (
         }}>
             CREATE + 
         </div>
-        <Link to="/admin/items/detetedrecord" className="btn btns float-end mb-2">Deleted Record</Link>
+        <Link to="/admin/items/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
 
         {/* CREATE ITEM  */}
         <Modal size="lg" show={create} onHide={() => { setCreate(false)}}>

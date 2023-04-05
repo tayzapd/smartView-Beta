@@ -29,7 +29,7 @@ class ItemController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string|min:3|max:120',
             'price' => 'required|numeric',
             'is_available' => 'required',
             'privacy' => 'required|in:public,private',
@@ -79,7 +79,7 @@ class ItemController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string|min:3|max:120',
             'price' => 'required|numeric',
             'is_available' => 'required',
             'privacy' => 'required|in:public,private',

@@ -5,11 +5,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 
-const AddDivisions = ()=>{
+const AddDivisions = ({handleClose})=>{
+    
     const {axios,divisions,setDivisions} = useAdminContext();
     const [divisionsInput,setDivisionsInput] = useState({
         name:'',
         remark:'',
+        error_list:[],
     });
 
     const navigate = useNavigate();
@@ -35,7 +37,7 @@ const AddDivisions = ()=>{
         axios.post(`/api/admin/divisions/create`, data)
         .then(res=>{
             // console.log(res);
-
+            handleClose();
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -48,21 +50,24 @@ const AddDivisions = ()=>{
                 });
             getDivisions();
 
+        }).catch((err)=>{
+            // console.log(err.response.data.error);
+            setDivisionsInput({...divisionsInput,error_list:err.response.data.error});
+            
         })
-         
-
     }
     return(
         <>
             <form onSubmit={saveDivision} id="adddivision">
                 <div className="mb-2">
                     <label>Name</label>
-                    <input type="text" name="name" onChange={handleInput} value={divisionsInput.name} className="form-control" required/>
+                    <input type="text" name="name" onChange={handleInput} value={divisionsInput.name} className="form-control"/>
+                    <span className="text-danger">{divisionsInput.error_list.name}</span>
 
                 </div> 
                 <div className="mb-2">
                     <label>Remark</label>
-                    <input type="text" name="remark" onChange={handleInput} value={divisionsInput.remark} className="form-control" required/>
+                    <input type="text" name="remark" onChange={handleInput} value={divisionsInput.remark} className="form-control" />
                 </div>
                 
             </form>

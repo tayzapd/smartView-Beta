@@ -5,8 +5,9 @@ import { useAdminContext } from "../../../Context/AdminContext";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-const AddShoptypes = ()=>{
-    const {axios,shoptypes,setShopTypes,setDialog} = useAdminContext();
+
+const AddShoptypes = ({handleClose})=>{
+    const {axios,shoptypes,setShopTypes} = useAdminContext();
     
     const [shoptypesInput,setShoptypes] = useState({
         name:'',
@@ -35,7 +36,7 @@ const AddShoptypes = ()=>{
         }
         axios.post(`/api/admin/shoptypes/create`, data)
         .then(res=>{
-            setDialog(false);
+            handleClose();
             toast.success(res.data.message, {
                 position: "top-right",
                 autoClose: 3000,
@@ -47,10 +48,7 @@ const AddShoptypes = ()=>{
                 theme: "light",
                 });
                 getShoptypes();
-            
-
         }).catch((err)=>{
-            setDialog(true);
             setShoptypes({...shoptypesInput,error_list:err.response.data.error});
             
         })

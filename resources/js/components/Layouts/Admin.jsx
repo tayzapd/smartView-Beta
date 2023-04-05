@@ -1,10 +1,20 @@
-import {  UserOutlined } from '@ant-design/icons';
+import {  UserOutlined,UsergroupAddOutlined,QrcodeOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import React, { useEffect } from 'react';
 import { Image } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Main from '../../Main';
 import { useAdminContext } from '../../Context/AdminContext';
+import { ApartmentOutlined } from '@material-ui/icons';
+import { StorefrontOutlined } from '@material-ui/icons';
+import { LaunchOutlined } from '@material-ui/icons';
+import { RestaurantRounded } from '@material-ui/icons';
+import { MapSharp } from '@material-ui/icons';
+import { Shop } from '@material-ui/icons';
+import { LocalCafeOutlined } from '@material-ui/icons';
+import { CasinoOutlined } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import '../Admin/admin.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -18,18 +28,20 @@ function getItem(label, key, icon, children) {
 }
 
 
+
 const items = [
-  getItem('Shop Types','/admin/shoptypes',<UserOutlined/>),
-  getItem('Divisions','/admin/divisions',<UserOutlined/>),
-  getItem('Cities','/admin/cities',<UserOutlined/>),
-  getItem('Townships','/admin/townships',<UserOutlined/>),
-  getItem('Shops','/admin/shops',<UserOutlined/>),
-  getItem('Categories','/admin/categories',<UserOutlined/>),
-  getItem('Items','/admin/items',<UserOutlined/>),
-  getItem('Qr Code ','/admin/qrcode',<UserOutlined/>),
-  getItem('Users','/admin/users',<UserOutlined/>),
+  getItem('Shop Types','/admin/shoptypes',<Shop />),
+  getItem('Divisions','/admin/divisions',<MapSharp/>),
+  getItem('Cities','/admin/cities',<ApartmentOutlined/>),
+  getItem('Townships','/admin/townships',<CasinoOutlined/>),
+  getItem('Shops','/admin/shops',<StorefrontOutlined/>),
+  getItem('Categories','/admin/categories',<RestaurantRounded/>),
+  getItem('Items','/admin/items',<LocalCafeOutlined/>),
+  getItem('Qr Code ','/admin/qrcode',<QrcodeOutlined />),
+  getItem('Users','/admin/users',<UsergroupAddOutlined />),
   getItem('Admins','/admin/admins',<UserOutlined/>),
 ]
+
 
 
 const Admin = () => {
@@ -73,7 +85,7 @@ const Admin = () => {
           backgroundImage: 'linear-gradient(to left bottom, #f26d00, #f16103, #ef5407, #ed460d, #eb3612)'
         }}
       >
-        <div className="logo" style={{ textAlign: 'center', fontSize:'20px', backgroundColor:'transparent', color:'#274256'}}>Smart View</div>
+        <div className="logo" style={{ textAlign: 'center', fontSize:'20px', backgroundColor:'transparent', color:'#ffffff'}}>Smart View</div>
         <Menu 
           onClick={({key})=>{
             if(key != "singout"){
@@ -91,10 +103,7 @@ const Admin = () => {
         />
       </Sider>
       <Layout>
-<<<<<<< HEAD
-=======
 
->>>>>>> 0753f38ccf313799f677ec9e2ba4d0a1b949922b
         <Content
           style={{
             margin: '24px 16px 0',
@@ -110,26 +119,25 @@ const Admin = () => {
             <Main/>
           </div>
         </Content>
-          <Footer
-            style={{
-              textAlign: 'center',
-            }}
-          > <div className="col-md-12 col-sm-6">
-
-              Admin Desgin ©2023 Created by XyberPlanet Developement Team 
-          </div>
-          </Footer>
+          
       </Layout>
         <style>
           {`
               .logo {
-                  height: 32px;
                   margin: 16px;
-                  background: rgba(255, 255, 255, 0.2);
-                }
+                  background-color:transparent;
+                  text-align:center;
+                  font-size:20px;
+                  color:#ffffff;
+                  transition:all 0.8s;
 
+                }
+              
+              .logo:hover{
+                color:#faee02;
+              }
               .h-screen {
-                  height:100vh;
+                  height:800px;
               }
 
               .ant-menu-light .ant-menu-item-selected{
@@ -140,6 +148,7 @@ const Admin = () => {
               .ant-menu-title-content:hover{
                 color:#faee02;
               }
+              
               .ant-layout .ant-layout-sider-zero-width-trigger{
                 background-color:#fc6400;
               }
