@@ -253,7 +253,7 @@ const Items = () => {
         setCategories(data)
     }
     
-    // console.log(shops);
+    console.log(shops);
     const getItems = async () =>{
         axios.post(`/api/admin/items/show`).then(({data}) => {
             setShops(data.items);

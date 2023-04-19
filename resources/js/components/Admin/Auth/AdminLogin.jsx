@@ -26,7 +26,7 @@ const AdminLogin = ()=>{
         }
     }
 
-
+    console.log(login);
     useEffect(() => {
     },[])
 

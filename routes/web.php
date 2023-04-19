@@ -16,19 +16,23 @@ Route::get('/{any}', function(){
 
 Route::get('/setup',function () {
 
-    // $user = User::find(1);
-    // $role = Role::find(1);
-    // $user->assignRole($role);
+    $user = User::find(2);
+    $role = Role::find(2);
+    $user->assignRole($role);
+    
 
-        // $check = Auth::attempt(['username'=>'Xyber@Admin007', 'password'=>'pandar']);
-        // // Find Admin User
+    
+
+        // $check = Auth::attempt(['username'=>'DefaultAdmin', 'password'=>123456]);
+//         // // Find Admin User
         // $user = User::find(Auth::id());
 
-        // // validate user is admin user ? 
-        // if($check && $user->shop_id == 1 && $user->hasRole('admin')){
-        //     return response()->json(['status'=>true,'token'=>$user->createToken('pandar')]);
+//         // // validate user is admin user ? 
+        // if($user->shop_id == 1 && $user->hasRole('admin')){
+        //     return response()->json(['status'=>true,'token'=>$user->createToken('admin')]);
         // }
         // return response()->json(['status'=>false,'token'=>NULL]);
 
     
 });
+

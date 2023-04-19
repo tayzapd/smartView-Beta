@@ -52,6 +52,7 @@ class AuthController extends Controller
         // Find Admin User
         $user = User::find(Auth::id());
 
+
         // validate user is admin user ? 
         if($check && $user->shop_id == 1 && $user->hasRole('admin')){
             $token = $user->createToken($req->password)->plainTextToken;

@@ -14,7 +14,8 @@ class CategoryController extends Controller
     public function showAll(Request $req)
     {
         if(Gate::allows('admin-auth',Auth::user())){
-            return Category::get();
+            return Category::get()->groupBy('shop_id');
+
         }
         
     }
