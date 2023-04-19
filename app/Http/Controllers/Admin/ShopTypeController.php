@@ -17,7 +17,7 @@ class ShopTypeController extends Controller
     {
         
         if(Gate::allows('admin-auth',Auth::user())){
-            return ShopType::get(['id','name','remark']);
+            return ShopType::orderBy('id','DESC')->get();
         }
 
     }

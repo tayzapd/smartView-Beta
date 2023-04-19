@@ -26,12 +26,21 @@ setCategories(res.data);
 })
 }
 
-useEffect(()=>{
-getCategories();
+// console.log(categories);
 
+// const getShops = () =>{
+//     axios.post(`/api/admin/shops/show`).then((res)=>{
+//         // console.log(res);
+//         setShops(res.data.shops);
+//     })
+// }
+
+
+console.log(filterText);
+useEffect(()=>{
+    getCategories();
 },[])
 
-// console.log(categories);
 const [showedit, setEditShow] = useState(false);
 const editClose = () => setEditShow(false);
 
@@ -113,15 +122,44 @@ selector: (row) =>
 
 ];
 
+
+
+
 return (
 <>
-    {/* <div className="container">
-        <button className='btn mb-2 btns' onClick={handleShow}>Add Category</button>
-        <Link to="/admin/categories/detetedrecord" className="btn float-end mb-2 btns">Trashed Record</Link>
-    </div> */}
+    <div className="container ">
+        <button className='btn btns' onClick={handleShow}>Add Category +</button>
+        <Link to="/admin/categories/detetedrecord" className="btn ms-1 btns">Trashed Bin </Link>
+    </div>
     <ToastContainer />
-    <DataTable title="Category Lists" columns={columns} data={categories} fixedHeader fixedHeaderScrollHeight="300px"
-        pagination responsive highlightOnHover />
+    <Accordion className="my-3 mt-sm-5">
+            
+            {Object.values(categories).map((category,index) => {
+                return (
+                    <Accordion.Item eventKey={index}  key={index}>
+                        {/* Header : Shop Name Of Items  */}
+                        <Accordion.Header>
+                            {category[0].shop.shop_name}
+                        </Accordion.Header>
+
+                        {/* Items Data Table  */}
+                        <Accordion.Body>
+                        <DataTable
+                            title="Category Lists"
+                            columns={columns}
+                            data={category}
+                            // progressPending={pending}
+                            fixedHeader
+                            fixedHeaderScrollHeight="300px"
+                            pagination
+                            responsive
+                            highlightOnHover
+                            />
+                        </Accordion.Body>
+                    </Accordion.Item>
+                )
+            })}
+        </Accordion>
 
     {/* ADD CATEGORY */}
     <Modal size="lg" show={show} onHide={handleClose}>

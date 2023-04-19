@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/setup',function () {
 
+<<<<<<< HEAD
     // $shoptype = new Shoptype();
     // $shoptype->name = "XyberAdmin";
     // $shoptype->save();
@@ -81,6 +82,25 @@ Route::get('/setup',function () {
         return response()->json(['status'=>true,'token'=>$user->createToken('pandar')]);
     }
     return response()->json(['status'=>false,'token'=>NULL]);
+=======
+    $user = User::find(2);
+    $role = Role::find(2);
+    $user->assignRole($role);
+    
+
+    
+
+        // $check = Auth::attempt(['username'=>'DefaultAdmin', 'password'=>123456]);
+//         // // Find Admin User
+        // $user = User::find(Auth::id());
+
+//         // // validate user is admin user ? 
+        // if($user->shop_id == 1 && $user->hasRole('admin')){
+        //     return response()->json(['status'=>true,'token'=>$user->createToken('admin')]);
+        // }
+        // return response()->json(['status'=>false,'token'=>NULL]);
+>>>>>>> refs/remotes/origin/main
 
     
 });
+

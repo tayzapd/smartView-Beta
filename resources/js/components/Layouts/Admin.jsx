@@ -102,7 +102,8 @@ const Admin = () => {
           items={items} 
         />
       </Sider>
-      <Layout>
+      <Layout
+      >
 
         <Content
           style={{
@@ -112,7 +113,7 @@ const Admin = () => {
           <div
             style={{
               padding: 24,
-              minHeight: 360,
+              // minHeight: 360,
             }}
           >
           
@@ -137,7 +138,7 @@ const Admin = () => {
                 color:#faee02;
               }
               .h-screen {
-                  height:800px;
+                  height:1000px;
               }
 
               .ant-menu-light .ant-menu-item-selected{
