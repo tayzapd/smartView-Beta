@@ -26,7 +26,7 @@ class CreateItemsTable extends Migration
             $table->integer('view');
             $table->foreignId('category_id')->constrained('categories');
             $table->text('description');
-            $table->text('remark');
+            $table->text('remark')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

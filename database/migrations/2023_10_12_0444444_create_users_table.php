@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
             $table->foreign('shop_id')->references('id')->on('shops');
             $table->string('username');
             $table->string('password');
-            $table->text('remark');
+            $table->text('remark')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

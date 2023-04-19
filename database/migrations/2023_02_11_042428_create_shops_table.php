@@ -22,7 +22,7 @@ class CreateShopsTable extends Migration
             $table->date('expired_date');
             $table->foreignId('shoptype_id')->constrained('shoptypes');
             $table->foreignId('township_id')->constrained('townships');
-            $table->text('remark');
+            $table->text('remark')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

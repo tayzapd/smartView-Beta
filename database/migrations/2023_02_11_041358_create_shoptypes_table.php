@@ -16,7 +16,7 @@ class CreateShoptypesTable extends Migration
         Schema::create('shoptypes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('remark');
+            $table->text('remark')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
