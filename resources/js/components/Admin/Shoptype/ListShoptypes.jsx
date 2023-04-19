@@ -127,7 +127,7 @@ const ListShopTypes = () => {
             
             <div className="container-fluid">
                 <button className='btn btns mb-2' onClick={handleShow}>Add Shop Type</button>
-                <Link to="/admin/shoptypes/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
+                <Link to="/admin/shoptypes/detetedrecord" className="btn btns float-end mb-2">Trashed Bin</Link>
 
             </div>
             <ToastContainer />

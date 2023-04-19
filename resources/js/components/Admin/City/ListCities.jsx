@@ -125,7 +125,7 @@ const ListCities = () => {
         <>
             <div className="container-fluid">
                 <button className='btn mb-2 btns'  onClick={handleShow}>Add City</button>
-                <Link to="/admin/cities/detetedrecord" className="btn float-end mb-2 btns">Trashed Record</Link>
+                <Link to="/admin/cities/detetedrecord" className="btn float-end mb-2 btns">Trashed Bin</Link>
 
             </div>
 

@@ -127,11 +127,11 @@ const AdminList = () => {
     },
 ];
   return (
-    <div className='container'>
+    <div className='container-fluid'>
       <Button className='my-3 btns' onClick={handleShow}>
         Add Admin +
       </Button>
-      <Link to="/admin/admins/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
+      <Link to="/admin/admins/detetedrecord" className="btn btns float-end mb-2">Trashed Bin</Link>
 
       <ToastContainer/>
  

@@ -129,7 +129,7 @@ return (
 <>
     <div className="container ">
         <button className='btn btns' onClick={handleShow}>Add Category +</button>
-        <Link to="/admin/categories/detetedrecord" className="btn ms-1 btns">Trashed Bin </Link>
+        <Link to="/admin/categories/detetedrecord" className="btn ms-1 float-end btns">Trashed Bin </Link>
     </div>
     <ToastContainer />
     <Accordion className="my-3 mt-sm-5">

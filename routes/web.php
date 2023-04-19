@@ -15,15 +15,14 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
 
-// Route::get('/{any}', function(){
-//     return view('welcome');
-// })->where('any', '.*');
+Route::get('/{any}', function(){
+    return view('welcome');
+})->where('any', '.*');
 
 
 
 Route::get('/setup',function () {
 
-<<<<<<< HEAD
     // $shoptype = new Shoptype();
     // $shoptype->name = "XyberAdmin";
     // $shoptype->save();
@@ -82,7 +81,6 @@ Route::get('/setup',function () {
         return response()->json(['status'=>true,'token'=>$user->createToken('pandar')]);
     }
     return response()->json(['status'=>false,'token'=>NULL]);
-=======
     $user = User::find(2);
     $role = Role::find(2);
     $user->assignRole($role);
@@ -99,7 +97,6 @@ Route::get('/setup',function () {
         //     return response()->json(['status'=>true,'token'=>$user->createToken('admin')]);
         // }
         // return response()->json(['status'=>false,'token'=>NULL]);
->>>>>>> refs/remotes/origin/main
 
     
 });
