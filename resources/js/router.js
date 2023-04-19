@@ -34,8 +34,14 @@ import DeletedShoptypesRecord from "./components/Admin/Shoptype/DeletedShoptypes
 import DeletedTownshipsRecord from "./components/Admin/Township/DeleteTownshipsRecord";
 import DeletedUsersRecord from "./components/Admin/User/DeletedUsersRecord";
 import DeletedItemsRecord from "./components/Admin/DeletedItemsRecord";
+import SmartView from "./components/SmartView";
 
 const router = createBrowserRouter([
+    {
+        path:'/',
+        element:<SmartView/> 
+
+    },
     {
         path:"/",
         element:<User />,
@@ -47,6 +53,7 @@ const router = createBrowserRouter([
   
         ]
     },
+   
     {
         path:'/sh/:id/profile',
         element:<ShopView /> 

@@ -1,0 +1,114 @@
+* {
+    padding: 0;
+    margin:0;
+    font-family: 'PT Sans',serif;
+}
+
+  
+body {
+    background: #f6eee1;
+    background-image: url('../phato/background.jpeg');
+    height: 100vh;
+}
+
+
+
+.smartview-page-header { 
+    left:0;
+    font-weight: 900;
+}
+
+.body-section { 
+    margin-top: 20px;
+}
+
+.office-logo {
+    top: 0;
+    padding-top: 0%;
+    background: url('../phato/office.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+}
+.get-start-btn {
+    background-color: rgba(254,133,0,1);
+    color: honeydew;
+    border:none;
+    box-shadow: none;
+    width: 8rem;
+    margin-top: 1.5rem;
+    margin-left: 0;
+    font-size: 0.9rem;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+}
+
+
+.get-start-btn:hover {
+    width: 9rem;
+}
+  
+@media only screen and (max-width : 480px) {
+    /* CSS code for mobile devices goes here */
+    .smartview-page-header { 
+        font-size: 18px;
+    }
+    .office-logo { 
+        margin-top: 2rem;
+        height: 25rem;
+    }
+    .body-section {
+        margin-top: 5rem;
+    }
+    .nav-bar {
+        position: relative;
+        height: 29px;
+        left: 20px;
+        top: 22px;
+    }
+    .contact-text {
+        font-size: 12px;
+    }
+
+    .meterial-icons {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (min-width : 768px) and (max-width : 1023px) {
+    /* CSS code for tablets goes here */
+    
+    .smartview-page-header { 
+        font-size: 28px;
+    }
+}
+
+@media only screen and (min-width : 1024px) {
+    /* CSS code for laptops and desktop devices goes here */
+    .smartview-page-header { 
+        font-size: 28px;
+    }
+
+    .nav-bar {
+        position: relative;
+        height: 29px;
+        left: 20px;
+        top: 32px;
+    }
+
+    .office-logo {
+        height: 25rem;
+    }
+    
+    
+}
+
+.custom-shape-divider-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    background-color: b;
+} 
