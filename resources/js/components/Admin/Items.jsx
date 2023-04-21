@@ -273,7 +273,7 @@ return (
         }}>
             CREATE + 
         </div>
-        <Link to="/admin/items/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
+        <Link to="/admin/items/detetedrecord" className="btn btns float-end mb-2">Trashed Bin</Link>
 
         {/* CREATE ITEM  */}
         <Modal size="lg" show={create} onHide={() => { setCreate(false)}}>
@@ -358,7 +358,7 @@ return (
                         <Accordion.Body>
                         <ToastContainer/>
                         <DataTable
-                            title="Category Lists"
+                            title="Item Lists"
                             columns={columns}
                             data={shop}
                             // progressPending={pending}

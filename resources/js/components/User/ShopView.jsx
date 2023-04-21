@@ -36,7 +36,7 @@ const ShopView = () => {
                 <div className="col"></div>
                 <div className="col" >
                     <span style={{float:'right'}}>
-                     <Close /> 
+                     {/* <Close />  */}
                     </span>
                 </div>
             </div>

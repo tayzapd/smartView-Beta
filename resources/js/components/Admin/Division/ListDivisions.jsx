@@ -94,6 +94,8 @@ const ListDivisions = () => {
             sortable: true,
             width:'200px',
             wrap:true,
+
+            
         },
         {
             name: 'Action',

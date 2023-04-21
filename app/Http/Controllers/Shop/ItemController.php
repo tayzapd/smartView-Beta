@@ -111,7 +111,7 @@ class ItemController extends Controller
             'price' => 'required|numeric',
             'is_available' => 'required',
             'privacy' => 'required|in:public,private',
-            'taste' => 'required|string',
+            'tag' => 'required|string',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'special_range' => 'required|date_format:Y-m-d',
             'category_id' => 'required|exists:categories,id',
@@ -127,8 +127,7 @@ class ItemController extends Controller
             $item->price = $request->price;
             $item->is_available = $request->is_available;
             $item->privacy = $request->privacy;
-            $item->taste = $request->taste;
-            $item->time_limited = date("Y-m-d");
+            $item->tag = $request->tag;
             $item->special_range = $request->special_range;
             $item->category_id = $request->category_id;
             $item->description = $request->description;

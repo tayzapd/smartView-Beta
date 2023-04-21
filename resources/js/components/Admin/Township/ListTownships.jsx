@@ -124,7 +124,7 @@ const ListTownships = () => {
         <>
             <div className="container">
                 <button className='btn btns mb-2' onClick={handleShow}>Add Township</button>
-                <Link to="/admin/townships/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
+                <Link to="/admin/townships/detetedrecord" className="btn btns float-end mb-2">Trashed Bin</Link>
 
             </div>
             <ToastContainer/>

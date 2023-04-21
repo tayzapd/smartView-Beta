@@ -139,7 +139,7 @@ const ListShops = ()=>{
         <>
             <div className="container">
                 <button className='btn mb-2 btns' onClick={handleShow}>Add Shop</button>
-                <Link to="/admin/shops/detetedrecord" className="btn btns float-end mb-2">Trashed Record</Link>
+                <Link to="/admin/shops/detetedrecord" className="btn btns float-end mb-2">Trashed Bin</Link>
 
             </div>
             <ToastContainer/>

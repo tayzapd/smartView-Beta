@@ -341,11 +341,11 @@ const Items = () => {
                 </div>
             </Modal>
             {/* item cards */}
-            <div className="d-flex flex-column justify-content-center align-item-center">
+            <div className="d-flex flex-column flex-row justify-content-center align-item-center col-12">
                     {
                         items.map((item,id) => {
                             return <div key={id} 
-                                        className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-1 rounded-4 " 
+                                        className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-4 my-1 rounded-4 " 
                                         onClick={() => {
                                             ShowOneItem(id)
                                             setItemImages(item.images)
@@ -393,52 +393,7 @@ const Items = () => {
                         })
                     }
                     </div>
-            {/* <div className="row row-cols-3 row-cols-md-3 px-0">
-                {items.map((item,index) => {
-
-                return  <Card
-                            key={index}
-                            className="mx-lg-3 mb-sm-3 "
-                            hoverable
-                            loading={loading}
-                            onClick={() => {
-                                ShowOneItem(index)
-                            }}
-                            cover={
-                                
-                                <>
-                                <img style={{height:250,margin:0,padding:0}}  src={`/images/shop/item/`+item.images[0]}/>
-                                <div style={{
-                                    position:"absolute",
-                                    top:"8px",
-                                    left:'16px',
-                                    color:"white"
-                                }}>
-                                    <Button onClick={() => {
-                                        setDialog(false);   
-                                        let i = item;
-                                        
-                                        i.special_range = item.special_range.substring(0,10);
-                                        setditCItem(i);
-                                        setditCItem({...item,category_id:i.category_id});
-                                        editCItem.shop_id = i.category.shop_id;
-                                        editCItem.images = [];
-                                        editCItem.is_available = i.is_available == 1 ? true : false; 
-                                        getCategories(editCItem.category.shop_id);
-                                        
-                                        setEdit(true);                                     
-                                    }} type="primary" icon={<EditOutlined />} />
-                                </div>
-                                </>
-                            }
-                            style={{ width: 300 ,margin:20,padding:0}}
-                            >
-                                <Meta title={item.name} description={`${item.description}`} />
-                                <p>${item.price}</p>
-                            </Card>
-                })}
-            </div> */}
-
+     
             {/* ITEM ONE PAGE VIEW   */}
             <Modal
                 width={1000}
