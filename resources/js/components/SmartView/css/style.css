@@ -1,28 +1,17 @@
-* {
-    padding: 0;
-    margin:0;
-    font-family: 'PT Sans',serif;
-}
-
-  
-body {
-    background: #f6eee1;
-    background-image: url('../phato/background.jpeg');
-    height: 100vh;
-}
 
 
 
-.smartview-page-header { 
+
+.smartview_page_header { 
     left:0;
     font-weight: 900;
 }
 
-.body-section { 
+.body_section { 
     margin-top: 20px;
 }
 
-.office-logo {
+.office_logo {
     top: 0;
     padding-top: 0%;
     background: url('../phato/office.png');
@@ -30,7 +19,7 @@ body {
     background-repeat: no-repeat;
     border-radius: 5px;
 }
-.get-start-btn {
+.get_start_btn {
     background-color: rgba(254,133,0,1);
     color: honeydew;
     border:none;
@@ -44,29 +33,31 @@ body {
 }
 
 
-.get-start-btn:hover {
+.get_start_btn:hover {
     width: 9rem;
 }
   
 @media only screen and (max-width : 480px) {
     /* CSS code for mobile devices goes here */
-    .smartview-page-header { 
+    .smartview_page_header { 
         font-size: 18px;
     }
-    .office-logo { 
+    .office_logo { 
         margin-top: 2rem;
         height: 25rem;
     }
-    .body-section {
+    .body_section {
         margin-top: 5rem;
     }
-    .nav-bar {
+    .nav_bar {
+        background-color: blue;
         position: relative;
         height: 29px;
         left: 20px;
         top: 22px;
     }
-    .contact-text {
+    
+    .contact_text {
         font-size: 12px;
     }
 
@@ -78,32 +69,32 @@ body {
 @media only screen and (min-width : 768px) and (max-width : 1023px) {
     /* CSS code for tablets goes here */
     
-    .smartview-page-header { 
+    .smartview_page_header { 
         font-size: 28px;
     }
 }
 
 @media only screen and (min-width : 1024px) {
     /* CSS code for laptops and desktop devices goes here */
-    .smartview-page-header { 
+    .smartview_page_header { 
         font-size: 28px;
     }
 
-    .nav-bar {
+    .nav_bar {
         position: relative;
         height: 29px;
         left: 20px;
         top: 32px;
     }
 
-    .office-logo {
+    .office_logo {
         height: 25rem;
     }
     
     
 }
 
-.custom-shape-divider-bottom {
+.custom_shape_divider_bottom {
     position: absolute;
     bottom: 0;
     left: 0;

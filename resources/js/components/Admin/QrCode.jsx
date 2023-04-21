@@ -12,6 +12,7 @@ const AdminQrCode = () => {
         const {data} = await axios.post('/api/admin/shops/show'); 
         setShops(data.shops);
     }
+    const [logo,setLogo] = useState("");
     const downloadQRCode = () => {
         const canvas = document.getElementById('QrCode')?.querySelector('canvas');
         if (canvas) {
@@ -36,11 +37,13 @@ const AdminQrCode = () => {
             
         }}>
             <Form.Control as="select" custom onChange={(e) => {
-                    setUrl(`http://localhost:8000/sh/${e.target.value}`);
+                    let shop = shops[e.target.value];
+                    setUrl(`http://localhost:8000/sh/${shop.id}`);
+                    setLogo(shop.logo_image)
                 }}>
 
-                {shops.map((shop) => (
-                <option key={shop.id} value={shop.id}>
+                {shops.map((shop,index) => (
+                <option key={shop.id} value={index}>
                     {shop.shop_name}
                 </option>
                 ))}
@@ -54,7 +57,7 @@ const AdminQrCode = () => {
                         size={qrSize}
                         errorLevel="H"
                         value={url}
-                        // icon="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+                        icon={`/images/shop/logo/`+logo}
                     />
                     </div>
                 </div>

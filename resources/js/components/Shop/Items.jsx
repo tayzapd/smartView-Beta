@@ -341,7 +341,59 @@ const Items = () => {
                 </div>
             </Modal>
             {/* item cards */}
-            <div className="row row-cols-1 row-cols-md-2 px-0">
+            <div className="d-flex flex-column justify-content-center align-item-center">
+                    {
+                        items.map((item,id) => {
+                            return <div key={id} 
+                                        className="card mx-0 mx-lg-3 mb-sm-3 col-12 col-md-3 my-1 rounded-4 " 
+                                        onClick={() => {
+                                            ShowOneItem(id)
+                                            setItemImages(item.images)
+                                            setCurrentImage(`/images/shop/item/`+item.images[0])
+                                        }}>
+                                    <div className="row no-gutters">
+                                        <div className="col-6 px-2 py-2">
+                                            <img style={{height:'130px',marginLeft:'10px'}} className="card-img rounded-4 col-12 " src={`/images/shop/item/`+item.images[0]} />
+                                            <div style={{
+                                                position:"absolute",
+                                                top:"10px",
+                                                paddingTop:'10px',
+                                                left:'16px',
+                                                color:"white"
+                                            }}>
+                                                <Button 
+                                                onClick={() => {
+                                                    setDialog(false);   
+                                                    let i = item;
+                                                    
+                                                    i.special_range = item.special_range.substring(0,10);
+                                                    setditCItem(i);
+                                                    setditCItem({...item,category_id:i.category_id});
+                                                    editCItem.shop_id = i.category.shop_id;
+                                                    editCItem.images = [];
+                                                    editCItem.is_available = i.is_available == 1 ? true : false; 
+                                                    getCategories(editCItem.category.shop_id);
+                                                    
+                                                    setEdit(true);                                     
+                                                }} type="primary" icon={<EditOutlined />} />
+                                            </div>
+                                        </div>
+                                        <div className="col-6">
+                                            <div className="card-body py-2 px-2 mr-2 text-center">
+                                                <h6 style={{fontSize:"20px",fontWeight:'900'}} className="col-12 mt-2 ">{item.name}</h6>
+                                                <p className="card-title ">{item.category.name}</p>
+    
+                                                <div className="text-warning" style={{marginTop:'30px'}}>
+                                                    {item.price} MMK 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        })
+                    }
+                    </div>
+            {/* <div className="row row-cols-3 row-cols-md-3 px-0">
                 {items.map((item,index) => {
 
                 return  <Card
@@ -349,6 +401,9 @@ const Items = () => {
                             className="mx-lg-3 mb-sm-3 "
                             hoverable
                             loading={loading}
+                            onClick={() => {
+                                ShowOneItem(index)
+                            }}
                             cover={
                                 
                                 <>
@@ -380,12 +435,9 @@ const Items = () => {
                             >
                                 <Meta title={item.name} description={`${item.description}`} />
                                 <p>${item.price}</p>
-                                <Button type="primary" onClick={() => {
-                                    ShowOneItem(index)
-                                }}>View More</Button>
                             </Card>
                 })}
-            </div>
+            </div> */}
 
             {/* ITEM ONE PAGE VIEW   */}
             <Modal
@@ -399,7 +451,9 @@ const Items = () => {
 
                 }}
                 type
-                onCancel={() => {setShowItem(false);setDialog(false)}}
+                cancelButtonProps={{
+                    hidden:true
+                }}
 
             >
 

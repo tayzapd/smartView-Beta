@@ -60,7 +60,7 @@ class ItemController extends Controller
             'is_available' => 'required',
             'privacy' => 'required|in:public,private',
             'images'=>'array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
         ]);

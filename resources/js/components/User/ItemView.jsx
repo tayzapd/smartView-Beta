@@ -58,7 +58,6 @@ const ItemView = () => {
         let item = items[index];
         setViewItem(item);
         setDialog(true);
-        console.log(viewItem)
     }
 
     const handleClick = (newImage) => {
@@ -135,7 +134,6 @@ const ItemView = () => {
                         </div>
                     </div>
             
-
                     <div className="container mt-3 d-flex flex-column justify-content-center align-item-center text-center " >
                         <b>
                             <h2 className="font-weight-bold" style={{fontWeight:"900"}}>{viewItem.name}  </h2> 
@@ -169,9 +167,13 @@ const ItemView = () => {
                         <h2 className="font-weight-bold" >Tags </h2> 
 
                         <div style={{marginleft:'12px'}} >
-                            <span className="rounded-2 px-2 py-1 mx-2" style={{background:'#d4fcff'}}>Fish</span>
-                            <span className="rounded-2 px-2 py-1 mx-2" style={{background:'#d4fcff'}}>Rice Noodle</span>
-                            <span className="rounded-2 px-2 py-1 mx-2" style={{background:'#d4fcff'}}>Spicy</span>
+                            {
+                                viewItem.tag.split(",").map((element,index) => {
+                                    return <span key={index} className="rounded-2 px-2 py-1 mx-2" style={{background:'#d4fcff'}}>
+                                   {element}
+                                    </span>
+                                })
+                            }
                         </div>
 
                         </b>
@@ -263,13 +265,13 @@ const ItemView = () => {
                     <div className="row d-flex  align-item-center " style={{padding:"0 10px "}}>
                     {
                         items.map((item,id) => {
-                            return <div className="card col-5 mx-1 my-2 rounded-3 pt-2" 
+                            return <div className="card col-4 mx-1 my-2 rounded-3 pt-2" 
                                     onClick={() => {
                                         ShowOneItem(id)
                                         setItemImages(item.images)
                                         setCurrentImage(`/images/shop/item/`+item.images[0])
                                     }}
-                                    style={{width:'190px'}}
+                                    style={{width:'175px'}}
                                     key={id} >
                                         <img style={{height:'130px'}} className="card-img-top rounded-3 col-12 " src={`/images/shop/item/`+item.images[0]} />
                                         <div className="card-body text-center ">

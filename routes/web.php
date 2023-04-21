@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\City;
-use App\Models\Division;
 use Illuminate\Support\Facades\Route;
 
 
+use App\Models\Division;
 use App\Models\Item;
+use App\Models\City;
 use App\Models\User;
 use App\Models\Shop;
 use App\Models\Shoptype;
@@ -15,15 +15,14 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
 
-// Route::get('/{any}', function(){
-//     return view('welcome');
-// })->where('any', '.*');
+Route::get('/{any}', function(){
+    return view('welcome');
+})->where('any', '.*');
 
 
 
 Route::get('/setup',function () {
 
-<<<<<<< HEAD
     // $shoptype = new Shoptype();
     // $shoptype->name = "XyberAdmin";
     // $shoptype->save();
@@ -72,35 +71,15 @@ Route::get('/setup',function () {
     // $user = User::find(1);
     // $role = Role::find(1);
     // $user->assignRole($role);
-
-    $check = Auth::attempt(['username'=>'XyberAdmin', 'password'=>'pandar']);
+    // $check = Auth::attempt(['username'=>'XyberAdmin', 'password'=>'pandar']);
     // Find Admin User
-    $user = User::find(Auth::id());
+    // $user = User::find(Auth::id());
 
     // validate user is admin user ? 
-    if($check && $user->shop_id == 1 && $user->hasRole('admin')){
-        return response()->json(['status'=>true,'token'=>$user->createToken('pandar')]);
-    }
-    return response()->json(['status'=>false,'token'=>NULL]);
-=======
-    $user = User::find(2);
-    $role = Role::find(2);
-    $user->assignRole($role);
-    
-
-    
-
-        // $check = Auth::attempt(['username'=>'DefaultAdmin', 'password'=>123456]);
-//         // // Find Admin User
-        // $user = User::find(Auth::id());
-
-//         // // validate user is admin user ? 
-        // if($user->shop_id == 1 && $user->hasRole('admin')){
-        //     return response()->json(['status'=>true,'token'=>$user->createToken('admin')]);
-        // }
-        // return response()->json(['status'=>false,'token'=>NULL]);
->>>>>>> refs/remotes/origin/main
-
+    // if($check && $user->shop_id == 1 && $user->hasRole('admin')){
+    //    return response()->json(['status'=>true,'token'=>$user->createToken('pandar')]);
+    // }
+    // return response()->json(['status'=>false,'token'=>NULL]);
     
 });
 

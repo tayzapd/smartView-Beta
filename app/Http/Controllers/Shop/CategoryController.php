@@ -33,14 +33,16 @@ class CategoryController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
         if(Gate::allows('shop-auth',Auth::user())) {
+            
             $category = new Category;
             $category->name = $req->name;
             $category->remark = $req->remark;
             $category->shop_id = Auth::user()->shop_id;
             if($category->save()){
-                return response()->json(['status'=>true,'message'=>"Category created successfully."]);
+                $categories = Category::all();
+                return response()->json(['status'=>true,'message'=>"Category created successfully.","categories"=>$categories]);
             }else {
-                return response()->json(['status'=>true,'message'=>"Category can't created!"]);
+                return response()->json(['status'=>false,'message'=>"Category can't created!"]);
             }
         }
     }
@@ -61,13 +63,15 @@ class CategoryController extends Controller
         if(Gate::allows('shop-auth',Auth::user())){
             if($user->shop_id == $req->shop_id)
             {
+                
                 $category = Category::find($req->id);
                 $category->name = $req->name;
                 $category->remark = $req->remark;
                 if($category->update()){
-                    return response()->json(['status'=>true,"Category updated successfully."]);
+                    $categories = Category::all();
+                    return response()->json(['status'=>true,"Category updated successfully.","categories"=>$categories]);
                 }else {
-                    return response()->json(['status'=>true,"Category can't updated!"]);
+                    return response()->json(['status'=>false,"Category can't updated!"]);
                 }
             }
         }
@@ -81,16 +85,18 @@ class CategoryController extends Controller
             if($user->shop_id == $req->shop_id)
             {
                 $category = Category::find($req->id);
+                
                 if($category->delete())
                 {
-                    return response()->json(['status'=>true,'Message'=>"Category Deleted!"]);
+                    $categories = Category::all();
+                    return response()->json(['status'=>true,'Message'=>"Category Deleted!","categories"=>$categories]);
                 }
                 else
                 {
-                    return response()->json(['status'=>true,'Message'=>"Category can't delete!, Try Again"]);
+                    return response()->json(['status'=>false,'Message'=>"Category can't delete!, Try Again"]);
                 }
             }else {
-                return response()->json(['status'=>true,'Message'=>"Category can't delete!, Try Again"]);
+                return response()->json(['status'=>false,'Message'=>"Category can't delete!, Try Again"]);
             }
         }
         

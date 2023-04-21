@@ -42,19 +42,25 @@ const Categories =  () => {
 
     }
 
+
     const editCategory = async () => {
-      const res = await axios.post(`/api/shop/category/update`,{
+      const { data } = await axios.post(`/api/shop/category/update`,{
         name,remark,shop_id:shopId,id:cateId
       });
-      getCategories();
+      if(data.status == true){
+        setCategories(data.categories)
+      }
     }
 
 
     const createCategory = async  () => {
-      const res = axios.post(`/api/shop/category/create`,{
+      const { data } = axios.post(`/api/shop/category/create`,{
                               name:name,
                               remark:remark
                             }); 
+      if(data.status == true){
+        setCategories(data.categories)
+      }
       
       
     }
@@ -69,10 +75,12 @@ const Categories =  () => {
       });
     }
     const deleteCategory = async () => {
-      const res = await axios.post(`/api/shop/category/delete`,{
+      const { data } = await axios.post(`/api/shop/category/delete`,{
                           id:cateId,shop_id:shopId
                         });
-      
+      if(data.status == true){
+        setCategories(data.categories)
+      }
     }
     const loadMore = () => {
         setPage((prevPage) => prevPage + 1);
