@@ -147,7 +147,7 @@ const UserList = () => {
 ];
   return (
     <div className='container-fluid'>
-      <Button className='my-3 btns' onClick={handleShow}>
+      <Button className='btn mb-2 btns' onClick={handleShow}>
         Add User +
       </Button>
       <Link to="/admin/users/detetedrecord" className="btn btns float-end mb-2">Trashed Bin</Link>
