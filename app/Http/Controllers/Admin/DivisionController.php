@@ -13,8 +13,13 @@ class DivisionController extends Controller
 {
     public function show(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            return Division::get();
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                return Division::get();
+            }
+        }
+        catch(\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
         
     }
@@ -28,16 +33,20 @@ class DivisionController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        if(Gate::allows('admin-auth',Auth::user())) {
-            $division = new Division;
-            $division->name = $req->name;
-            $division->remark = $req->remark;
-            if($division->save()){
-                return response()->json(['status'=>true,'message'=>"Division created successfully."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())) {
+                $division = new Division;
+                $division->name = $req->name;
+                $division->remark = $req->remark;
+                if($division->save()){
+                    return response()->json(['status'=>true,'message'=>"Division created successfully."]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"Division can't created!"]);
+                
             }
-            
-            return response()->json(['status'=>true,'message'=>"Division can't created!"]);
-            
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
     }
 
@@ -51,66 +60,87 @@ class DivisionController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        if(Gate::allows('admin-auth',Auth::user())) {
-            $division = Division::find($req->id);
-            $division->name = $req->name;
-            $division->remark = $req->remark;
-            if($division->update()){
-                return response()->json(['status'=>true,'message'=>"Division updated successfully."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())) {
+                $division = Division::find($req->id);
+                $division->name = $req->name;
+                $division->remark = $req->remark;
+                if($division->update()){
+                    return response()->json(['status'=>true,'message'=>"Division updated successfully."]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"Division can't updated!"]);
+                
             }
-            
-            return response()->json(['status'=>true,'message'=>"Division can't updated!"]);
-            
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
     }
     
     public function delete(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $division = Division::find($req->id);
-            if($division->delete())
-            {
-                return response()->json(['status'=>true,'message'=>"Division Deleted!"]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $division = Division::find($req->id);
+                if($division->delete())
+                {
+                    return response()->json(['status'=>true,'message'=>"Division Deleted!"]);
+                }
+                return response()->json(['status'=>true,'message'=>"Division can't delete!, Try Again"]);
+                
             }
-            return response()->json(['status'=>true,'message'=>"Division can't delete!, Try Again"]);
-            
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
         
 
     }
     public function restore(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $division = Division::withTrashed()->find($req->id);
-            if($division->restore()){
-                return response()->json(['status'=>true,'message'=>"Division restored."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $division = Division::withTrashed()->find($req->id);
+                if($division->restore()){
+                    return response()->json(['status'=>true,'message'=>"Division restored."]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"Division can't restore!"]);
+                
             }
-            
-            return response()->json(['status'=>true,'message'=>"Division can't restore!"]);
-            
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
         
     }
 
     public function trashshow()
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $divisions = Division::onlyTrashed()->get();
-            return response()->json(['status'=>true,'divisions'=>$divisions]);
-            
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $divisions = Division::onlyTrashed()->get();
+                return response()->json(['status'=>true,'divisions'=>$divisions]);
+                
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
     }
 
     public function restoreAll(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $divisions =Division::onlyTrashed();
-            if($divisions->restore()){
-                return response()->json(['status'=>true,'message'=>"All Divisions restored."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $divisions =Division::onlyTrashed();
+                if($divisions->restore()){
+                    return response()->json(['status'=>true,'message'=>"All Divisions restored."]);
+                }
+                
+                return response()->json(['status'=>false,'message'=>"Divisions can't restore!"]);
+                
             }
-            
-            return response()->json(['status'=>false,'message'=>"Divisions can't restore!"]);
-            
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
         
     }

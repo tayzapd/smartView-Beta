@@ -18,8 +18,12 @@ class ItemController extends Controller
             return response()->json(['status'=>false,"message"=>"Access denied!"]);
         }
         
-        $items = Item::with('category','category.shop')->get()->groupBy('category.shop_id');
-
+        try{
+            $items = Item::with('category','category.shop')->get()->groupBy('category.shop_id');
+        } catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
+        }
+        
         if($items != null)
         {
             return response()->json(['status'=>true,'items'=>$items]);
@@ -48,26 +52,31 @@ class ItemController extends Controller
         }
 
 
-        $item = new Item;
-        $item->name = $request->name;
-        $item->price = $request->price;
-        $item->currency = "MMK";
-        $item->is_available = json_decode($request->is_available);
-        $item->privacy = $request->privacy;
-        $item->tag = "hi";
-        $item->special_range = $request->special_range;
-        $item->view = 0;
-        $item->category_id = $request->category_id;
-        $item->description = $request->description;
-        $item->remark = $request->remark;
-        $images = [];
-        
-        foreach ($request->file('images') as $image) {
-            $path = $image->move(public_path('images/shop/item'),$image->getClientOriginalName());
-            $images[] = basename($path);
+        try {
+            $item = new Item;
+            $item->name = $request->name;
+            $item->price = $request->price;
+            $item->currency = "MMK";
+            $item->is_available = json_decode($request->is_available);
+            $item->privacy = $request->privacy;
+            $item->tag = "hi";
+            $item->special_range = $request->special_range;
+            $item->view = 0;
+            $item->category_id = $request->category_id;
+            $item->description = $request->description;
+            $item->remark = $request->remark;
+            $images = [];
+            
+            foreach ($request->file('images') as $image) {
+                $path = $image->move(public_path('images/shop/item'),$image->getClientOriginalName());
+                $images[] = basename($path);
+            }
+    
+            $item->images = serialize($images);
+        } 
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
-
-        $item->images = serialize($images);
 
         if($item->save()){
             return response()->json(['message' => 'Item created successfully'], 201);
@@ -94,32 +103,38 @@ class ItemController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
         if(Gate::allows('admin-auth',Auth::user())) {
-            $item = Item::find($request->id);
-            $item->name = $request->name;
-            $item->price = $request->price;
-            $item->currency = "MMK";
-            $item->is_available = $request->is_available;
-            $item->privacy = $request->privacy;
-            $item->tag = $request->tag;
-            $item->category_id = $request->category_id;
-            $item->description = $request->description;
-            $item->remark = $request->remark;
-
-            if ($request->hasFile('images')) {
-                $images = unserialize($item->images);
-
-                foreach ($images as $image) {
-                    Storage::delete(public_path('images/shop/item').$image);
+            
+            try {
+                $item = Item::find($request->id);
+                $item->name = $request->name;
+                $item->price = $request->price;
+                $item->currency = "MMK";
+                $item->is_available = $request->is_available;
+                $item->privacy = $request->privacy;
+                $item->tag = $request->tag;
+                $item->category_id = $request->category_id;
+                $item->description = $request->description;
+                $item->remark = $request->remark;
+    
+                if ($request->hasFile('images')) {
+                    $images = unserialize($item->images);
+    
+                    foreach ($images as $image) {
+                        Storage::delete(public_path('images/shop/item').$image);
+                    }
+    
+                    $images = [];
+    
+                    foreach ($request->file('images') as $image) {
+                        $path = $image->move(public_path('images/shop/item'),$image->getClientOriginalName());
+                        $images[] = basename($path);
+                    }
+    
+                    $item->images = serialize($images);
                 }
-
-                $images = [];
-
-                foreach ($request->file('images') as $image) {
-                    $path = $image->move(public_path('images/shop/item'),$image->getClientOriginalName());
-                    $images[] = basename($path);
-                }
-
-                $item->images = serialize($images);
+            } 
+            catch(\Throwable $th) {
+                return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
             }
 
             if($item->update()){
@@ -133,47 +148,67 @@ class ItemController extends Controller
 
     public function delete(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $item = Item::find($req->id);
-            $item->delete();
-            return response()->json(['message' => 'Item deleted successfully'], 200);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $item = Item::find($req->id);
+                $item->delete();
+                return response()->json(['message' => 'Item deleted successfully'], 200);
+            }
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
         
     }
 
     public function restore(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $item = Item::withTrashed()->find($req->id);
-            if($item->restore()){
-                return response()->json(['status'=>true,'message'=>"Items restored."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $item = Item::withTrashed()->find($req->id);
+                if($item->restore()){
+                    return response()->json(['status'=>true,'message'=>"Items restored."]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"Items can't restore!"]);
+                
             }
-            
-            return response()->json(['status'=>true,'message'=>"Items can't restore!"]);
-            
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
         
     }
 
     public function trashshow()
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $items = Item::onlyTrashed()->get();
-            return response()->json(['status'=>true,'items'=>$items]);
-            
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $items = Item::onlyTrashed()->get();
+                return response()->json(['status'=>true,'items'=>$items]);
+                
+            }
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
     }
 
     public function restoreAll(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $items =Item::onlyTrashed();
-            if($items->restore()){
-                return response()->json(['status'=>true,'message'=>"All Items restored."]);
+        try{
+            if(Gate::allows('admin-auth',Auth::user())){
+                $items =Item::onlyTrashed();
+                if($items->restore()){
+                    return response()->json(['status'=>true,'message'=>"All Items restored."]);
+                }
+                
+                return response()->json(['status'=>false,'message'=>"Items can't restore!"]);
+                
             }
-            
-            return response()->json(['status'=>false,'message'=>"Items can't restore!"]);
-            
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
         
     }

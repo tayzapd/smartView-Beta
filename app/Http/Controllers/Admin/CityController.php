@@ -13,8 +13,12 @@ class CityController extends Controller
 {
     public function show(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            return City::with('division')->get();
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                return City::with('division')->get();
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
         
     }
@@ -30,17 +34,21 @@ class CityController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        if(Gate::allows('admin-auth',Auth::user())) {
-            $city = new City;
-            $city->name = $req->name;
-            $city->division_id = $req->division_id;
-            $city->remark = $req->remark;
-            if($city->save()){
-                return response()->json(['status'=>true,'message'=>"City created successfully."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())) {
+                $city = new City;
+                $city->name = $req->name;
+                $city->division_id = $req->division_id;
+                $city->remark = $req->remark;
+                if($city->save()){
+                    return response()->json(['status'=>true,'message'=>"City created successfully."]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"City can't created!"]);
+                
             }
-            
-            return response()->json(['status'=>true,'message'=>"City can't created!"]);
-            
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
     }
     public function update(Request $req)
@@ -55,69 +63,89 @@ class CityController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        if(Gate::allows('admin-auth',Auth::user())) {
-            $city = City::find($req->id);
-            $city->name = $req->name;
-            $city->division_id = $req->division_id;
-            $city->remark = $req->remark;
-            if($city->update()){
-                return response()->json(['status'=>true,'message'=>"City updated successfully."]);
+        
+        try {
+            if(Gate::allows('admin-auth',Auth::user())) {
+                $city = City::find($req->id);
+                $city->name = $req->name;
+                $city->division_id = $req->division_id;
+                $city->remark = $req->remark;
+                if($city->update()){
+                    return response()->json(['status'=>true,'message'=>"City updated successfully."]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"City can't updated!"]);
+                
             }
-            
-            return response()->json(['status'=>true,'message'=>"City can't updated!"]);
-            
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
     }
 
     public function delete(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $city = City::find($req->id);
-            if($city->delete())
-            {
-                return response()->json(['status'=>true,'message'=>"City Deleted!"]);
-            }
-            
-            return response()->json(['status'=>true,'message'=>"City can't delete!, Try Again"]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $city = City::find($req->id);
+                if($city->delete())
+                {
+                    return response()->json(['status'=>true,'message'=>"City Deleted!"]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"City can't delete!, Try Again"]);
         
-    
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
         
     }
 
     public function trashshow()
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $cities = City::onlyTrashed()->get();
-            return response()->json(['status'=>true,'cities'=>$cities]);
-            
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $cities = City::onlyTrashed()->get();
+                return response()->json(['status'=>true,'cities'=>$cities]);
+                
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
     }
 
     public function restore(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $city = City::withTrashed()->find($req->id);
-            if($city->restore()){
-                return response()->json(['status'=>true,'message'=>"City restored."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $city = City::withTrashed()->find($req->id);
+                if($city->restore()){
+                    return response()->json(['status'=>true,'message'=>"City restored."]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"City can't restore!"]);
+                
             }
-            
-            return response()->json(['status'=>true,'message'=>"City can't restore!"]);
-            
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
         
     }
 
     public function restoreAll(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $cities = City::onlyTrashed();
-            if($cities->restore()){
-                return response()->json(['status'=>true,'message'=>"All Cities restored."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $cities = City::onlyTrashed();
+                if($cities->restore()){
+                    return response()->json(['status'=>true,'message'=>"All Cities restored."]);
+                }
+                
+                return response()->json(['status'=>false,'message'=>"Cities can't restore!"]);
+                
             }
-            
-            return response()->json(['status'=>false,'message'=>"Cities can't restore!"]);
-            
+        } catch (\Throwable $th) {
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"]);
         }
         
     }

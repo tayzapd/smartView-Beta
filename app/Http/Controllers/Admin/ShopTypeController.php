@@ -16,103 +16,139 @@ class ShopTypeController extends Controller
     public function show(Request $req)
     {
         
-        if(Gate::allows('admin-auth',Auth::user())){
-            return ShopType::orderBy('id','DESC')->get();
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                return ShopType::orderBy('id','DESC')->get();
+            }
+        } catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
 
     }
     
     public function create(Request $req)
     {
-        $validator = Validator::make($req->all(), [
-            'name' => 'required|string|min:3|max:120',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-        if(Gate::allows('admin-auth',Auth::user())) {
-            $shop_type = new ShopType;
-            $shop_type->name = $req->name;
-            $shop_type->remark = $req->remark;
-            if($shop_type->save()){
-                return response()->json(['status'=>true,'message'=>"Shop Type created successfully."]);
+        try {
+            $validator = Validator::make($req->all(), [
+                'name' => 'required|string|min:3|max:120',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
             }
-            
-            return response()->json(['status'=>false,"Shop Type can't created!"]);
-            
+            if(Gate::allows('admin-auth',Auth::user())) {
+                $shop_type = new ShopType;
+                $shop_type->name = $req->name;
+                $shop_type->remark = $req->remark;
+                if($shop_type->save()){
+                    return response()->json(['status'=>true,'message'=>"Shop Type created successfully."]);
+                }
+                
+                return response()->json(['status'=>false,"Shop Type can't created!"]);
+                
+            }
+        } 
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
     }
+
+
     public function update(Request $req)
     {
-        $validator = Validator::make($req->all(), [
-            'id'=> 'required',
-            'name' => 'required|string|min:3|max:120',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()],400);
-        }
-        if(Gate::allows('admin-auth',Auth::user())) {
-            $shop_type = ShopType::find($req->id);
-            $shop_type->name = $req->name;
-            $shop_type->remark = $req->remark;
-            if($shop_type->update()){
-                return response()->json(['status'=>true,'message'=>"Shop Type updated successfully."]);
+        try {
+            $validator = Validator::make($req->all(), [
+                'id'=> 'required',
+                'name' => 'required|string|min:3|max:120',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()],400);
             }
-            
-            return response()->json(['status'=>false,'message'=>"Shop Type can't updated!"]);
-            
+            if(Gate::allows('admin-auth',Auth::user())) {
+                $shop_type = ShopType::find($req->id);
+                $shop_type->name = $req->name;
+                $shop_type->remark = $req->remark;
+                if($shop_type->update()){
+                    return response()->json(['status'=>true,'message'=>"Shop Type updated successfully."]);
+                }
+                
+                return response()->json(['status'=>false,'message'=>"Shop Type can't updated!"]);
+                
+            }
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
     }
+
+
     public function delete(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $shop_type = ShopType::find($req->id);
-            if($shop_type->delete())
-            {
-                return response()->json(['status'=>true,'message'=>"ShopType Deleted!"]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $shop_type = ShopType::find($req->id);
+                if($shop_type->delete())
+                {
+                    return response()->json(['status'=>true,'message'=>"ShopType Deleted!"]);
+                }
+                return response()->json(['status'=>true,'Message'=>"ShopType can't delete!, Try Again"]);
+                
             }
-            return response()->json(['status'=>true,'Message'=>"ShopType can't delete!, Try Again"]);
-            
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
         
-
     }
+
     public function trashshow()
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $shoptypes = ShopType::onlyTrashed()->get();
-            return response()->json(['status'=>true,'shoptypes'=>$shoptypes]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $shoptypes = ShopType::onlyTrashed()->get();
+                return response()->json(['status'=>true,'shoptypes'=>$shoptypes]);
+            }
         }
-        
-
-
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
+        }
+    
     }
     public function restore(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $shop_type = ShopType::withTrashed()->find($req->id);
-            if($shop_type->restore()){
-                return response()->json(['status'=>true,'message'=>"ShopType restored."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $shop_type = ShopType::withTrashed()->find($req->id);
+                if($shop_type->restore()){
+                    return response()->json(['status'=>true,'message'=>"ShopType restored."]);
+                }
+                
+                return response()->json(['status'=>true,'message'=>"ShopType can't restore!"]);
+                
             }
-            
-            return response()->json(['status'=>true,'message'=>"ShopType can't restore!"]);
-            
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
         
     }
 
     public function restoreAll(Request $req)
     {
-        if(Gate::allows('admin-auth',Auth::user())){
-            $shoptypes =Shoptype::onlyTrashed();
-            if($shoptypes->restore()){
-                return response()->json(['status'=>true,'message'=>"All Shoptypes restored."]);
+        try {
+            if(Gate::allows('admin-auth',Auth::user())){
+                $shoptypes =Shoptype::onlyTrashed();
+                if($shoptypes->restore()){
+                    return response()->json(['status'=>true,'message'=>"All Shoptypes restored."]);
+                }
+                
+                return response()->json(['status'=>false,'message'=>"Shoptypes can't restore!"]);
+                
             }
-            
-            return response()->json(['status'=>false,'message'=>"Shoptypes can't restore!"]);
-            
+        }
+        catch(\Throwable $th){
+            return response()->json(['status'=>false,'message'=>"Something is wrong!"],500);
         }
         
     }
