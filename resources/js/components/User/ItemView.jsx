@@ -271,7 +271,7 @@ const ItemView = () => {
                                         setItemImages(item.images)
                                         setCurrentImage(`/images/shop/item/`+item.images[0])
                                     }}
-                                    style={{width:'175px'}}
+                                    style={{width:'160px'}}
                                     key={id} >
                                         <img style={{height:'130px'}} className="card-img-top rounded-3 col-12 " src={`/images/shop/item/`+item.images[0]} />
                                         <div className="card-body text-center ">
